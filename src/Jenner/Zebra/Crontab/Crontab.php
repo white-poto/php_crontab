@@ -30,7 +30,7 @@ class Crontab
     {
         $this->config = $crontab_config;
         if(empty($log_file)){
-            $this->log_file = '/tmp/php_crontab.log';
+            $this->log_file = '/var/log/php_crontab.log';
         }else{
             $this->log_file = $log_file;
         }
