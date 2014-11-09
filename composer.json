@@ -1,6 +1,6 @@
 {
     "name": "jenner/crontab",
-    "description": "daemon",
+    "description": "php crontab",
     "license": "MIT",
     "keywords": ["daemon"],
     "version": "v1.0.0",
