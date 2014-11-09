@@ -7,11 +7,12 @@
     "authors": [
         {
             "name": "Jenner",
-            "email": "hypxm@qq.com"
+            "email": "hypxm@qq.com",
+            "homepage" : "http://www.huyanping.cn"
         }
     ],
     "require": {
-        "jenner/multi_process": "v1.0.0",
+        "jenner/multi_process": "1.0.0",
         "php": ">=5.3.0"
     },
 

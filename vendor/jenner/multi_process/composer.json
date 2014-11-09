@@ -1,0 +1,22 @@
+{
+    "name": "jenner/multi_process",
+    "description": "php message queue wrapper",
+    "license": "MIT",
+    "keywords": ["message queue"],
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Jenner",
+            "email": "hypxm@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "Jenner\\Zebra\\MultiProcess": "src/"
+        }
+    }
+}
