@@ -1,0 +1,86 @@
+[
+    {
+        "name": "jenner/multi_process",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/huyanping/Zebra-Multi-Process.git",
+            "reference": "5f8d7b245baf1ad52804f67feeb2d420b2d6a135"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/huyanping/Zebra-Multi-Process/zipball/5f8d7b245baf1ad52804f67feeb2d420b2d6a135",
+            "reference": "5f8d7b245baf1ad52804f67feeb2d420b2d6a135",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2014-11-09 12:26:47",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Jenner\\Zebra\\MultiProcess": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jenner",
+                "email": "hypxm@qq.com"
+            }
+        ],
+        "description": "php message queue wrapper",
+        "keywords": [
+            "message queue"
+        ]
+    },
+    {
+        "name": "jenner/crontab",
+        "version": "v1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/huyanping/Zebra-Crontab.git",
+            "reference": "34ea91f8e8a5a713bcc3fcc3b45d8823d274b8aa"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/huyanping/Zebra-Crontab/zipball/34ea91f8e8a5a713bcc3fcc3b45d8823d274b8aa",
+            "reference": "34ea91f8e8a5a713bcc3fcc3b45d8823d274b8aa",
+            "shasum": ""
+        },
+        "require": {
+            "jenner/multi_process": "1.0.0",
+            "php": ">=5.3.0"
+        },
+        "time": "2014-11-09 13:53:19",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Jenner\\Zebra\\Crontab": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jenner",
+                "email": "hypxm@qq.com",
+                "homepage": "http://www.huyanping.cn"
+            }
+        ],
+        "description": "php crontab",
+        "keywords": [
+            "daemon"
+        ]
+    }
+]
