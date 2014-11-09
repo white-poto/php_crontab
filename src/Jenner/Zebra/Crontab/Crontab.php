@@ -21,12 +21,20 @@ class Crontab
      */
     protected $config;
 
+    protected $log_file;
+
     /**
      * @param $crontab_config
      */
-    public function __construct($crontab_config)
+    public function __construct($crontab_config, $log_file)
     {
         $this->config = $crontab_config;
+        if(empty($log_file)){
+            $this->log_file = '/tmp/php_crontab.log';
+        }else{
+            $this->log_file = $log_file;
+        }
+
     }
 
     /**
@@ -38,6 +46,7 @@ class Crontab
         $missions = $this->getMission();
         foreach ($missions as $mission) {
             $mission_executor = new Mission($mission['cmd'], $mission['output_file']);
+            $this->log($mission['cmd']);
             $manager->fork(new Process([$mission_executor, 'start'], $mission['name']));
         }
         do {
@@ -71,5 +80,14 @@ class Crontab
         return $mission;
     }
 
+    protected function setLogFile($filename){
+        $this->log_file = $filename;
+    }
 
+    protected function log($cmd){
+        $content = '[' . date('Y-m-d H:i:s') . ']-' . '.cmd:' . $cmd. PHP_EOL;
+        if(is_file($this->log_file) && is_writable($this->log_file)){
+            file_put_contents($this->log_file, $content, FILE_APPEND);
+        }
+    }
 } 
