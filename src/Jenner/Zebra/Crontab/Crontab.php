@@ -56,6 +56,7 @@ class Crontab
     public function start()
     {
         $this->start_time = time();
+        $this->log('start. pid' . getmypid());
         $manager = new ProcessManager();
         $missions = $this->getMission();
         foreach ($missions as $mission) {
@@ -74,7 +75,7 @@ class Crontab
             }
             sleep(1);
         } while ($manager->countAliveChildren());
-
+        $this->log('end. pid:' . getmypid());
     }
 
     /**
@@ -118,7 +119,7 @@ class Crontab
      */
     protected function log($cmd)
     {
-        $content = '[' . date('Y-m-d H:i:s') . ']-' . 'cmd:' . $cmd . PHP_EOL;
+        $content = '[' . date('Y-m-d H:i:s') . ']-' . 'content:' . $cmd . PHP_EOL;
         if (touch($this->log_file) && is_file($this->log_file) && is_writable($this->log_file)) {
             file_put_contents($this->log_file, $content, FILE_APPEND);
         }else{

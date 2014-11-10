@@ -8,8 +8,6 @@
 
 define('DS', DIRECTORY_SEPARATOR);
 require dirname(__FILE__) . DS . 'vendor' . DS . 'autoload.php';
-
-$single_script = 'php ' . dirname(__FILE__) . DS . 'single.php';
 date_default_timezone_set('PRC');
 
 error_reporting(E_ALL);
@@ -17,12 +15,12 @@ error_reporting(E_ALL);
 $crontab_config = [
     'test_1' => [
         'name' => '服务监控1',
-        'cmd' => 'echo "111111111111\r\n"',
+        'cmd' => 'php -v',
         'output' => '/tmp/test.log',
         'time' => '* * * * *'
     ],
     'single_test' => [
-        'name' => '服务监控2',
+        'name' => 'php -i',
         'cmd' => $single_script,
         'output' => '/tmp/single_script.log',
         'time' => '* * * * *'
