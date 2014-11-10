@@ -118,9 +118,11 @@ class Crontab
      */
     protected function log($cmd)
     {
-        $content = '[' . date('Y-m-d H:i:s') . ']-' . '.cmd:' . $cmd . PHP_EOL;
-        if (is_file($this->log_file) && is_writable($this->log_file)) {
+        $content = '[' . date('Y-m-d H:i:s') . ']-' . 'cmd:' . $cmd . PHP_EOL;
+        if (touch($this->log_file) && is_file($this->log_file) && is_writable($this->log_file)) {
             file_put_contents($this->log_file, $content, FILE_APPEND);
+        }else{
+            echo 'crontab log_file is not writable' . PHP_EOL;
         }
     }
 } 
