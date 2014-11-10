@@ -18,14 +18,14 @@ $crontab_config = [
     'test_1' => [
         'name' => '服务监控1',
         'cmd' => 'echo "111111111111\r\n"',
-        'output_file' => '/tmp/test.log',
-        'time_rule' => '* * * * *'
+        'output' => '/tmp/test.log',
+        'time' => '* * * * *'
     ],
     'single_test' => [
         'name' => '服务监控2',
         'cmd' => $single_script,
-        'output_file' => '/tmp/single_script.log',
-        'time_rule' => '* * * * *'
+        'output' => '/tmp/single_script.log',
+        'time' => '* * * * *'
     ],
 ];
 

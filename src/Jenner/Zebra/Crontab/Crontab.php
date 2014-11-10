@@ -22,7 +22,7 @@ class Crontab
      * @var 定时任务配置
      * 格式：[['name'=>'服务监控', 'cmd'=>'要执行的命令', 'output_file'=>'输出重定向', 'time_rule'=>'时间规则(crontab规则)']]
      */
-    protected $config;
+    protected $mission;
 
     /**
      * @var null
@@ -31,12 +31,18 @@ class Crontab
     protected $log_file;
 
     /**
+     * @var
+     * start()函数开始执行时间，避免程序执行超过一分钟，获取到的时间不准确
+     */
+    protected $start_time;
+
+    /**
      * @param $crontab_config
      * @param $log_file
      */
     public function __construct($crontab_config, $log_file = null)
     {
-        $this->config = $crontab_config;
+        $this->mission = $crontab_config;
         if (is_null($log_file)) {
             $this->log_file = '/var/log/php_crontab.log';
         } else {
@@ -49,10 +55,11 @@ class Crontab
      */
     public function start()
     {
+        $this->start_time = time();
         $manager = new ProcessManager();
         $missions = $this->getMission();
         foreach ($missions as $mission) {
-            $mission_executor = new Mission($mission['cmd'], $mission['output_file']);
+            $mission_executor = new Mission($mission['cmd'], $mission['output']);
             $this->log($mission['cmd']);
             $manager->fork(new Process([$mission_executor, 'start'], $mission['name']));
         }
@@ -78,13 +85,22 @@ class Crontab
     {
         $cur_time = time();
         $mission = [];
-        foreach ($this->config as $config) {
-            if ($cur_time - CrontabParse::parse($config['time_rule']) == 0) {
-                $mission[] = $config;
+        foreach ($this->mission as $mission_value) {
+            if ($cur_time - CrontabParse::parse($mission_value['time'], $this->start_time) == 0) {
+                $mission[] = $mission_value;
             }
         }
 
         return $mission;
+    }
+
+    /**
+     * 添加定时任务
+     * @param $mission
+     * @return mixed
+     */
+    public function addMission($mission){
+        return array_pop($this->mission, $mission);
     }
 
     /**

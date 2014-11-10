@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Administrator
+ * User: Jenner
  * Date: 14-11-7
  * Time: 下午5:00
  */
@@ -61,10 +61,10 @@ class CrontabParse {
     public static function parse($_cron_string,$_after_timestamp=null)
     {
         if(!preg_match('/^((\*(\/[0-9]+)?)|[0-9\-\,\/]+)\s+((\*(\/[0-9]+)?)|[0-9\-\,\/]+)\s+((\*(\/[0-9]+)?)|[0-9\-\,\/]+)\s+((\*(\/[0-9]+)?)|[0-9\-\,\/]+)\s+((\*(\/[0-9]+)?)|[0-9\-\,\/]+)$/i',trim($_cron_string))){
-            throw new InvalidArgumentException("Invalid cron string: ".$_cron_string);
+            throw new \InvalidArgumentException("Invalid cron string: ".$_cron_string);
         }
         if($_after_timestamp && !is_numeric($_after_timestamp)){
-            throw new InvalidArgumentException("\$_after_timestamp must be a valid unix timestamp ($_after_timestamp given)");
+            throw new \InvalidArgumentException("\$_after_timestamp must be a valid unix timestamp ($_after_timestamp given)");
         }
         $cron   = preg_split("/[\s]+/i",trim($_cron_string));
         $start  = empty($_after_timestamp)?time():$_after_timestamp;
