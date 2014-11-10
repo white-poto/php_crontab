@@ -21,9 +21,12 @@ $crontab_config = [
     ],
     'single_test' => [
         'name' => 'php -i',
-        'cmd' => $single_script,
+        'cmd' => 'php -v',
         'output' => '/tmp/single_script.log',
-        'time' => '* * * * *'
+        'time' => [
+            '* * * * *',
+            '* * * * *',
+        ],
     ],
 ];
 

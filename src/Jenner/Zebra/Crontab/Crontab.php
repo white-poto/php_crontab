@@ -64,6 +64,7 @@ class Crontab
             $this->log($mission['cmd']);
             $manager->fork(new Process([$mission_executor, 'start'], $mission['name']));
         }
+        //等待子进程退出
         do {
             foreach ($manager->getChildren() as $process) {
                 $iid = $process->getInternalId();
@@ -84,15 +85,35 @@ class Crontab
      */
     protected function getMission()
     {
-        $cur_time = time();
+        $mission_config = $this->formatMission();
         $mission = [];
-        foreach ($this->mission as $mission_value) {
-            if ($cur_time - CrontabParse::parse($mission_value['time'], $this->start_time) == 0) {
+        foreach ($mission_config as $mission_value) {
+            if ($this->start_time - CrontabParse::parse($mission_value['time'], $this->start_time) == 0) {
                 $mission[] = $mission_value;
             }
         }
 
         return $mission;
+    }
+
+    /**
+     * 格式化定时任务配置数组
+     * @return array
+     */
+    protected function formatMission(){
+        $mission_array = [];
+        foreach($this->mission as $mission_value){
+            if(is_array($mission_value['time']) && !empty($mission_value['time'])){
+                foreach($mission_value['time'] as $time){
+                    $tmp = $mission_value;
+                    $tmp['time'] = $time;
+                    $mission_array[] = $tmp;
+                }
+            }else{
+                $mission_array[] = $mission_value;
+            }
+        }
+        return $mission_array;
     }
 
     /**
