@@ -8,7 +8,11 @@
 
 define('DS', DIRECTORY_SEPARATOR);
 require dirname(__FILE__) . DS . 'vendor' . DS . 'autoload.php';
+
+$single_script = 'php ' . dirname(__FILE__) . DS . 'single.php';
 date_default_timezone_set('PRC');
+
+error_reporting(E_ALL);
 
 $crontab_config = [
     'test_1' => [
@@ -17,16 +21,10 @@ $crontab_config = [
         'output_file' => '/tmp/test.log',
         'time_rule' => '* * * * *'
     ],
-    'test_2' => [
+    'single_test' => [
         'name' => '服务监控2',
-        'cmd' => 'echo "2222222222\r\n"',
-        'output_file' => '/tmp/test.log',
-        'time_rule' => '* * * * *'
-    ],
-    'test_3' => [
-        'name' => '服务监控3',
-        'cmd' => 'echo "333333333\r\n"',
-        'output_file' => '/tmp/test.log',
+        'cmd' => $single_script,
+        'output_file' => '/tmp/single_script.log',
         'time_rule' => '* * * * *'
     ],
 ];

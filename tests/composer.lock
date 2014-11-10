@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d98e8ca555ab2c3dfed871ce92a96577",
+    "hash": "abe90351b78fa614c013d98ea9a0e795",
     "packages": [
         {
             "name": "jenner/crontab",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/huyanping/Zebra-Crontab.git",
-                "reference": "34ea91f8e8a5a713bcc3fcc3b45d8823d274b8aa"
+                "reference": "c888e9264eb3ae91e38a82f9ab7812dab0fd5d89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/huyanping/Zebra-Crontab/zipball/34ea91f8e8a5a713bcc3fcc3b45d8823d274b8aa",
-                "reference": "34ea91f8e8a5a713bcc3fcc3b45d8823d274b8aa",
+                "url": "https://api.github.com/repos/huyanping/Zebra-Crontab/zipball/c888e9264eb3ae91e38a82f9ab7812dab0fd5d89",
+                "reference": "c888e9264eb3ae91e38a82f9ab7812dab0fd5d89",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,46 @@
             "keywords": [
                 "daemon"
             ],
-            "time": "2014-11-09 13:53:19"
+            "time": "2014-11-09 14:08:37"
+        },
+        {
+            "name": "jenner/daemon",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/huyanping/Zebra-Daemon.git",
+                "reference": "793a269741feb0438ceec46c0aec5ed250deb1f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/huyanping/Zebra-Daemon/zipball/793a269741feb0438ceec46c0aec5ed250deb1f0",
+                "reference": "793a269741feb0438ceec46c0aec5ed250deb1f0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Jenner\\Zebra\\Daemon": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jenner",
+                    "email": "hypxm@qq.com"
+                }
+            ],
+            "description": "daemon",
+            "keywords": [
+                "daemon"
+            ],
+            "time": "2014-11-09 12:46:25"
         },
         {
             "name": "jenner/multi_process",
