@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/huyanping/Zebra-Crontab.git",
-                "reference": "c888e9264eb3ae91e38a82f9ab7812dab0fd5d89"
+                "reference": "b1c5a23a2d4028481eca3708627c083a1f2097a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/huyanping/Zebra-Crontab/zipball/c888e9264eb3ae91e38a82f9ab7812dab0fd5d89",
-                "reference": "c888e9264eb3ae91e38a82f9ab7812dab0fd5d89",
+                "url": "https://api.github.com/repos/huyanping/Zebra-Crontab/zipball/b1c5a23a2d4028481eca3708627c083a1f2097a3",
+                "reference": "b1c5a23a2d4028481eca3708627c083a1f2097a3",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,7 @@
             "keywords": [
                 "daemon"
             ],
-            "time": "2014-11-09 14:08:37"
+            "time": "2014-11-10 11:36:05"
         },
         {
             "name": "jenner/daemon",

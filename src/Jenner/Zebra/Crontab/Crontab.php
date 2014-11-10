@@ -69,9 +69,9 @@ class Crontab
             foreach ($manager->getChildren() as $process) {
                 $iid = $process->getInternalId();
                 if ($process->isAlive()) {
-                    echo sprintf('Process %s is running', $iid) . PHP_EOL;
+//                    echo sprintf('Process %s is running', $iid) . PHP_EOL;
                 } else if ($process->isFinished()) {
-                    echo sprintf('Process %s is finished', $iid) . PHP_EOL;
+//                    echo sprintf('Process %s is finished', $iid) . PHP_EOL;
                 }
             }
             sleep(1);
