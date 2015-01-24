@@ -20,8 +20,8 @@ $crontab_config = [
         'cmd' => 'php -r "echo "11111" . PHP_EOL;sleep(60);"',
         'output' => '/www/test.log',
         'time' => '* * * * *',
-        'user_name' => 'mysql',
-        'group_name' => 'mysql'
+        'user_name' => 'www',
+        'group_name' => 'www'
     ],
     'single_test' => [
         'name' => 'php -i',
