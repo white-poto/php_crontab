@@ -7,8 +7,7 @@
         }
     ],
     "require": {
-        "jenner/multi_process": "1.0.0",
-        "jenner/crontab": "1.0.0",
+        "jenner/crontab": "1.2.0",
         "jenner/daemon": "1.0.0",
         "php": ">=5.3.0"
     }

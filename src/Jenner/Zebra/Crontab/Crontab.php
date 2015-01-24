@@ -64,7 +64,12 @@ class Crontab
             $this->log($mission['cmd']);
             $user_name = isset($mission['user_name']) ? $mission['user_name'] : null;
             $group_name = isset($mission['group_name']) ? $mission['group_name'] : null;
-            $manager->fork(new Process([$mission_executor, 'start'], $mission['name']), $user_name, $group_name);
+            try{
+                $manager->fork(new Process([$mission_executor, 'start'], $mission['name']), $user_name, $group_name);
+            }catch (\Exception $e){
+                $this->log($e->getMessage());
+            }
+
         }
         //等待子进程退出
         do {
@@ -138,11 +143,11 @@ class Crontab
 
     /**
      * 日志记录
-     * @param $cmd
+     * @param $message
      */
-    protected function log($cmd)
+    protected function log($message)
     {
-        $content = '[' . date('Y-m-d H:i:s') . ']-' . 'content:' . $cmd . PHP_EOL;
+        $content = '[' . date('Y-m-d H:i:s') . ']-' . 'CONTENT:' . $message . PHP_EOL;
         if (touch($this->log_file) && is_file($this->log_file) && is_writable($this->log_file)) {
             file_put_contents($this->log_file, $content, FILE_APPEND);
         }else{
