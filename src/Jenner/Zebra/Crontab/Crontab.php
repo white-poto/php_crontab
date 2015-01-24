@@ -62,7 +62,9 @@ class Crontab
         foreach ($missions as $mission) {
             $mission_executor = new Mission($mission['cmd'], $mission['output']);
             $this->log($mission['cmd']);
-            $manager->fork(new Process([$mission_executor, 'start'], $mission['name']));
+            $user_name = isset($mission['user_name']) ? $mission['user_name'] : null;
+            $group_name = isset($mission['group_name']) ? $mission['group_name'] : null;
+            $manager->fork(new Process([$mission_executor, 'start'], $mission['name']), $user_name, $group_name);
         }
         //等待子进程退出
         do {

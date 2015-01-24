@@ -15,9 +15,11 @@ error_reporting(E_ALL);
 $crontab_config = [
     'test_1' => [
         'name' => '服务监控1',
-        'cmd' => 'php -v',
+        'cmd' => 'php -r "sleep(60);"',
         'output' => '/tmp/test.log',
-        'time' => '* * * * *'
+        'time' => '* * * * *',
+        'user_name' => 'mysql',
+        'group_name' => 'mysql'
     ],
     'single_test' => [
         'name' => 'php -i',
