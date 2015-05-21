@@ -1,6 +1,8 @@
 Zebra-Crontab 基于PHP的定时任务管理器
 =============
 [![Total Downloads](https://img.shields.io/packagist/dt/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
+[![Latest Stable Version](http://img.shields.io/packagist/v/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
+[![License](https://img.shields.io/packagist/l/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
 为什么使用PHP管理crontab
 ------------
 一般在定时任务较少的情况下，使用原生的crontab服务一般不会有什么问题，但当定时任务较多时就会产生如下问题：
