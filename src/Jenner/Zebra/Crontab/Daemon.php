@@ -42,11 +42,18 @@ class Daemon
         $this->logger = $logger;
     }
 
+    /**
+     * 设置monolog对象
+     * @param Logger $logger
+     */
     public function setLogger(Logger $logger)
     {
         $this->logger = $logger;
     }
 
+    /**
+     * 开始运行，不退出模式
+     */
     public function start()
     {
         $this->logger->info("crontab start");

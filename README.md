@@ -29,6 +29,7 @@ Zebra-Crontab 基于PHP的定时任务管理器
 + 支持设定用户、用户组
 + 支持设定多个执行时间
 + 支持输出重定向
++ 基于libev的时间事件驱动，支持守护运行
 
 你可以通过如下方式实现分布式定时任务管理
 ------------
@@ -37,7 +38,10 @@ Zebra-Crontab 基于PHP的定时任务管理器
 + 写入mysql数据库（推荐主从架构），自动同步
 
 
-**示例：**
+**基于crontab运行：**
+```shell
+* * * * * php demo.php
+```
 ```php
 <?php
 $crontab_config = [
@@ -60,9 +64,36 @@ $crontab_config = [
     ],
 ];
 
+$time = time();
 $crontab_server = new \Jenner\Zebra\Crontab\Crontab($crontab_config);
-$crontab_server->start();
+$crontab_server->start($time);
 ```
+**独立进程运行**
+```php
+$crontab_config = [
+    'test_1' => [
+        'name' => '服务监控1',
+        'cmd' => 'php -r "echo "11111" . PHP_EOL;sleep(60);"',
+        'output' => '/www/test.log',
+        'time' => '* * * * *',
+        'user_name' => 'www',
+        'group_name' => 'www'
+    ],
+    'single_test' => [
+        'name' => 'php -i',
+        'cmd' => 'php -i',
+        'output' => '/tmp/single_script.log',
+        'time' => [
+            '* * * * *',
+            '* * * * *',
+        ],
+    ],
+];
+
+$daemon = new \Jenner\Zebra\Crontab\Daemon($crontab_config, "logfile.log");
+$daemon->start();
+```
+
 
 工具短小，但很精悍
 -----------
