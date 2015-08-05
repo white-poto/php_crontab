@@ -56,7 +56,7 @@ class CrontabParse {
      *  @param int $_after_timestamp timestamp [default=current timestamp]
      *  @return int unix timestamp - next execution time will be greater
      *              than given timestamp (defaults to the current timestamp)
-     *  @throws InvalidArgumentException
+     *  @throws \InvalidArgumentException
      */
     public static function parse($_cron_string,$_after_timestamp=null)
     {

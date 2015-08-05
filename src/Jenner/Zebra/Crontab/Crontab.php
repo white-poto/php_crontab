@@ -10,6 +10,7 @@ namespace Jenner\Zebra\Crontab;
 
 use \Jenner\Zebra\MultiProcess\Process;
 use \Jenner\Zebra\MultiProcess\ProcessManager;
+use Monolog\Logger;
 
 
 /**
@@ -19,16 +20,15 @@ use \Jenner\Zebra\MultiProcess\ProcessManager;
 class Crontab
 {
     /**
-     * @var 定时任务配置
+     * @var array 定时任务配置
      * 格式：[['name'=>'服务监控', 'cmd'=>'要执行的命令', 'output_file'=>'输出重定向', 'time_rule'=>'时间规则(crontab规则)']]
      */
     protected $mission;
 
     /**
-     * @var null
-     * 日志文件[推荐使用绝对路径，请确保有可写权限，否则日志将不会被记录]
+     * @var Logger
      */
-    protected $log_file;
+    protected $logger;
 
     /**
      * @var
@@ -38,36 +38,32 @@ class Crontab
 
     /**
      * @param $crontab_config
-     * @param $log_file
+     * @param Logger $logger
      */
-    public function __construct($crontab_config, $log_file = null)
+    public function __construct($crontab_config, $logger)
     {
         $this->mission = $crontab_config;
-        if (is_null($log_file)) {
-            $this->log_file = '/var/log/php_crontab.log';
-        } else {
-            $this->log_file = $log_file;
-        }
+        $this->logger = $logger;
     }
 
     /**
      * 创建子进程执行定时任务
      */
-    public function start()
+    public function start($time)
     {
-        $this->start_time = time();
-        $this->log('start. pid' . getmypid());
+        $this->start_time = $time;
+        $this->logger->info("start. pid:" . getmypid());
         $manager = new ProcessManager();
         $missions = $this->getMission();
         foreach ($missions as $mission) {
             $mission_executor = new Mission($mission['cmd'], $mission['output']);
-            $this->log($mission['cmd']);
+            $this->logger->info("start cmd:" . $mission['cmd']);
             $user_name = isset($mission['user_name']) ? $mission['user_name'] : null;
             $group_name = isset($mission['group_name']) ? $mission['group_name'] : null;
             try{
                 $manager->fork(new Process([$mission_executor, 'start'], $mission['name']), $user_name, $group_name);
             }catch (\Exception $e){
-                $this->log($e->getMessage());
+                $this->logger->error($e->getMessage(), $e->getTraceAsString());
             }
 
         }
@@ -75,7 +71,7 @@ class Crontab
         do {
             sleep(1);
         } while ($manager->countAliveChildren());
-        $this->log('end. pid:' . getmypid());
+        $this->logger->info("end. pid:" . getmypid());
     }
 
     /**
@@ -117,33 +113,10 @@ class Crontab
 
     /**
      * 添加定时任务
-     * @param $mission
+     * @param array $mission
      * @return mixed
      */
-    public function addMission($mission){
-        return array_pop($this->mission, $mission);
-    }
-
-    /**
-     * 设置日志文件
-     * @param $filename
-     */
-    public function setLogFile($filename)
-    {
-        $this->log_file = $filename;
-    }
-
-    /**
-     * 日志记录
-     * @param $message
-     */
-    protected function log($message)
-    {
-        $content = '[' . date('Y-m-d H:i:s') . ']-' . 'CONTENT:' . $message . PHP_EOL;
-        if (touch($this->log_file) && is_file($this->log_file) && is_writable($this->log_file)) {
-            file_put_contents($this->log_file, $content, FILE_APPEND);
-        }else{
-            echo 'crontab log_file is not writable' . PHP_EOL;
-        }
+    public function addMission(array $mission){
+        return array_merge($this->mission, $mission);
     }
 } 
