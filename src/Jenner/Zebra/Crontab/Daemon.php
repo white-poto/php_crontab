@@ -59,7 +59,7 @@ class Daemon
         $this->logger->info("crontab start");
         $crontab = new Crontab($this->crontab_config, $this->logger);
         $process_count = 0;
-        $timer = new EvPeriodic(0., 1., null, function ($timer, $revents) use ($crontab, &$process_count)  {
+        $timer = new EvPeriodic(0., 60., null, function ($timer, $revents) use ($crontab, &$process_count)  {
             $pid = pcntl_fork();
             if($pid>0){
                 $process_count++;
