@@ -73,7 +73,8 @@ $time = time();
 $crontab_server = new \Jenner\Zebra\Crontab\Crontab($crontab_config);
 $crontab_server->start($time);
 ```
-**独立进程运行** 
+**独立进程运行**
+
 每分钟触发一次
 ```php
 $crontab_config = [
