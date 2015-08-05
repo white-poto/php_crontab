@@ -15,31 +15,58 @@ use Monolog\Logger;
 
 class Daemon
 {
+    /**
+     * @var array
+     */
     protected $crontab_config;
 
+    /**
+     * @var Logger
+     */
     protected $logger;
 
     /**
      * @param $crontab_config
      * @param $logfile
      */
-    public function __construct($crontab_config, $logfile){
+    public function __construct($crontab_config, $logfile)
+    {
         $this->crontab_config = $crontab_config;
+
         $logger = new Logger("php_crontab");
-        if(!empty($logfile)){
+        if (!empty($logfile)) {
             $logger->pushHandler(new StreamHandler($logfile));
-        }else{
+        } else {
             $logger->pushHandler(new NullHandler());
         }
-    }
-
-    public function setLogger(Logger $logger){
         $this->logger = $logger;
     }
 
-    public function start(){
-        $timer = new EvPeriodic(0., 1., null, function($w, $revents){
-            echo microtime(), PHP_EOL;
+    public function setLogger(Logger $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    public function start()
+    {
+        $crontab = new Crontab($this->crontab_config, $this->logger);
+        $process_count = 0;
+        $timer = new EvPeriodic(0., 1., null, function ($timer, $revents) use ($crontab, &$process_count)  {
+            $pid = pcntl_fork();
+            if($pid>0){
+                $process_count++;
+            }elseif($pid==0){
+                $crontab->start(time());
+            }else{
+                $this->logger->error("could not fork");
+                exit();
+            }
+        });
+
+        $child = new EvChild(0, false, function ($child, $revents) {
+            pcntl_waitpid($child->rpid, $status);
+            $message = "process exit. pid:" . $child->rpid . ". exit code:" . $child->rstatus;
+            $this->logger->info($message);
         });
 
         Ev::run();
