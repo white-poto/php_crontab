@@ -49,6 +49,7 @@ class Daemon
 
     public function start()
     {
+        $this->logger->info("crontab start");
         $crontab = new Crontab($this->crontab_config, $this->logger);
         $process_count = 0;
         $timer = new EvPeriodic(0., 1., null, function ($timer, $revents) use ($crontab, &$process_count)  {
@@ -70,5 +71,6 @@ class Daemon
         });
 
         Ev::run();
+        $this->logger->info("crontab exit");
     }
 }
