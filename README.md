@@ -37,6 +37,11 @@ Zebra-Crontab 基于PHP的定时任务管理器
 + 定时任务写入文件，修改时rsync同步
 + 写入mysql数据库（推荐主从架构），自动同步
 
+TODO
+-------------
++ 增加HTTP服务
++ 增加reload功能
+
 
 **基于crontab运行：**
 ```shell
