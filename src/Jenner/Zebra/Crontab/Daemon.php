@@ -9,6 +9,7 @@
 namespace Jenner\Zebra\Crontab;
 
 
+use Monolog\ErrorHandler;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -40,6 +41,7 @@ class Daemon
             $logger->pushHandler(new NullHandler());
         }
         $this->logger = $logger;
+        ErrorHandler::register($logger);
     }
 
     /**
