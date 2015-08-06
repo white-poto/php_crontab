@@ -61,9 +61,10 @@ class Daemon
         $timer = new \EvPeriodic(0., 60., null, function ($timer, $revents) use ($crontab)  {
             $pid = pcntl_fork();
             if($pid>0){
-                // todo
+                return;
             }elseif($pid==0){
                 $crontab->start(time());
+                exit();
             }else{
                 $this->logger->error("could not fork");
                 exit();
