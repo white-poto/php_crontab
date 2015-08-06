@@ -8,7 +8,7 @@
 
 date_default_timezone_set('PRC');
 define('DS', DIRECTORY_SEPARATOR);
-require dirname(__FILE__) . DS . 'vendor' . DS . 'autoload.php';
+require dirname(dirname(__FILE__)) . DS . 'vendor' . DS . 'autoload.php';
 
 error_reporting(E_ALL);
 

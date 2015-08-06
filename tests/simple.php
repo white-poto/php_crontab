@@ -9,15 +9,14 @@
 
 date_default_timezone_set('PRC');
 define('DS', DIRECTORY_SEPARATOR);
-require dirname(__FILE__) . DS . 'vendor' . DS . 'autoload.php';
-
+require dirname(dirname(__FILE__)) . DS . 'vendor' . DS . 'autoload.php';
 
 error_reporting(E_ALL);
 
 $crontab_config = [
     'test_1' => [
         'name' => '服务监控1',
-        'cmd' => 'php -r "echo "11111" . PHP_EOL;sleep(60);"',
+        'cmd' => 'php -r "echo "hello world" . PHP_EOL;sleep(60);"',
         'output' => '/www/test.log',
         'time' => '* * * * *',
         'user_name' => 'www',
