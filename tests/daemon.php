@@ -13,21 +13,21 @@ require dirname(dirname(__FILE__)) . DS . 'vendor' . DS . 'autoload.php';
 error_reporting(E_ALL);
 
 $crontab_config = [
-    'test_1' => [
-        'name' => '·þÎñ¼à¿Ø1',
-        'cmd' => 'php -r "echo "11111" . PHP_EOL;sleep(60);"',
+    'mission_1' => [
+        'name' => 'hello',
+        'cmd' => 'php -r "echo "hello world" . PHP_EOL;sleep(60);"',
         'output' => '/www/test.log',
         'time' => '* * * * *',
         'user_name' => 'www',
         'group_name' => 'www'
     ],
-    'single_test' => [
-        'name' => 'php -i',
-        'cmd' => 'php -i',
+    'mission_2' => [
+        'name' => 'ls',
+        'cmd' => 'ls -al',
         'output' => '/tmp/single_script.log',
         'time' => [
             '* * * * *',
-            '* * * * *',
+            '1 * * * *',
         ],
     ],
 ];

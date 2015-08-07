@@ -9,20 +9,36 @@
 namespace Jenner\Zebra\Crontab;
 
 
-class Mission {
+class Mission
+{
 
+    /**
+     * @var string 需要执行的命令
+     */
     protected $cmd;
 
-    protected $output_file;
+    /**
+     * @var string 日志文件
+     */
+    protected $out;
 
-    public function __construct($cmd, $output_file=null){
+    /**
+     * @param $cmd
+     * @param null $out
+     */
+    public function __construct($cmd, $out = null)
+    {
         $this->cmd = $cmd;
-        $this->output_file = $output_file;
+        $this->out = $out;
     }
 
-    public function start(){
-        $output_file = is_null($this->output_file) ? '/dev/null' : $this->output_file;
-        $cmd = $this->cmd . ' >> ' .  $output_file;
+    /**
+     * 执行命令
+     */
+    public function start()
+    {
+        $output_file = is_null($this->out) ? '/dev/null' : $this->out;
+        $cmd = $this->cmd . ' >> ' . $output_file;
         exec($cmd, $output, $status);
         exit($status);
     }

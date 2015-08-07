@@ -60,9 +60,9 @@ class Crontab
             $this->logger->info("start cmd:" . $mission['cmd']);
             $user_name = isset($mission['user_name']) ? $mission['user_name'] : null;
             $group_name = isset($mission['group_name']) ? $mission['group_name'] : null;
-            try{
+            try {
                 $manager->fork(new Process([$mission_executor, 'start'], $mission['name']), $user_name, $group_name);
-            }catch (\Exception $e){
+            } catch (\Exception $e) {
                 $this->logger->error($e->getMessage(), $e->getTraceAsString());
             }
 
@@ -95,16 +95,17 @@ class Crontab
      * 格式化定时任务配置数组
      * @return array
      */
-    protected function formatMission(){
+    protected function formatMission()
+    {
         $mission_array = [];
-        foreach($this->mission as $mission_value){
-            if(is_array($mission_value['time']) && !empty($mission_value['time'])){
-                foreach($mission_value['time'] as $time){
+        foreach ($this->mission as $mission_value) {
+            if (is_array($mission_value['time']) && !empty($mission_value['time'])) {
+                foreach ($mission_value['time'] as $time) {
                     $tmp = $mission_value;
                     $tmp['time'] = $time;
                     $mission_array[] = $tmp;
                 }
-            }else{
+            } else {
                 $mission_array[] = $mission_value;
             }
         }
@@ -116,7 +117,8 @@ class Crontab
      * @param array $mission
      * @return mixed
      */
-    public function addMission(array $mission){
+    public function addMission(array $mission)
+    {
         return array_merge($this->mission, $mission);
     }
 } 
