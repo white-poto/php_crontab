@@ -42,6 +42,7 @@ class Crontab
      */
     public function __construct($crontab_config, $logger)
     {
+        set_time_limit(0);
         $this->mission = $crontab_config;
         $this->logger = $logger;
     }
