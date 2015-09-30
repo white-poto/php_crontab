@@ -62,9 +62,10 @@ class Crontab
     /**
      * @param $time integer start time
      */
-    public function start($time)
+    public function start($time = null)
     {
         try {
+            if(is_null($time)) $time = time();
             $this->start_time = $time;
             $this->logger->info(
                 "start. date:" .date("Y-m-d H:i:s", $time) . ". pid:" . getmypid());
