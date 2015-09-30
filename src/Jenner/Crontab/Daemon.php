@@ -6,7 +6,7 @@
  * Time: 17:11
  */
 
-namespace Jenner\Zebra\Crontab;
+namespace Jenner\Crontab;
 
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;

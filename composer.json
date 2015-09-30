@@ -12,14 +12,13 @@
         }
     ],
     "require": {
-        "jenner/multi_process": "1.2.0",
+        "jenner/simple_fork": "0.3",
         "php": ">=5.3.0",
-        "monolog/monolog": "1.15.0"
+        "monolog/monolog": "1.17.1"
     },
-
     "autoload": {
         "psr-0": {
-            "Jenner\\Zebra\\Crontab": "src/"
+            "Jenner\\Crontab": "src/"
         }
     }
 }

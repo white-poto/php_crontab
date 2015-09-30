@@ -16,15 +16,15 @@ $crontab_config = [
     'mission_1' => [
         'name' => 'hello',
         'cmd' => 'php -r "echo "hello world" . PHP_EOL;sleep(60);"',
-        'output' => '/www/test.log',
+        'out' => '/www/test.log',
         'time' => '* * * * *',
-        'user_name' => 'www',
-        'group_name' => 'www'
+        'user' => 'www',
+        'group' => 'www'
     ],
     'mission_2' => [
         'name' => 'ls',
         'cmd' => 'ls -al',
-        'output' => '/tmp/single_script.log',
+        'out' => '/tmp/single_script.log',
         'time' => [
             '* * * * *',
             '1 * * * *',

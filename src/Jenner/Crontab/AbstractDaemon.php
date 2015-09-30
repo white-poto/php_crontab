@@ -6,10 +6,9 @@
  * Time: 18:55
  */
 
-namespace Jenner\Zebra\Crontab;
+namespace Jenner\Crontab;
 
-use Monolog\Logger;
-use Monolog\ErrorHandler;
+use Psr\Log\LoggerInterface;
 
 
 class AbstractDaemon
@@ -21,27 +20,26 @@ class AbstractDaemon
     protected $crontab_config;
 
     /**
-     * monolog instance
-     * @var Logger
+     * psr log instance
+     * @var LoggerInterface
      */
     protected $logger;
 
     /**
-     * @param Logger $logger
+     * @param LoggerInterface $logger
      */
-    public function __construct($logger)
+    public function __construct(LoggerInterface $logger)
     {
         $this->setLogger($logger);
     }
 
     /**
      * set logger
-     * @param Logger $logger
+     * @param LoggerInterface $logger
      */
-    public function setLogger(Logger $logger)
+    public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
-        ErrorHandler::register($logger);
     }
 
     /**
