@@ -16,12 +16,12 @@ class Daemon extends AbstractDaemon
 {
 
     /**
-     * @param $crontab_config
-     * @param $logfile
+     * @param $missions array
+     * @param $logfile string
      */
-    public function __construct($crontab_config, $logfile)
+    public function __construct($missions, $logfile)
     {
-        $this->crontab_config = $crontab_config;
+        $this->missions = $missions;
         $logger = new Logger("php_crontab");
         if (!empty($logfile)) {
             $logger->pushHandler(new StreamHandler($logfile));
