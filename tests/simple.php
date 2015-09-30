@@ -16,9 +16,11 @@ error_reporting(E_ALL);
 $missions = [
     'mission_1' => [
         'name' => 'ls_tmp',
-        'cmd' => 'ls /tmp',
+        'cmd' => 'ls /tmp && php -r "sleep(120);"',
         'out' => '/tmp/ls_tmp.log',
-        'time' => '* * * * *'
+        'time' => '* * * * *',
+        'user' => 'www',
+        'group' => 'www'
     ],
     'mission_2' => [
         'name' => 'ls',
