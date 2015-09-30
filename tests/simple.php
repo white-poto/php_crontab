@@ -15,7 +15,7 @@ error_reporting(E_ALL);
 
 $missions = [
     'mission_1' => [
-        'name' => 'hello',
+        'name' => 'ls_tmp',
         'cmd' => 'ls /tmp',
         'out' => '/tmp/ls_tmp.log',
         'time' => '* * * * *',
