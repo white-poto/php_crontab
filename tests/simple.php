@@ -13,11 +13,11 @@ require dirname(dirname(__FILE__)) . DS . 'vendor' . DS . 'autoload.php';
 
 error_reporting(E_ALL);
 
-$crontab_config = [
+$missions = [
     'mission_1' => [
         'name' => 'hello',
-        'cmd' => 'php -r "echo "hello world" . PHP_EOL;sleep(60);"',
-        'out' => '/www/test.log',
+        'cmd' => 'ls /tmp',
+        'out' => '/tmp/ls_tmp.log',
         'time' => '* * * * *',
         'user' => 'www',
         'group' => 'www'
@@ -25,7 +25,7 @@ $crontab_config = [
     'mission_2' => [
         'name' => 'ls',
         'cmd' => 'ls -al',
-        'out' => '/tmp/single_script.log',
+        'out' => '/tmp/ls_al.log',
         'time' => [
             '* * * * *',
             '1 * * * *',

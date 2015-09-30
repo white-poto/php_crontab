@@ -12,7 +12,7 @@ require dirname(dirname(__FILE__)) . DS . 'vendor' . DS . 'autoload.php';
 
 error_reporting(E_ALL);
 
-$crontab_config = [
+$missions = [
     'mission_1' => [
         'name' => 'hello',
         'cmd' => 'ls /tmp',
