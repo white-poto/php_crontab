@@ -56,10 +56,17 @@ class Mission extends Process
     {
         $output_file = is_null($this->out) ? self::DEFAULT_FILE : $this->out;
 
-        if(!file_exists($output_file) || !is_writable($output_file)){
-            $message = "output file is not exists or writable";
-            throw new \RuntimeException($message);
+        if(!file_exists($output_file)){
+            $create_file = touch($output_file);
+            if($create_file === false){
+                $message = "can not create output file";
+                throw new \RuntimeException($message);
+            }
         }
+        if(!is_writable($output_file)){
+            throw new \RuntimeException("output file is not writable");
+        }
+
         $this->setUserAndGroup();
 
         $cmd = $this->cmd . ' >> ' . $output_file;
