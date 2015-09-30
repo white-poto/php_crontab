@@ -1,9 +1,13 @@
 {
-    "name": "jenner/crontab",
-    "description": "php crontab",
+    "name": "jenner/php_crontab",
+    "description": "php crontab base on pcntl and libev",
     "license": "MIT",
-    "keywords": ["daemon"],
-    "version": "v1.3.0",
+    "keywords": [
+        "crontab",
+        "php crontab",
+        "crontab manager"
+    ],
+    "version": "v0.1",
     "authors": [
         {
             "name": "Jenner",
@@ -15,6 +19,9 @@
         "jenner/simple_fork": "0.3",
         "php": ">=5.3.0",
         "monolog/monolog": "1.17.1"
+    },
+    "suggest": {
+        "ext-ev": "*"
     },
     "autoload": {
         "psr-0": {
