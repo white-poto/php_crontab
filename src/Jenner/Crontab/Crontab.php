@@ -83,13 +83,13 @@ class Crontab
                 try {
                     $process->start();
                 } catch (\Exception $e) {
-                    $this->logger->error($e->getMessage(), $e->getTraceAsString());
+                    $this->logException($e);
                 }
 
                 $pool->submit($process);
             }
         } catch (\Exception $e) {
-            $this->logger->error($e->getMessage(), $e->getTraceAsString());
+            $this->logException($e);
         }
     }
 
@@ -147,5 +147,13 @@ class Crontab
     public function addMission(array $mission)
     {
         array_push($this->missions, $mission);
+    }
+
+    protected function logException(\Exception $e){
+        $message = "Exception. message:" . $e->getMessage() .
+            ". code:" . $e->getCode() .
+            ". trace:" . $e->getTraceAsString();
+
+        $this->logger->error($message);
     }
 } 
