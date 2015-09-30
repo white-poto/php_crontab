@@ -12,19 +12,22 @@ require dirname(dirname(__FILE__)) . DS . 'vendor' . DS . 'autoload.php';
 
 error_reporting(E_ALL);
 
+$hello_command = "echo 'hello ';";
+$world_command = "sleep(1); echo 'world';";
+
 $missions = [
-    'mission_1' => [
+    [
         'name' => 'hello',
-        'cmd' => 'ls /tmp',
-        'out' => '/tmp/ls_tmp.log',
+        'cmd' => "php -r '{$hello_command}'",
+        'out' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
         'user' => 'www',
         'group' => 'www'
     ],
-    'mission_2' => [
-        'name' => 'ls',
-        'cmd' => 'ls -al',
-        'out' => '/tmp/ls_al.log',
+    'mission_ls' => [
+        'name' => 'world',
+        'cmd' => "php -r '{$world_command}'",
+        'out' => '/tmp/php_crontab.log',
         'time' => [
             '* * * * *',
             '1 * * * *',
@@ -32,5 +35,5 @@ $missions = [
     ],
 ];
 
-$daemon = new \Jenner\Crontab\Daemon($missions, "logfile.log");
+$daemon = new \Jenner\Crontab\Daemon($missions);
 $daemon->start();

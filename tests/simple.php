@@ -13,19 +13,22 @@ require dirname(dirname(__FILE__)) . DS . 'vendor' . DS . 'autoload.php';
 
 error_reporting(E_ALL);
 
+$hello_command = "echo 'hello ';";
+$world_command = "sleep(1); echo 'world';";
+
 $missions = [
-    'mission_1' => [
-        'name' => 'ls_tmp',
-        'cmd' => 'ls /tmp && php -r "sleep(120);"',
-        'out' => '/tmp/ls_tmp.log',
+    [
+        'name' => 'hello',
+        'cmd' => "php -r '{$hello_command}'",
+        'out' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
         'user' => 'www',
         'group' => 'www'
     ],
-    'mission_2' => [
-        'name' => 'ls',
-        'cmd' => 'ls -al',
-        'out' => '/tmp/ls_al.log',
+    'mission_ls' => [
+        'name' => 'world',
+        'cmd' => "php -r '{$world_command}'",
+        'out' => '/tmp/php_crontab.log',
         'time' => [
             '* * * * *',
             '1 * * * *',

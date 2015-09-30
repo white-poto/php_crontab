@@ -14,19 +14,20 @@ use Monolog\Logger;
 
 class Daemon extends AbstractDaemon
 {
+    const DEFAULT_FILE = '/var/log/php_crontab.log';
 
     /**
      * @param $missions array
      * @param $logfile string
      */
-    public function __construct($missions, $logfile)
+    public function __construct($missions, $logfile = null)
     {
         $this->missions = $missions;
         $logger = new Logger("php_crontab");
         if (!empty($logfile)) {
             $logger->pushHandler(new StreamHandler($logfile));
         } else {
-            $logger->pushHandler(new NullHandler());
+            $logger->pushHandler(new StreamHandler(self::DEFAULT_FILE));
         }
         $this->logger = $logger;
 
