@@ -7,7 +7,7 @@
         "php crontab",
         "crontab manager"
     ],
-    "version": "v0.1",
+    "version": "v1.4.0",
     "authors": [
         {
             "name": "Jenner",
