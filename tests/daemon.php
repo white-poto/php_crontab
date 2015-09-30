@@ -32,5 +32,5 @@ $missions = [
     ],
 ];
 
-$daemon = new \Jenner\Crontab\Daemon($crontab_config, "logfile.log");
+$daemon = new \Jenner\Crontab\Daemon($missions, "logfile.log");
 $daemon->start();

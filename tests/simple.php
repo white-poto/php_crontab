@@ -31,5 +31,5 @@ $missions = [
     ],
 ];
 
-$crontab_server = new \Jenner\Crontab\Crontab($crontab_config);
+$crontab_server = new \Jenner\Crontab\Crontab($missions);
 $crontab_server->start(time());
