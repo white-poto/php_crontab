@@ -18,9 +18,7 @@ $missions = [
         'name' => 'ls_tmp',
         'cmd' => 'ls /tmp',
         'out' => '/tmp/ls_tmp.log',
-        'time' => '* * * * *',
-        'user' => 'www',
-        'group' => 'www'
+        'time' => '* * * * *'
     ],
     'mission_2' => [
         'name' => 'ls',
