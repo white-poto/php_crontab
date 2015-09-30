@@ -72,6 +72,7 @@ class Crontab
             $pool = new Pool();
 
             $missions = $this->currentMissions();
+            print_r($missions);
             foreach ($missions as $mission) {
                 $process = new Mission(
                     $mission['cmd'],
