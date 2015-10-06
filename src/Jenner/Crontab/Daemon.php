@@ -33,4 +33,34 @@ class Daemon extends AbstractDaemon
 
         parent::__construct($logger);
     }
+
+    /**
+     * start crontab and loop
+     */
+    public function start()
+    {
+        $this->logger->info("crontab start");
+        $crontab = new Crontab($this->missions, $this->logger);
+        $timer = new \EvPeriodic(0., 60., null, function ($timer, $revents) use ($crontab) {
+            $pid = pcntl_fork();
+            if ($pid > 0) {
+                return;
+            } elseif ($pid == 0) {
+                $crontab->start(time());
+                exit();
+            } else {
+                $this->logger->error("could not fork");
+                exit();
+            }
+        });
+
+        $child = new \EvChild(0, false, function ($child, $revents) {
+            pcntl_waitpid($child->rpid, $status);
+            $message = "process exit. pid:" . $child->rpid . ". exit code:" . $child->rstatus;
+            $this->logger->info($message);
+        });
+
+        \Ev::run();
+        $this->logger->info("crontab exit");
+    }
 }
