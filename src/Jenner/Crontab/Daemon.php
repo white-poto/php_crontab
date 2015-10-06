@@ -19,7 +19,7 @@ class Daemon extends AbstractDaemon
     /**
      * @var array cron config
      * format£º[
-     *  [
+     *  mission_name => [
      *      'name'=>'mission name',
      *      'cmd'=>'shell command',
      *      'out'=>'output filename',
@@ -29,7 +29,7 @@ class Daemon extends AbstractDaemon
      *  ]
      * ]
      */
-    protected $missions;
+    protected $missions = array();
 
     /**
      * @param $missions array
@@ -37,7 +37,10 @@ class Daemon extends AbstractDaemon
      */
     public function __construct($missions, $logfile = null)
     {
-        $this->missions = $missions;
+        foreach($missions as $mission){
+            $this->missions[$mission['name']] = $mission;
+        }
+
         $logger = new Logger("php_crontab");
         if (!empty($logfile)) {
             $logger->pushHandler(new StreamHandler($logfile));
@@ -88,7 +91,7 @@ class Daemon extends AbstractDaemon
      *
      * @return Crontab
      */
-    public function createCrontab()
+    protected function createCrontab()
     {
         $missions = $this->formatMission();
         $tasks = array();

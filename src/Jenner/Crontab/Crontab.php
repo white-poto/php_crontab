@@ -9,17 +9,12 @@
 namespace Jenner\Crontab;
 
 use Jenner\SimpleFork\Pool;
-use Monolog\Handler\StreamHandler;
+use Monolog\Handler\NullHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
 class Crontab
 {
-    /**
-     *
-     */
-    const LOG_FILE = '/var/log/php_crontab.log';
-
     /**
      * @var array of Task
      */
@@ -40,7 +35,7 @@ class Crontab
         set_time_limit(0);
         if (is_null($logger)) {
             $this->logger = new Logger("php_crontab");
-            $this->logger->pushHandler(new StreamHandler(self::LOG_FILE));
+            $this->logger->pushHandler(new NullHandler());
         } else {
             $this->logger = $logger;
         }
