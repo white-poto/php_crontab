@@ -10,10 +10,26 @@ namespace Jenner\Crontab;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use React\EventLoop\Factory;
 
 class Daemon extends AbstractDaemon
 {
-    const DEFAULT_FILE = '/var/log/php_crontab.log';
+    const LOG_FILE = '/var/log/php_crontab.log';
+
+    /**
+     * @var array cron config
+     * format£º[
+     *  [
+     *      'name'=>'mission name',
+     *      'cmd'=>'shell command',
+     *      'out'=>'output filename',
+     *      'time'=>'time rule like crontab',
+     *      'user'=>'process user',
+     *      'group'=>'process group'
+     *  ]
+     * ]
+     */
+    protected $missions;
 
     /**
      * @param $missions array
@@ -26,7 +42,7 @@ class Daemon extends AbstractDaemon
         if (!empty($logfile)) {
             $logger->pushHandler(new StreamHandler($logfile));
         } else {
-            $logger->pushHandler(new StreamHandler(self::DEFAULT_FILE));
+            $logger->pushHandler(new StreamHandler(self::LOG_FILE));
         }
         $this->logger = $logger;
 
@@ -39,8 +55,11 @@ class Daemon extends AbstractDaemon
     public function start()
     {
         $this->logger->info("crontab start");
-        $crontab = new Crontab($this->logger, $this->missions);
-        $timer = new \EvPeriodic(0., 60., null, function ($timer, $revents) use ($crontab) {
+        $crontab = $this->createCrontab();
+        $loop = Factory::create();
+
+        // add periodic timer
+        $loop->addPeriodicTimer(60, function () use ($crontab) {
             $pid = pcntl_fork();
             if ($pid > 0) {
                 return;
@@ -53,13 +72,64 @@ class Daemon extends AbstractDaemon
             }
         });
 
-        $child = new \EvChild(0, false, function ($child, $revents) {
-            pcntl_waitpid($child->rpid, $status);
-            $message = "process exit. pid:" . $child->rpid . ". exit code:" . $child->rstatus;
-            $this->logger->info($message);
+        // recover the sub processes
+        $loop->addPeriodicTimer(60, function () {
+            while (($pid = pcntl_waitpid(0, $status, WNOHANG)) > 0) {
+                $message = "process exit. pid:" . $pid . ". exit code:" . $status;
+                $this->logger->info($message);
+            }
         });
 
-        \Ev::run();
-        $this->logger->info("crontab exit");
+        $loop->run();
+    }
+
+    /**
+     * create crontab object
+     *
+     * @return Crontab
+     */
+    public function createCrontab()
+    {
+        $missions = $this->formatMission();
+        $tasks = array();
+        foreach ($missions as $mission) {
+            $task = new Task(
+                $mission['name'],
+                $mission['cmd'],
+                $mission['time'],
+                $mission['out'],
+                $mission['user'],
+                $mission['group']
+            );
+            $tasks[] = $task;
+        }
+
+        return new Crontab($this->logger, $tasks);
+    }
+
+    /**
+     * format mission
+     *
+     * @return array
+     */
+    protected function formatMission()
+    {
+        $missions = [];
+        foreach ($this->missions as $mission) {
+            if (is_array($mission['time']) && !empty($mission['time'])) {
+                foreach ($mission['time'] as $time) {
+                    $tmp = $mission;
+                    $tmp['time'] = $time;
+                    array_key_exists('user', $tmp) ? null : $tmp['user'] = null;
+                    array_key_exists('group', $tmp) ? null : $tmp['group'] = null;
+                    $missions[] = $tmp;
+                }
+            } else {
+                array_key_exists('user', $mission) ? null : $mission['user'] = null;
+                array_key_exists('group', $mission) ? null : $mission['group'] = null;
+                $missions[] = $mission;
+            }
+        }
+        return $missions;
     }
 }

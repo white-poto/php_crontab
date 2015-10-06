@@ -24,7 +24,9 @@
         "guzzlehttp/psr7": "1.2.0"
     },
     "suggest": {
-        "ext-ev": "*"
+        "ext-libevent": ">=0.1.0",
+        "ext-event": "~1.0",
+        "ext-libev": "*"
     },
     "autoload": {
         "psr-0": {

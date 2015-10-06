@@ -18,7 +18,7 @@ class Crontab
     /**
      *
      */
-    const DEFAULT_FILE = '/var/log/php_crontab.log';
+    const LOG_FILE = '/var/log/php_crontab.log';
 
     /**
      * @var array of Task
@@ -40,7 +40,7 @@ class Crontab
         set_time_limit(0);
         if (is_null($logger)) {
             $this->logger = new Logger("php_crontab");
-            $this->logger->pushHandler(new StreamHandler(self::DEFAULT_FILE));
+            $this->logger->pushHandler(new StreamHandler(self::LOG_FILE));
         } else {
             $this->logger = $logger;
         }
