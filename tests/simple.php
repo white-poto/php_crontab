@@ -38,5 +38,17 @@ $missions = [
 $logger = new \Monolog\Logger("php_crontab");
 $logger->pushHandler(new \Monolog\Handler\StreamHandler("/tmp/php_crontab.log"));
 
-$crontab_server = new \Jenner\Crontab\Crontab($logger, $missions);
+$tasks = array();
+foreach($missions as $mission){
+    $tasks[] = new \Jenner\Crontab\Task(
+            $mission['name'],
+            $mission['cmd'],
+            $mission['time'],
+            $mission['out'],
+            $mission['user'],
+            $mission['group']
+        );
+}
+
+$crontab_server = new \Jenner\Crontab\Crontab($logger, $tasks);
 $crontab_server->start(time());
