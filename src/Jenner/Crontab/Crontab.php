@@ -71,7 +71,7 @@ class Crontab
             $pool = new Pool();
 
             foreach ($this->tasks as $task) {
-                if(!$task->needRun()) continue;
+                if(!$task->needRun($time)) continue;
 
                 $process = new Mission($task);
                 try {
