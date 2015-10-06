@@ -8,7 +8,6 @@
 
 namespace Jenner\Crontab;
 
-use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
