@@ -13,8 +13,8 @@ require dirname(dirname(__FILE__)) . DS . 'vendor' . DS . 'autoload.php';
 
 error_reporting(E_ALL);
 
-$hello_command = "sleep(1); echo 'world';";
-$world_command = "sleep(1); echo 'world';";
+$hello_command = "sleep(1); echo 123;";
+$world_command = "sleep(1); echo 456;";
 
 $missions = [
     [
