@@ -1,5 +1,5 @@
 {
-    "name": "jenner/php_crontab",
+    "name": "jenner/crontab",
     "description": "php crontab base on pcntl and libev",
     "license": "MIT",
     "keywords": [
@@ -16,8 +16,8 @@
         }
     ],
     "require": {
-        "jenner/simple_fork": "0.3",
         "php": ">=5.3.0",
+        "jenner/simple_fork": "0.3",
         "monolog/monolog": "1.17.1"
     },
     "suggest": {

@@ -1,4 +1,4 @@
-Zebra-Crontab 基于PHP的定时任务管理器
+php_crontab 基于PHP的定时任务管理器
 =============
 [![Total Downloads](https://img.shields.io/packagist/dt/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
 [![Latest Stable Version](http://img.shields.io/packagist/v/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
@@ -17,7 +17,7 @@ Zebra-Crontab 基于PHP的定时任务管理器
 -----------
 + 定时任务可以不再是以文本方式的形式存在，可以存储在缓冲、数据库中，甚至你可以开发管理功能，在后台对定时任务进行编辑
 + 定时任务的日志是可配置的，你可以按照业务需求，对日志进行差异化配置
-+ crontab服务在不同用户下的定时任务需要分开编写，使用phpCrontab管理后，可以集中配置脚本执行权限
++ crontab服务在不同用户下的定时任务需要分开编写，使用php_crontab管理后，可以集中配置脚本执行权限
 
 使用方式如下：
 + 编写一个任务管理器，可参考test/simple.php
