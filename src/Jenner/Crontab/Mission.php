@@ -19,34 +19,15 @@ class Mission extends Process
     const DEFAULT_FILE = '/dev/null';
 
     /**
-     * @var string shell command
+     * @var Task
      */
-    protected $cmd;
+    protected $task;
 
-    /**
-     * @var string log file
-     */
-    protected $out;
 
-    /**
-     * @var string user of this process
-     */
-    protected $user;
-
-    /**
-     * @var string group of this process
-     */
-    protected $group;
-
-    /**
-     * @param $cmd
-     * @param null $out
-     */
-    public function __construct($cmd, $out = null, $user = null, $group = null)
+    public function __construct($task)
     {
         parent::__construct();
-        $this->cmd = $cmd;
-        $this->out = $out;
+        $this->task = $task;
     }
 
     /**
@@ -54,7 +35,7 @@ class Mission extends Process
      */
     public function run()
     {
-        $output_file = is_null($this->out) ? self::DEFAULT_FILE : $this->out;
+        $output_file = $this->task->getOut();
 
         if(!file_exists($output_file)){
             $create_file = touch($output_file);
@@ -69,7 +50,7 @@ class Mission extends Process
 
         $this->setUserAndGroup();
 
-        $cmd = $this->cmd . ' >> ' . $output_file;
+        $cmd = $this->task->getCmd(). ' >> ' . $output_file;
         exec($cmd, $output, $status);
 
         exit($status);
@@ -78,17 +59,17 @@ class Mission extends Process
     /**
      * set user and group if they are not null
      */
-    public function setUserAndGroup()
+    protected function setUserAndGroup()
     {
-        if (!is_null($this->user)) {
-            if (!is_null($this->group)) {
-                $group_info = posix_getgrnam($this->group);
+        if (!is_null($this->task->getUser())) {
+            if (!is_null($this->task->getGroup())) {
+                $group_info = posix_getgrnam($this->task->getGroup());
                 $group_id = $group_info['gid'];
                 if (!posix_setgid($group_id)) {
                     throw new \RuntimeException("set group failed");
                 }
             }
-            $user_info = posix_getpwnam($this->user);
+            $user_info = posix_getpwnam($this->task->getUser());
             $user_id = $user_info["uid"];
             if (!posix_setuid($user_id)) {
                 throw new \RuntimeException("set user failed");

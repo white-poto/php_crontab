@@ -39,7 +39,7 @@ class Daemon extends AbstractDaemon
     public function start()
     {
         $this->logger->info("crontab start");
-        $crontab = new Crontab($this->missions, $this->logger);
+        $crontab = new Crontab($this->logger, $this->missions);
         $timer = new \EvPeriodic(0., 60., null, function ($timer, $revents) use ($crontab) {
             $pid = pcntl_fork();
             if ($pid > 0) {

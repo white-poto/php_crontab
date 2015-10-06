@@ -18,7 +18,10 @@
     "require": {
         "php": ">=5.3.0",
         "jenner/simple_fork": "0.3",
-        "monolog/monolog": "1.17.1"
+        "monolog/monolog": "1.17.1",
+        "react/socket": "^0.4",
+        "react/stream": "^0.4",
+        "guzzlehttp/psr7": "1.2.0"
     },
     "suggest": {
         "ext-ev": "*"
