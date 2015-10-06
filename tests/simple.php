@@ -14,7 +14,7 @@ require dirname(dirname(__FILE__)) . DS . 'vendor' . DS . 'autoload.php';
 error_reporting(E_ALL);
 
 $hello_command = "sleep(1); echo 123;";
-$world_command = "sleep(1); echo 456;";
+$world_command = "sleep(1); echo 456 . PHP_EOL;";
 
 $missions = [
     [
@@ -33,7 +33,7 @@ $missions = [
     ],
 ];
 $logger = new \Monolog\Logger("php_crontab");
-$logger->pushHandler(new \Monolog\Handler\StreamHandler("/tmp/php_crontab.log2"));
+$logger->pushHandler(new \Monolog\Handler\StreamHandler("/tmp/php_crontab.log"));
 
 $tasks = array();
 foreach($missions as $mission){
