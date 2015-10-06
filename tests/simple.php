@@ -31,7 +31,6 @@ $missions = [
         'out' => '/tmp/php_crontab.log',
         'time' => [
             '* * * * *',
-            '1 * * * *',
         ],
     ],
 ];
