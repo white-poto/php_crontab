@@ -33,7 +33,7 @@ $missions = [
     ],
 ];
 $logger = new \Monolog\Logger("php_crontab");
-$logger->pushHandler(new \Monolog\Handler\StreamHandler("/tmp/php_crontab.log"));
+$logger->pushHandler(new \Monolog\Handler\StreamHandler("/tmp/php_crontab.log2"));
 
 $tasks = array();
 foreach($missions as $mission){
