@@ -41,9 +41,7 @@ foreach($missions as $mission){
             $mission['name'],
             $mission['cmd'],
             $mission['time'],
-            $mission['out'],
-            $mission['user'],
-            $mission['group']
+            $mission['out']
         );
 }
 
