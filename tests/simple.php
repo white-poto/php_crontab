@@ -29,9 +29,7 @@ $missions = [
         'name' => 'world',
         'cmd' => "php -r '{$world_command}'",
         'out' => '/tmp/php_crontab.log',
-        'time' => [
-            '* * * * *',
-        ],
+        'time' => '* * * * *',
     ],
 ];
 $logger = new \Monolog\Logger("php_crontab");
