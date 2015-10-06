@@ -51,6 +51,7 @@ class Mission extends Process
         $this->setUserAndGroup();
 
         $cmd = $this->task->getCmd(). ' >> ' . $output_file;
+        echo $cmd . PHP_EOL;
         exec($cmd, $output, $status);
 
         exit($status);
