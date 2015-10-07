@@ -126,7 +126,7 @@ class Server
     /**
      * @param Response $response
      */
-    protected function clear(Response $response)
+    protected function clear($params, Response $response)
     {
         $this->missions = array();
         $this->response($response, 1);
@@ -135,7 +135,7 @@ class Server
     /**
      * @param Response $response
      */
-    protected function missions(Response $response)
+    protected function missions($params, Response $response)
     {
         $this->response($response, 1, $this->missions);
     }
