@@ -55,8 +55,17 @@ class Mission extends Process
      * @param null $out
      * @param null $user
      * @param null $group
+     * @param null $comment
      */
-    public function __construct($name, $cmd, $time, $out = null, $user = null, $group = null, $comment = null)
+    public function __construct(
+        $name,
+        $cmd,
+        $time,
+        $out = null,
+        $user = null,
+        $group = null,
+        $comment = null
+    )
     {
         parent::__construct();
         $this->name = $name;
