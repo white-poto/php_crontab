@@ -62,9 +62,7 @@ class Server
                 return null;
             }
 
-            $query_string = $request->getQuery();
-            parse_str($query_string, $query_info);
-            var_dump($query_info, $query_string);
+            $query_info = $request->getQuery();
             $method = array($this, $this->routes[$path]);
             return call_user_func($method, $query_info, $response);
         });
