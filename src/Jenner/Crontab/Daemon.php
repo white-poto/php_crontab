@@ -23,7 +23,7 @@ class Daemon extends AbstractDaemon
      *      'name'=>'mission name',
      *      'cmd'=>'shell command',
      *      'out'=>'output filename',
-     *      'time'=>'time rule like crontab',
+     *      'time'=>'* * * * *',
      *      'user'=>'process user',
      *      'group'=>'process group'
      *  ]
@@ -37,7 +37,7 @@ class Daemon extends AbstractDaemon
      */
     public function __construct($missions, $logfile = null)
     {
-        foreach($missions as $mission){
+        foreach ($missions as $mission) {
             $this->missions[$mission['name']] = $mission;
         }
 
@@ -119,20 +119,11 @@ class Daemon extends AbstractDaemon
     {
         $missions = [];
         foreach ($this->missions as $mission) {
-            if (is_array($mission['time']) && !empty($mission['time'])) {
-                foreach ($mission['time'] as $time) {
-                    $tmp = $mission;
-                    $tmp['time'] = $time;
-                    array_key_exists('user', $tmp) ? null : $tmp['user'] = null;
-                    array_key_exists('group', $tmp) ? null : $tmp['group'] = null;
-                    $missions[] = $tmp;
-                }
-            } else {
-                array_key_exists('user', $mission) ? null : $mission['user'] = null;
-                array_key_exists('group', $mission) ? null : $mission['group'] = null;
-                $missions[] = $mission;
-            }
+            array_key_exists('user', $mission) ? null : $mission['user'] = null;
+            array_key_exists('group', $mission) ? null : $mission['group'] = null;
+            $missions[] = $mission;
         }
+
         return $missions;
     }
 }
