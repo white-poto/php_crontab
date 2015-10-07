@@ -56,8 +56,7 @@ class Server
 
         $http = new \React\Http\Server($socket);
         $http->on('request', function (Request $request, Response $response) {
-            $path = $request->getPath();
-            echo $path . PHP_EOL;
+            $path = trim($request->getPath(), '/');
             if(!array_key_exists($path, $this->routes)){
                 $this->response($response, 0, "method not found", 101);
                 return null;
