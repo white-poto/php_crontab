@@ -14,6 +14,14 @@ class HttpDaemon extends Daemon
 {
     const LOG_FILE = '/var/log/php_crontab.log';
 
+    protected $port;
+
+    public function __construct($tasks, $logfile, $port = 6364)
+    {
+        parent::__construct($tasks, $logfile);
+        $this->port = $port;
+    }
+
     /**
      * start crontab and loop
      */
@@ -47,7 +55,7 @@ class HttpDaemon extends Daemon
         });
 
         $server = new \Jenner\Crontab\HTTP\Server($loop, $this);
-        $server->start();
+        $server->start($this->port);
 
         $loop->run();
     }
