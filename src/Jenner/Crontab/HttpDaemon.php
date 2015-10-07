@@ -24,7 +24,7 @@ class HttpDaemon extends Daemon
         $loop = Factory::create();
 
         // add periodic timer
-        $loop->addPeriodicTimer(60, function () {
+        $loop->addPeriodicTimer(1, function () {
             $pid = pcntl_fork();
             if ($pid > 0) {
                 return;
@@ -39,7 +39,7 @@ class HttpDaemon extends Daemon
         });
 
         // recover the sub processes
-        $loop->addPeriodicTimer(60, function () {
+        $loop->addPeriodicTimer(1, function () {
             while (($pid = pcntl_waitpid(0, $status, WNOHANG)) > 0) {
                 $message = "process exit. pid:" . $pid . ". exit code:" . $status;
                 $this->logger->info($message);
