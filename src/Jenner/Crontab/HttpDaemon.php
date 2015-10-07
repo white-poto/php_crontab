@@ -8,8 +8,6 @@
 
 namespace Jenner\Crontab;
 
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use React\EventLoop\Factory;
 
 class HttpDaemon extends Daemon
