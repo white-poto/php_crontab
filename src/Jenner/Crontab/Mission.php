@@ -68,6 +68,7 @@ class Mission extends Process
 
     public function needRun($time)
     {
+        var_dump($time);
         if ($time - CrontabParse::parse($this->getTime(), $time) == 0) {
             return true;
         }
