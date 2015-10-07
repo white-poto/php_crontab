@@ -37,7 +37,7 @@ $logger->pushHandler(new \Monolog\Handler\StreamHandler("/tmp/php_crontab.log"))
 
 $tasks = array();
 foreach($missions as $mission){
-    $tasks[] = new \Jenner\Crontab\Task(
+    $tasks[] = new \Jenner\Crontab\Mission(
             $mission['name'],
             $mission['cmd'],
             $mission['time'],

@@ -100,10 +100,12 @@ class Server
         }
 
         $name = $params['name'];
-        if ($this->daemon->getByName($name)) {
-            $this->response($response, 1, $this->missions[$name]);
+        $task = $this->daemon->getByName($name);
+        if ($task !== false) {
+            $this->response($response, 1, $task);
             return;
         }
+
         $this->response($response, 0, "mission {$name} is not exists");
     }
 
