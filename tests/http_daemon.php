@@ -12,8 +12,8 @@ require dirname(dirname(__FILE__)) . DS . 'vendor' . DS . 'autoload.php';
 
 error_reporting(E_ALL);
 
-$hello_command = "echo 'hello ';";
-$world_command = "sleep(1); echo 'world';";
+$hello_command = "echo \"hello \";";
+$world_command = "sleep(1); echo \"world\";";
 
 $missions = [
     [
