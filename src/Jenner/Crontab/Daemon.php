@@ -25,7 +25,8 @@ class Daemon extends AbstractDaemon
      *      'out'=>'output filename',
      *      'time'=>'* * * * *',
      *      'user'=>'process user',
-     *      'group'=>'process group'
+     *      'group'=>'process group',
+     *      'comment'=>'comment',
      *  ]
      * ]
      */

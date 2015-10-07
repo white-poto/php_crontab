@@ -44,6 +44,11 @@ class Mission extends Process
     protected $group;
 
     /**
+     * @var null
+     */
+    protected $comment;
+
+    /**
      * @param null $name
      * @param $cmd
      * @param $time
@@ -51,7 +56,7 @@ class Mission extends Process
      * @param null $user
      * @param null $group
      */
-    public function __construct($name, $cmd, $time, $out = null, $user = null, $group = null)
+    public function __construct($name, $cmd, $time, $out = null, $user = null, $group = null, $comment = null)
     {
         parent::__construct();
         $this->name = $name;
@@ -60,6 +65,7 @@ class Mission extends Process
         $this->out = $out;
         $this->user = $user;
         $this->group = $group;
+        $this->comment = $comment;
     }
 
     /**
@@ -134,6 +140,7 @@ class Mission extends Process
             'out' => $this->out,
             'user' => $this->user,
             'group' => $this->group,
+            'comment' => $this->comment,
         );
     }
 
