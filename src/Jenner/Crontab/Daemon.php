@@ -37,9 +37,7 @@ class Daemon extends AbstractDaemon
      */
     public function __construct($tasks, $logfile = null)
     {
-        foreach ($tasks as $task) {
-            $this->tasks[$task['name']] = $task;
-        }
+        $this->setTasks($tasks);
 
         $logger = new Logger("php_crontab");
         if (!empty($logfile)) {
@@ -125,5 +123,23 @@ class Daemon extends AbstractDaemon
         }
 
         return $tasks;
+    }
+
+    /**
+     * @param $tasks
+     */
+    public function setTasks($tasks)
+    {
+        $must = array('name', 'cmd', 'time');
+        foreach ($tasks as $task) {
+            foreach ($must as $key) {
+                if (!array_key_exists($key, $task)) {
+                    $message = "task must have a {$key} value";
+                    throw new \InvalidArgumentException($message);
+                }
+            }
+
+            $this->tasks[$task['name']] = $task;
+        }
     }
 }
