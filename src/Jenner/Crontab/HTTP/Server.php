@@ -10,6 +10,7 @@ namespace Jenner\Crontab\HTTP;
 
 use Jenner\Crontab\HttpDaemon;
 use React\EventLoop\LoopInterface;
+use React\EventLoop\Timer\TimerInterface;
 use React\Http\Request;
 use React\Http\Response;
 
@@ -26,6 +27,11 @@ class Server
     protected $daemon;
 
     /**
+     * @var TimerInterface
+     */
+    protected $crontab_timer;
+
+    /**
      * @var array
      */
     protected $routes = array(
@@ -34,16 +40,19 @@ class Server
         'remove_by_name' => 'removeByName',
         'clear' => 'clear',
         'missions' => 'missions',
+        'start' => 'begin',
+        'stop' => 'stop',
     );
 
     /**
      * @param $loop
      * @param $missions
      */
-    public function __construct($loop, HttpDaemon $daemon)
+    public function __construct($loop, HttpDaemon $daemon, TimerInterface $crontab_timer)
     {
         $this->loop = $loop;
         $this->daemon = $daemon;
+        $this->crontab_timer = $crontab_timer;
     }
 
     /**
@@ -140,6 +149,26 @@ class Server
     protected function missions($params, Response $response)
     {
         $this->response($response, 1, $this->daemon->get());
+    }
+
+    /**
+     * @param $params
+     * @param Response $response
+     */
+    protected function begin($params, Response $response)
+    {
+        $this->loop->addPeriodicTimer(60, array($this->daemon, 'crontabCallback'));
+        $this->response($response, 1);
+    }
+
+    /**
+     * @param $params
+     * @param Response $response
+     */
+    protected function stop($params, Response $response)
+    {
+        $this->loop->cancelTimer($this->crontab_timer);
+        $this->response($response, 1);
     }
 
     /**

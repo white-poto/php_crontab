@@ -32,32 +32,37 @@ class HttpDaemon extends Daemon
         $loop = Factory::create();
 
         // add periodic timer
-        $loop->addPeriodicTimer(1, function () {
-            $pid = pcntl_fork();
-            if ($pid > 0) {
-                return;
-            } elseif ($pid == 0) {
-                $crontab = $this->createCrontab();
-                $crontab->start(time());
-                exit();
-            } else {
-                $this->logger->error("could not fork");
-                exit();
-            }
-        });
+        $crontab_timer = $loop->addPeriodicTimer(60, array($this, 'crontabCallback'));
 
         // recover the sub processes
-        $loop->addPeriodicTimer(1, function () {
-            while (($pid = pcntl_waitpid(0, $status, WNOHANG)) > 0) {
-                $message = "process exit. pid:" . $pid . ". exit code:" . $status;
-                $this->logger->info($message);
-            }
-        });
+        $loop->addPeriodicTimer(60, array($this, 'processRecoverCallback'));
 
-        $server = new \Jenner\Crontab\HTTP\Server($loop, $this);
+        $server = new \Jenner\Crontab\HTTP\Server($loop, $this, $crontab_timer);
         $server->start($this->port);
 
         $loop->run();
+    }
+
+    public function crontabCallback()
+    {
+        $pid = pcntl_fork();
+        if ($pid > 0) {
+            return;
+        } elseif ($pid == 0) {
+            $crontab = $this->createCrontab();
+            $crontab->start(time());
+            exit();
+        } else {
+            $this->logger->error("could not fork");
+            exit();
+        }
+    }
+
+    public function processRecoverCallback(){
+        while (($pid = pcntl_waitpid(0, $status, WNOHANG)) > 0) {
+            $message = "process exit. pid:" . $pid . ". exit code:" . $status;
+            $this->logger->info($message);
+        }
     }
 
     /**
