@@ -28,10 +28,7 @@ $missions = [
         'name' => 'world',
         'cmd' => "php -r '{$world_command}'",
         'out' => '/tmp/php_crontab.log',
-        'time' => [
-            '* * * * *',
-            '1 * * * *',
-        ],
+        'time' => '* * * * *',
     ],
 ];
 
