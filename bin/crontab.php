@@ -7,3 +7,5 @@
  * Time: 16:12
  */
 
+require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor' . 'autoload.php';
+
