@@ -37,6 +37,8 @@ class Mission extends Process
     {
         $output_file = $this->task->getOut();
 
+        $this->setUserAndGroup();
+
         if(!file_exists($output_file)){
             $create_file = touch($output_file);
             if($create_file === false){
@@ -47,8 +49,6 @@ class Mission extends Process
         if(!is_writable($output_file)){
             throw new \RuntimeException("output file is not writable");
         }
-
-        $this->setUserAndGroup();
 
         $cmd = $this->task->getCmd(). ' >> ' . $output_file;
         echo $cmd . PHP_EOL;
