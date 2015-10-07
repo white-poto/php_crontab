@@ -45,7 +45,7 @@ class Crontab
 
     public function addMission(Mission $mission)
     {
-        array_push($this->missions, $task);
+        array_push($this->missions, $mission);
     }
 
     public function batchAddMissions($missions)
