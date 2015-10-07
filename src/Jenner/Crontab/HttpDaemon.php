@@ -17,23 +17,6 @@ class HttpDaemon extends Daemon
     const LOG_FILE = '/var/log/php_crontab.log';
 
     /**
-     * @param $missions array
-     * @param $logfile string
-     */
-    public function __construct($missions, $logfile = null)
-    {
-        $logger = new Logger("php_crontab");
-        if (!empty($logfile)) {
-            $logger->pushHandler(new StreamHandler($logfile));
-        } else {
-            $logger->pushHandler(new StreamHandler(self::LOG_FILE));
-        }
-        $this->logger = $logger;
-
-        parent::__construct($missions, $logger);
-    }
-
-    /**
      * start crontab and loop
      */
     public function start()
