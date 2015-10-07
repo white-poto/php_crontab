@@ -46,9 +46,40 @@ class HttpDaemon extends Daemon
             }
         });
 
-        $server = new \Jenner\Crontab\HTTP\Server($loop, $this->missions);
+        $server = new \Jenner\Crontab\HTTP\Server($loop, $this);
         $server->start();
 
         $loop->run();
     }
+
+    public function add($task)
+    {
+        $this->tasks[$task['name']] = $task;
+    }
+
+    public function getByName($name)
+    {
+        if (array_key_exists($name, $this->tasks)) {
+            return $this->tasks[$name];
+        }
+
+        return false;
+    }
+
+    public function removeByName($name)
+    {
+        unset($this->tasks[$name]);
+    }
+
+    public function clear()
+    {
+        unset($this->tasks);
+        $this->tasks = array();
+    }
+
+    public function get()
+    {
+        return $this->tasks;
+    }
+
 }

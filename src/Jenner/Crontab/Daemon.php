@@ -19,8 +19,8 @@ class Daemon extends AbstractDaemon
     /**
      * @var array cron config
      * format£º[
-     *  mission_name => [
-     *      'name'=>'mission name',
+     *  task_name => [
+     *      'name'=>'task_name',
      *      'cmd'=>'shell command',
      *      'out'=>'output filename',
      *      'time'=>'* * * * *',
@@ -29,16 +29,16 @@ class Daemon extends AbstractDaemon
      *  ]
      * ]
      */
-    protected $missions = array();
+    protected $tasks = array();
 
     /**
-     * @param $missions array
+     * @param $tasks array
      * @param $logfile string
      */
-    public function __construct($missions, $logfile = null)
+    public function __construct($tasks, $logfile = null)
     {
-        foreach ($missions as $mission) {
-            $this->missions[$mission['name']] = $mission;
+        foreach ($tasks as $task) {
+            $this->tasks[$task['name']] = $task;
         }
 
         $logger = new Logger("php_crontab");
@@ -93,21 +93,21 @@ class Daemon extends AbstractDaemon
      */
     protected function createCrontab()
     {
-        $missions = $this->formatMission();
-        $tasks = array();
-        foreach ($missions as $mission) {
-            $task = new Task(
-                $mission['name'],
-                $mission['cmd'],
-                $mission['time'],
-                $mission['out'],
-                $mission['user'],
-                $mission['group']
+        $tasks = $this->formatTasks();
+        $missions = array();
+        foreach ($tasks as $task) {
+            $mission = new Mission(
+                $task['name'],
+                $task['cmd'],
+                $task['time'],
+                $task['out'],
+                $task['user'],
+                $task['group']
             );
-            $tasks[] = $task;
+            $missions[] = $mission;
         }
 
-        return new Crontab($this->logger, $tasks);
+        return new Crontab($this->logger, $missions);
     }
 
     /**
@@ -115,15 +115,15 @@ class Daemon extends AbstractDaemon
      *
      * @return array
      */
-    protected function formatMission()
+    protected function formatTasks()
     {
-        $missions = [];
-        foreach ($this->missions as $mission) {
-            array_key_exists('user', $mission) ? null : $mission['user'] = null;
-            array_key_exists('group', $mission) ? null : $mission['group'] = null;
-            $missions[] = $mission;
+        $tasks = [];
+        foreach ($this->tasks as $task) {
+            array_key_exists('user', $task) ? null : $task['user'] = null;
+            array_key_exists('group', $task) ? null : $task['group'] = null;
+            $tasks[] = $task;
         }
 
-        return $missions;
+        return $tasks;
     }
 }

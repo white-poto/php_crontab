@@ -16,9 +16,9 @@ use Psr\Log\LoggerInterface;
 class Crontab
 {
     /**
-     * @var array of Task
+     * @var array of Mission
      */
-    protected $tasks = array();
+    protected $missions = array();
 
     /**
      * @var LoggerInterface
@@ -30,7 +30,7 @@ class Crontab
      */
     protected $start_time;
 
-    public function __construct(LoggerInterface $logger = null, $tasks = null)
+    public function __construct(LoggerInterface $logger = null, $missions = null)
     {
         set_time_limit(0);
         if (is_null($logger)) {
@@ -40,21 +40,18 @@ class Crontab
             $this->logger = $logger;
         }
 
-        $this->batchAddTask($tasks);
+        $this->batchAddMissions($missions);
     }
 
-    public function addTask(Task $task)
+    public function addMission(Mission $mission)
     {
-        array_push($this->tasks, $task);
+        array_push($this->missions, $task);
     }
 
-    public function batchAddTask($tasks)
+    public function batchAddMissions($missions)
     {
-        foreach ($tasks as $task) {
-            if (!($task instanceof Task)) {
-                throw new \InvalidArgumentException("param tasks must be an array of Task");
-            }
-            array_push($this->tasks, $task);
+        foreach($missions as $mission){
+            $this->addMission($mission);
         }
     }
 
@@ -70,17 +67,16 @@ class Crontab
                 "start. date:" . date("Y-m-d H:i:s", $time) . ". pid:" . getmypid());
             $pool = new Pool();
 
-            foreach ($this->tasks as $task) {
-                if(!$task->needRun($time)) continue;
+            foreach ($this->missions as $mission) {
+                if(!$mission->needRun($time)) continue;
 
-                $process = new Mission($task);
                 try {
-                    $process->start();
+                    $mission->start();
                 } catch (\Exception $e) {
                     $this->logException($e);
                 }
 
-                $pool->submit($process);
+                $pool->submit($mission);
             }
 
             $pool->wait(true);
@@ -100,4 +96,5 @@ class Crontab
 
         $this->logger->error($message);
     }
+
 } 

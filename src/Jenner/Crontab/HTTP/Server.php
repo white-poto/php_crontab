@@ -8,7 +8,7 @@
 
 namespace Jenner\Crontab\HTTP;
 
-
+use Jenner\Crontab\HttpDaemon;
 use React\EventLoop\LoopInterface;
 use React\Http\Request;
 use React\Http\Response;
@@ -23,7 +23,7 @@ class Server
     /**
      * @var
      */
-    protected $missions;
+    protected $daemon;
 
     /**
      * @var array
@@ -40,10 +40,10 @@ class Server
      * @param $loop
      * @param $missions
      */
-    public function __construct($loop, &$missions)
+    public function __construct($loop, HttpDaemon $daemon)
     {
         $this->loop = $loop;
-        $this->missions = $missions;
+        $this->daemon = $daemon;
     }
 
     /**
@@ -84,7 +84,7 @@ class Server
             }
         }
 
-        $this->missions[$params['name']] = $params;
+        $this->daemon->add($params);
         $this->response($response, 1);
     }
 
@@ -100,7 +100,7 @@ class Server
         }
 
         $name = $params['name'];
-        if (array_key_exists($name, $this->missions)) {
+        if ($this->daemon->getByName($name)) {
             $this->response($response, 1, $this->missions[$name]);
             return;
         }
@@ -119,7 +119,7 @@ class Server
         }
 
         $name = $params['name'];
-        unset($this->missions[$name]);
+        $this->daemon->removeByName($name);
         $this->response($response, 1);
     }
 
@@ -128,7 +128,7 @@ class Server
      */
     protected function clear($params, Response $response)
     {
-        $this->missions = array();
+        $this->daemon->clear();
         $this->response($response, 1);
     }
 
@@ -137,7 +137,7 @@ class Server
      */
     protected function missions($params, Response $response)
     {
-        $this->response($response, 1, $this->missions);
+        $this->response($response, 1, $this->daemon->get());
     }
 
     /**

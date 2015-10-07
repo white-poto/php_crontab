@@ -18,16 +18,72 @@ class Mission extends Process
      */
     const DEFAULT_FILE = '/dev/null';
 
-    /**
-     * @var Task
-     */
-    protected $task;
+    protected $name;
+    protected $cmd;
+    protected $time;
+    protected $out;
+    protected $user;
+    protected $group;
 
-
-    public function __construct($task)
+    public function __construct($name, $cmd, $time, $out = null, $user = null, $group = null)
     {
         parent::__construct();
-        $this->task = $task;
+        $this->name = $name;
+        $this->cmd = $cmd;
+        $this->time = $time;
+        $this->out = $out;
+        $this->user = $user;
+        $this->group = $group;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getCmd()
+    {
+        return $this->cmd;
+    }
+
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    public function getOut()
+    {
+        return $this->out;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    public function needRun($time)
+    {
+        if ($time - CrontabParse::parse($this->getTime(), $time) == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public function info()
+    {
+        return array(
+            'name' => $this->name,
+            'cmd' => $this->cmd,
+            'time' => $this->time,
+            'out' => $this->out,
+            'user' => $this->user,
+            'group' => $this->group,
+        );
     }
 
     /**
@@ -35,7 +91,7 @@ class Mission extends Process
      */
     public function run()
     {
-        $output_file = $this->task->getOut();
+        $output_file = $this->out;
 
         $this->setUserAndGroup();
 
@@ -50,7 +106,7 @@ class Mission extends Process
             throw new \RuntimeException("output file is not writable");
         }
 
-        $cmd = $this->task->getCmd(). ' >> ' . $output_file;
+        $cmd = $this->cmd. ' >> ' . $output_file;
         echo $cmd . PHP_EOL;
         exec($cmd, $output, $status);
 
@@ -62,15 +118,15 @@ class Mission extends Process
      */
     protected function setUserAndGroup()
     {
-        if (!is_null($this->task->getUser())) {
-            if (!is_null($this->task->getGroup())) {
-                $group_info = posix_getgrnam($this->task->getGroup());
+        if (!is_null($this->user)) {
+            if (!is_null($this->group)) {
+                $group_info = posix_getgrnam($this->user);
                 $group_id = $group_info['gid'];
                 if (!posix_setgid($group_id)) {
                     throw new \RuntimeException("set group failed");
                 }
             }
-            $user_info = posix_getpwnam($this->task->getUser());
+            $user_info = posix_getpwnam($this->user);
             $user_id = $user_info["uid"];
             if (!posix_setuid($user_id)) {
                 throw new \RuntimeException("set user failed");
