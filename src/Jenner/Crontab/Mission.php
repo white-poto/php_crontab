@@ -18,13 +18,39 @@ class Mission extends Process
      */
     const DEFAULT_FILE = '/dev/null';
 
+    /**
+     * @var null
+     */
     protected $name;
+    /**
+     * @var
+     */
     protected $cmd;
+    /**
+     * @var
+     */
     protected $time;
+    /**
+     * @var null
+     */
     protected $out;
+    /**
+     * @var null
+     */
     protected $user;
+    /**
+     * @var null
+     */
     protected $group;
 
+    /**
+     * @param null $name
+     * @param $cmd
+     * @param $time
+     * @param null $out
+     * @param null $user
+     * @param null $group
+     */
     public function __construct($name, $cmd, $time, $out = null, $user = null, $group = null)
     {
         parent::__construct();
@@ -36,36 +62,58 @@ class Mission extends Process
         $this->group = $group;
     }
 
+    /**
+     * @return null
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCmd()
     {
         return $this->cmd;
     }
 
+    /**
+     * @return mixed
+     */
     public function getTime()
     {
         return $this->time;
     }
 
+    /**
+     * @return null
+     */
     public function getOut()
     {
         return $this->out;
     }
 
+    /**
+     * @return null
+     */
     public function getUser()
     {
         return $this->user;
     }
 
+    /**
+     * @return null
+     */
     public function getGroup()
     {
         return $this->group;
     }
 
+    /**
+     * @param $time
+     * @return bool
+     */
     public function needRun($time)
     {
         if ($time - CrontabParse::parse($this->getTime(), $time) == 0) {
@@ -74,6 +122,9 @@ class Mission extends Process
         return false;
     }
 
+    /**
+     * @return array
+     */
     public function info()
     {
         return array(
@@ -95,19 +146,18 @@ class Mission extends Process
 
         $this->setUserAndGroup();
 
-        if(!file_exists($output_file)){
+        if (!file_exists($output_file)) {
             $create_file = touch($output_file);
-            if($create_file === false){
+            if ($create_file === false) {
                 $message = "can not create output file";
                 throw new \RuntimeException($message);
             }
         }
-        if(!is_writable($output_file)){
+        if (!is_writable($output_file)) {
             throw new \RuntimeException("output file is not writable");
         }
 
-        $cmd = $this->cmd. ' >> ' . $output_file;
-        echo $cmd . PHP_EOL;
+        $cmd = $this->cmd . ' >> ' . $output_file;
         exec($cmd, $output, $status);
 
         exit($status);

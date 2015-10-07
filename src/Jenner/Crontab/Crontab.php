@@ -30,6 +30,10 @@ class Crontab
      */
     protected $start_time;
 
+    /**
+     * @param LoggerInterface|null $logger
+     * @param null $missions
+     */
     public function __construct(LoggerInterface $logger = null, $missions = null)
     {
         set_time_limit(0);
@@ -43,14 +47,20 @@ class Crontab
         $this->batchAddMissions($missions);
     }
 
+    /**
+     * @param Mission $mission
+     */
     public function addMission(Mission $mission)
     {
         array_push($this->missions, $mission);
     }
 
+    /**
+     * @param $missions
+     */
     public function batchAddMissions($missions)
     {
-        foreach($missions as $mission){
+        foreach ($missions as $mission) {
             $this->addMission($mission);
         }
     }
@@ -68,7 +78,7 @@ class Crontab
             $pool = new Pool();
 
             foreach ($this->missions as $mission) {
-                if(!$mission->needRun($time)) continue;
+                if (!$mission->needRun($time)) continue;
 
                 try {
                     $mission->start();
@@ -88,6 +98,9 @@ class Crontab
     }
 
 
+    /**
+     * @param \Exception $e
+     */
     protected function logException(\Exception $e)
     {
         $message = "Exception. message:" . $e->getMessage() .

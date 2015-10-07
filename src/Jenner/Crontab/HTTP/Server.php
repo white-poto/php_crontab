@@ -57,7 +57,7 @@ class Server
         $http = new \React\Http\Server($socket);
         $http->on('request', function (Request $request, Response $response) {
             $path = trim($request->getPath(), '/');
-            if(!array_key_exists($path, $this->routes)){
+            if (!array_key_exists($path, $this->routes)) {
                 $this->response($response, 0, "method not found", 101);
                 return null;
             }
@@ -77,8 +77,8 @@ class Server
     protected function add($params, Response $response)
     {
         $must = array('name', 'cmd', 'time');
-        foreach($must as $key){
-            if(!array_key_exists($key, $params)){
+        foreach ($must as $key) {
+            if (!array_key_exists($key, $params)) {
                 $this->response($response, 0, "missing param `{$key}`");
                 return;
             }
@@ -94,7 +94,7 @@ class Server
      */
     protected function getByName($params, Response $response)
     {
-        if(!array_key_exists('name', $params)){
+        if (!array_key_exists('name', $params)) {
             $this->response($response, 0, "missing param `name`");
             return;
         }
@@ -115,7 +115,7 @@ class Server
      */
     protected function removeByName($params, Response $response)
     {
-        if(!array_key_exists('name', $params)){
+        if (!array_key_exists('name', $params)) {
             $this->response($response, 0, "missing param name");
             return;
         }

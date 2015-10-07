@@ -52,11 +52,18 @@ class HttpDaemon extends Daemon
         $loop->run();
     }
 
+    /**
+     * @param $task
+     */
     public function add($task)
     {
         $this->tasks[$task['name']] = $task;
     }
 
+    /**
+     * @param $name
+     * @return bool
+     */
     public function getByName($name)
     {
         if (array_key_exists($name, $this->tasks)) {
@@ -66,17 +73,26 @@ class HttpDaemon extends Daemon
         return false;
     }
 
+    /**
+     * @param $name
+     */
     public function removeByName($name)
     {
         unset($this->tasks[$name]);
     }
 
+    /**
+     *
+     */
     public function clear()
     {
         unset($this->tasks);
         $this->tasks = array();
     }
 
+    /**
+     * @return array
+     */
     public function get()
     {
         return $this->tasks;
