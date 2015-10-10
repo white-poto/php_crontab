@@ -30,5 +30,5 @@ $missions = [
     ],
 ];
 
-$http_daemon = new \Jenner\Crontab\HttpDaemon($missions);
+$http_daemon = new \Jenner\Crontab\HttpDaemon($missions, "php_crontab.log");
 $http_daemon->start();

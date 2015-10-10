@@ -19,15 +19,6 @@ hard for fresh man to understand what is it.
 + Different task of users must written in different files.
 Based on the above reasons, we need a crontab manager which can manage crontab tasks together and configure the tasks.
 
-
-Properties
------------
-+ The crontab tasks can be stored in any way you what. For example, mysql, reids. 
-What's more? You can develop a web application to manage them.
-+ Logs of the crontab tasks can be configured as you want.
-+ The tasks of different users can be managed together.
-
-
 How to use it?
 ---------------
 There is two ways to use php_crontab to manage you crontab tasks. 
@@ -38,11 +29,16 @@ It will check the tasks every minute. For example `tests/daemon.php`
 
 Properties
 -----------
++ The crontab tasks can be stored in any way you what. For example, mysql, reids. 
+What's more? You can develop a web application to manage them.
++ Logs of the crontab tasks can be configured as you want.
++ The tasks of different users can be managed together.
 + Multi-Process, every task is a process.
 + You can set the user and group of a crontab task
 + You can set more than one time configs to one crontab task.
 + STDOUT can be redirected
 + Based on libev, it can run as a daemon.
++ A HTTP server which you can manage the crontab task through it.
 
 TODO
 -------------
@@ -105,9 +101,38 @@ $crontab_config = [
 
 $daemon = new \Jenner\Zebra\Crontab\Daemon($crontab_config, "logfile.log");
 $daemon->start();
+
+**run as aa daemon and start the http server**
+```php
+error_reporting(E_ALL);
+
+$hello_command = "echo \"hello \";";
+$world_command = "sleep(1); echo \"world\";";
+
+$missions = [
+    [
+        'name' => 'hello',
+        'cmd' => "php -r '{$hello_command}'",
+        'out' => '/tmp/php_crontab.log',
+        'time' => '* * * * *',
+    ],
+    [
+        'name' => 'world',
+        'cmd' => "php -r '{$world_command}'",
+        'out' => '/tmp/php_crontab.log',
+        'time' => '* * * * *',
+    ],
+];
+
+$http_daemon = new \Jenner\Crontab\HttpDaemon($missions, "php_crontab.log");
+$http_daemon->start($port = 6364);
 ```
-
-
+Then you can manage the crontab task by curl like:
+```shell
+curl http://127.0.0.1:6364/get_by_name?name=hello
+curl http://127.0.0.1:6364/remove_by_name?name=hello
+curl http://127.0.0.1:6364/missions
+```
 
 [blog:www.huyanping.cn](http://www.huyanping.cn/ "程序猿始终不够")
 
