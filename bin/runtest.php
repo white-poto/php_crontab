@@ -1,4 +1,3 @@
-#!/usr/local/webserver/php/bin/php
 <?php
 /**
  * Created by PhpStorm.
@@ -10,5 +9,4 @@
 require_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . "TestSuite.php");
 require_once(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . "MissionTest.php");
 
-TestSuite::run("InterfaceTest");
-TestSuite::run("ProcessTest");
+TestSuite::run("MissionTest");
