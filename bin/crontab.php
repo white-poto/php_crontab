@@ -111,7 +111,8 @@ GLOB_MARK;
             $pid = file_get_contents($this->pid_file);
             if ($pid != getmypid()) {
                 $message = "the pid file is exists. " .
-                    "so maybe the crontab is already running. PID:" . $pid;
+                    "so maybe the crontab is already running. PID:" . $pid .
+                    ". pid file:" . $this->pid_file . PHP_EOL;
                 throw new RuntimeException($message);
             }
         } else {
