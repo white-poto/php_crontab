@@ -47,11 +47,13 @@ class Crontab
 
     protected function help(){
         echo <<<GLOB_MARK
+php_crontab help:
 -c  --config    crontab missions config file
 -p  --port      http server port
 -f  --pid-file  daemon pid file
 -l  --log       crontab log file
 GLOB_MARK;
+        echo PHP_EOL;
         exit;
     }
 
