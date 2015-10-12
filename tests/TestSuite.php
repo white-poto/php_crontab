@@ -48,7 +48,7 @@ class TestSuite
         foreach($methods as $method){
             $method_name = $method->getName();
             if(strpos($method_name, 'test') !== 0) continue;
-            call_user_func($obj, $method_name);
+            call_user_func(array($obj, $method_name));
         }
     }
 }
