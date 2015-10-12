@@ -53,7 +53,7 @@ class Crontab
         if (array_key_exists($name, $this->params)) {
             return $this->params[$name];
         }elseif (array_key_exists(rtrim($this->args[$name . ':'], ':'), $this->params)) {
-            return $this->params[$this->args[$name]];
+            return $this->params[rtrim($this->args[$name . ':'], ':')];
         }
 
         return null;
