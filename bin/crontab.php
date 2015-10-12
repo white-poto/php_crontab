@@ -119,6 +119,7 @@ GLOB_MARK;
                 throw new RuntimeException("create pid file failed");
             }
         }
+        echo $this->pid_file . PHP_EOL;
 
         $put = file_put_contents($this->pid_file, getmypid());
         if (!$put) {
