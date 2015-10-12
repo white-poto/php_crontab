@@ -46,7 +46,8 @@ class Server
 
     /**
      * @param $loop
-     * @param $missions
+     * @param HttpDaemon $daemon
+     * @param TimerInterface $crontab_timer
      */
     public function __construct($loop, HttpDaemon $daemon, TimerInterface $crontab_timer)
     {
