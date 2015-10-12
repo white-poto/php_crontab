@@ -61,6 +61,9 @@ GLOB_MARK;
     public function start()
     {
         $this->init();
+        if($this->argExists('help') || empty($this->params)){
+            $this->help();
+        }
         $this->checkPidFile();
         $this->daemon = $this->factory();
         $this->daemon->start();
