@@ -9,8 +9,14 @@
 
 require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$crontab = new Crontab();
-$crontab->start();
+try{
+    $crontab = new Crontab();
+    $crontab->start();
+}catch (Exception $e){
+    echo "Exception:" . $e->getMessage() . PHP_EOL;
+    echo $e->getTraceAsString() . PHP_EOL;
+}
+
 
 class Crontab
 {
