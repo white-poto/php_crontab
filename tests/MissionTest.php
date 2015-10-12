@@ -31,8 +31,11 @@ class MissionTest extends TestSuite
 
     public function testRun()
     {
+        echo "prepare" . PHP_EOL;
         $this->mission->run();
+        echo "run" . PHP_EOL;
         $this->mission->wait();
+        echo "wait" . PHP_EOL;
         $this->assertEquals($this->mission->exitCode(), 0);
         $out = file_get_contents("/tmp/mission_test.log");
         exec("ls / -al", $except);
