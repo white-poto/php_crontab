@@ -31,9 +31,8 @@ class MissionTest extends PHPUnit_Framework_TestCase
         $this->mission->wait();
         echo "wait" . PHP_EOL;
         $this->assertEquals($this->mission->exitCode(), 0);
-        $out = file_get_contents("/tmp/mission_test.log");
+        $out = file("/tmp/mission_test.log");
         exec("ls / -al", $except);
-        print_r($except);
         $this->assertEquals($out, $except);
     }
 }
