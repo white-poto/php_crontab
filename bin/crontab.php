@@ -32,6 +32,9 @@ class Crontab
     {
         $this->params = getopt(implode('', array_values($this->args)), array_keys($this->args));
         print_r($this->params);
+
+        var_dump($this->argExists('h'));
+        var_dump($this->arg('port'));
     }
 
     protected function argExists($name){
