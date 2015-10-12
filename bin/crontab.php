@@ -20,6 +20,6 @@ class Crontab {
 
     public function start(){
         $params = getopt(implode('', array_keys($this->args)), $this->args);
-
+        print_r($params);
     }
 }
