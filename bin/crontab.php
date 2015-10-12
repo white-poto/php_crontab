@@ -166,7 +166,6 @@ GLOB_MARK;
      */
     protected function arg($name)
     {
-        echo rtrim($this->args[$name . ':'], ':') . PHP_EOL;
         if (array_key_exists($name, $this->params)) {
             return $this->params[$name];
         } elseif (array_key_exists(rtrim($this->args[$name . ':'], ':'), $this->params)) {
