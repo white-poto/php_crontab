@@ -27,7 +27,7 @@ class MissionTest extends PHPUnit_Framework_TestCase
         if(file_exists("/tmp/mission_test.log")){
             unlink("/tmp/mission_test.log");
         }
-        $this->mission = new \Jenner\Crontab\Mission("mission_test", "ls / -al", "* * * * *", "/tmp/mission_test.log");
+        $this->mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "* * * * *", "/tmp/mission_test.log");
         echo "prepare" . PHP_EOL;
         $this->mission->start();
         echo "run" . PHP_EOL;
@@ -35,7 +35,7 @@ class MissionTest extends PHPUnit_Framework_TestCase
         echo "wait" . PHP_EOL;
         $this->assertEquals($this->mission->exitCode(), 0);
         $out = file_get_contents("/tmp/mission_test.log");
-        $except = shell_exec("ls / -al");
+        $except = shell_exec("ls /");
         $this->assertEquals($out, $except);
     }
 }
