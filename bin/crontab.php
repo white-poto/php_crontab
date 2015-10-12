@@ -61,9 +61,6 @@ GLOB_MARK;
     public function start()
     {
         $this->init();
-        if($this->argExists('help') || empty($this->params)){
-            $this->help();
-        }
         $this->checkPidFile();
         $this->daemon = $this->factory();
         $this->daemon->start();
@@ -98,6 +95,10 @@ GLOB_MARK;
     protected function init()
     {
         $this->params = getopt(implode('', array_values($this->args)), array_keys($this->args));
+
+        if($this->argExists('help') || empty($this->params)){
+            $this->help();
+        }
 
         if (!$this->argExists('config')) {
             throw new Exception("the config arg is required");
