@@ -34,7 +34,7 @@ class Crontab
 
     protected $port;
 
-    protected $pid_file;
+    protected $pid_file = '/tmp/php_crontab.pid';
 
     protected $log;
 
@@ -175,5 +175,11 @@ GLOB_MARK;
         }
 
         return null;
+    }
+
+    public function __destruct(){
+        if(file_exists($this->pid_file)){
+            @unlink($this->pid_file);
+        }
     }
 }
