@@ -24,17 +24,15 @@ class MissionTest extends PHPUnit_Framework_TestCase
 
     public function testRun()
     {
-        if(file_exists("/tmp/mission_test.log")){
-            unlink("/tmp/mission_test.log");
+        $log_file = "/tmp/mission_test.log";
+        if(file_exists($log_file)){
+            unlink($log_file);
         }
-        $this->mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "* * * * *", "/tmp/mission_test.log");
-        echo "prepare" . PHP_EOL;
+        $this->mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "* * * * *", $log_file);
         $this->mission->start();
-        echo "run" . PHP_EOL;
         $this->mission->wait();
-        echo "wait" . PHP_EOL;
         $this->assertEquals($this->mission->exitCode(), 0);
-        $out = file_get_contents("/tmp/mission_test.log");
+        $out = file_get_contents($log_file);
         $except = shell_exec("ls /");
         $this->assertEquals($out, $except);
     }
