@@ -104,6 +104,7 @@ GLOB_MARK;
      */
     protected function checkPidFile()
     {
+        register_shutdown_function(array($this, '__destruct'));
         if (file_exists($this->pid_file)) {
             if (!is_readable($this->pid_file) || !is_writable($this->pid_file)) {
                 throw new RuntimeException("the pid file is not readable or writable");
@@ -163,8 +164,6 @@ GLOB_MARK;
         if ($this->argExists('log')) {
             $this->log = $this->arg('log');
         }
-
-        register_shutdown_function(array($this, '__destruct'));
     }
 
     /**
