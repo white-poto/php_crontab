@@ -31,7 +31,9 @@ class MissionTest extends PHPUnit_Framework_TestCase
 
     public function testRun()
     {
+        define('TEST_MODE', false);
         $this->mission->run();
+        define('TEST_MODE', true);
         $this->mission->wait();
         $this->assertEquals($this->mission->exitCode(), 0);
         $out = file_get_contents("/tmp/mission_test.log");
