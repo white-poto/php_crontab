@@ -1,4 +1,4 @@
-#!php
+#!/usr/local/webserver/php/bin/php
 <?php
 /**
  * Created by PhpStorm.
