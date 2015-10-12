@@ -45,6 +45,16 @@ class Crontab
         'log:' => 'l:',
     );
 
+    protected function help(){
+        echo <<<GLOB_MARK
+-c  --config    crontab missions config file
+-p  --port      http server port
+-f  --pid-file  daemon pid file
+-l  --log       crontab log file
+GLOB_MARK;
+        exit;
+    }
+
     /**
      *
      */
