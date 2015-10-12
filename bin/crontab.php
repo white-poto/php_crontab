@@ -103,7 +103,6 @@ GLOB_MARK;
      */
     protected function checkPidFile()
     {
-        if (empty($this->pid_file)) return true;
         if (file_exists($this->pid_file)) {
             if (!is_readable($this->pid_file) || !is_writable($this->pid_file)) {
                 throw new RuntimeException("the pid file is not readable or writable");
