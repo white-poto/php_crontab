@@ -22,5 +22,20 @@ class MissionTest extends TestSuite
     }
 
 
+    public function testRun()
+    {
+        $this->mission = new \Jenner\Crontab\Mission("mission_test", "ls / -al", "* * * * *", "/tmp/mission_test.log");
+        echo "prepare" . PHP_EOL;
+        $this->mission->run();
+        echo "run" . PHP_EOL;
+        $this->mission->wait();
+        echo "wait" . PHP_EOL;
+        $this->assertEquals($this->mission->exitCode(), 0);
+        $out = file_get_contents("/tmp/mission_test.log");
+        exec("ls / -al", $except);
+        $this->assertEquals($out, $except);
+    }
+
+
 
 }

@@ -9,7 +9,7 @@
 class TestSuite 
 {
 
-    public function assertEqual($except, $compare){
+    public function assertEquals($except, $compare){
         if($except == $compare){
             return ;
         }
