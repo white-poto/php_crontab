@@ -24,6 +24,9 @@ class MissionTest extends PHPUnit_Framework_TestCase
 
     public function testRun()
     {
+        if(file_exists("/tmp/mission_test.log")){
+            unlink("/tmp/mission_test.log");
+        }
         $this->mission = new \Jenner\Crontab\Mission("mission_test", "ls / -al", "* * * * *", "/tmp/mission_test.log");
         echo "prepare" . PHP_EOL;
         $this->mission->start();
