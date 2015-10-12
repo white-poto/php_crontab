@@ -7,7 +7,7 @@
  * Time: 16:12
  */
 
-require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor' . 'autoload.php';
+require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 $crontab = new Crontab();
 $crontab->start();
