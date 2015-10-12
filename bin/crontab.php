@@ -9,10 +9,10 @@
 
 require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-try{
+try {
     $crontab = new Crontab();
     $crontab->start();
-}catch (Exception $e){
+} catch (Exception $e) {
     $crontab->keepPidFile();
     echo "Exception:" . $e->getMessage() . PHP_EOL;
     echo $e->getTraceAsString() . PHP_EOL;
@@ -75,7 +75,8 @@ class Crontab
     /**
      *
      */
-    protected function help(){
+    protected function help()
+    {
         echo <<<GLOB_MARK
 php_crontab help:
 -c  --config    crontab missions config file
@@ -119,10 +120,9 @@ GLOB_MARK;
                 throw new RuntimeException("create pid file failed");
             }
         }
-        echo $this->pid_file . PHP_EOL;
-        echo getmypid()  .PHP_EOL;
 
         $put = file_put_contents($this->pid_file, getmypid());
+        echo file_get_contents($this->pid_file);
         if (!$put) {
             throw new RuntimeException("write pid file failed");
         }
@@ -137,7 +137,7 @@ GLOB_MARK;
     {
         $this->params = getopt(implode('', array_values($this->args)), array_keys($this->args));
 
-        if($this->argExists('help') || empty($this->params)){
+        if ($this->argExists('help') || empty($this->params)) {
             $this->help();
         }
 
@@ -211,15 +211,17 @@ GLOB_MARK;
     /**
      *
      */
-    public function keepPidFile(){
+    public function keepPidFile()
+    {
         $this->keep_pid_file = true;
     }
 
     /**
      *
      */
-    public function __destruct(){
-        if(file_exists($this->pid_file) && !$this->keep_pid_file){
+    public function __destruct()
+    {
+        if (file_exists($this->pid_file) && !$this->keep_pid_file) {
             @unlink($this->pid_file);
         }
     }
