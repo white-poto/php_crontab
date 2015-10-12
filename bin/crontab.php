@@ -120,6 +120,7 @@ GLOB_MARK;
             }
         }
         echo $this->pid_file . PHP_EOL;
+        echo getmypid()  .PHP_EOL;
 
         $put = file_put_contents($this->pid_file, getmypid());
         if (!$put) {
