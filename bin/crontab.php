@@ -44,7 +44,7 @@ class Crontab
     /**
      * @var string pid file
      */
-    protected $pid_file = '/var/php_crontab.pid';
+    protected $pid_file = './php_crontab.pid';
 
     /**
      * @var string crontab log
