@@ -36,6 +36,8 @@ class MissionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->mission->exitCode(), 0);
         $out = file("/tmp/mission_test.log");
         exec("ls / -al", $except);
+        print_r($except);
+        print_r($out);
         $this->assertEquals($out, $except);
     }
 }
