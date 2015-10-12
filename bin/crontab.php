@@ -83,7 +83,9 @@ GLOB_MARK;
             }
             $pid = file_get_contents($this->pid_file);
             if ($pid != getmypid()) {
-                throw new RuntimeException("the crontab is already running. pid:" . $pid);
+                $message = "the pid file is exists. " .
+                    "so maybe the crontab is already running. PID:" . $pid;
+                throw new RuntimeException($message);
             }
         } else {
             $touch = touch($this->pid_file);
