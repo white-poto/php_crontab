@@ -32,7 +32,7 @@ class Crontab
 
     /**
      * @param LoggerInterface|null $logger
-     * @param null $missions
+     * @param Mission[]|null $missions
      */
     public function __construct(LoggerInterface $logger = null, $missions = null)
     {
