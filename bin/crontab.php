@@ -163,6 +163,8 @@ GLOB_MARK;
         if ($this->argExists('log')) {
             $this->log = $this->arg('log');
         }
+
+        register_shutdown_function(array($this, '__destruct'));
     }
 
     /**
@@ -225,4 +227,6 @@ GLOB_MARK;
             @unlink($this->pid_file);
         }
     }
+
+
 }
