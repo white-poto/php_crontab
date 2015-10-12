@@ -12,17 +12,46 @@ require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_
 $crontab = new Crontab();
 $crontab->start();
 
-class Crontab {
+class Crontab
+{
+
+    /**
+     * @var array
+     */
+    protected $params;
+
     protected $args = array(
-        'h' => 'help',
-        'c:' => 'config:',
-        'p:' => 'port:',
-        'f:' => 'pid-file:',
-        'l:' => 'log:',
+        'help' => 'h',
+        'config:' => 'c:',
+        'port:' => 'p:',
+        'pid-file:' => 'f:',
+        'log:' => 'l:',
     );
 
-    public function start(){
-        $params = getopt(implode('', array_keys($this->args)), $this->args);
-        print_r($params);
+    public function start()
+    {
+        $this->params = getopt(implode('', array_values($this->args)), array_keys($this->args));
+        print_r($this->params);
+    }
+
+    protected function argExists($name){
+        if (array_key_exists($name, $this->params)) {
+            return true;
+        } elseif (array_key_exists($this->args[$name], $this->params)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function arg($name)
+    {
+        if (array_key_exists($name, $this->params)) {
+            return $this->params[$name];
+        }elseif (array_key_exists(rtrim($this->args[$name . ':'], ':'), $this->params)) {
+            return $this->params[$this->args[$name]];
+        }
+
+        return null;
     }
 }
