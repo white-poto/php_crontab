@@ -104,7 +104,8 @@ GLOB_MARK;
      */
     protected function checkPidFile()
     {
-        register_shutdown_function(array($this, '__destruct'));
+        register_shutdown_function(array($this, 'deletePidFile'));
+
         if (file_exists($this->pid_file)) {
             if (!is_readable($this->pid_file) || !is_writable($this->pid_file)) {
                 throw new RuntimeException("the pid file is not readable or writable");
@@ -217,14 +218,19 @@ GLOB_MARK;
         $this->keep_pid_file = true;
     }
 
+    public function deletePidFile()
+    {
+        if (file_exists($this->pid_file) && !$this->keep_pid_file) {
+            @unlink($this->pid_file);
+        }
+    }
+
     /**
      *
      */
     public function __destruct()
     {
-        if (file_exists($this->pid_file) && !$this->keep_pid_file) {
-            @unlink($this->pid_file);
-        }
+        $this->deletePidFile();
     }
 
 
