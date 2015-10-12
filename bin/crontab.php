@@ -9,6 +9,9 @@
 
 require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor' . 'autoload.php';
 
+$crontab = new Crontab();
+$crontab->start();
+
 class Crontab {
     protected $args = array(
         'h' => 'help',
