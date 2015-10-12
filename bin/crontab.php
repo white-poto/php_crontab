@@ -30,18 +30,33 @@ class Crontab
      */
     protected $params;
 
+    /**
+     * @var string crontab missions config file
+     */
     protected $config_file;
 
+    /**
+     * @var int http server port
+     */
     protected $port;
 
+    /**
+     * @var string pid file
+     */
     protected $pid_file = '/tmp/php_crontab.pid';
 
+    /**
+     * @var string crontab log
+     */
     protected $log;
 
+    /**
+     * @var array missions
+     */
     protected $missions;
 
     /**
-     * @var array
+     * @var array console args
      */
     protected $args = array(
         'help' => 'h',
@@ -51,6 +66,9 @@ class Crontab
         'log:' => 'l:',
     );
 
+    /**
+     *
+     */
     protected function help(){
         echo <<<GLOB_MARK
 php_crontab help:
@@ -74,6 +92,9 @@ GLOB_MARK;
         $this->daemon->start();
     }
 
+    /**
+     * @return bool
+     */
     protected function checkPidFile()
     {
         if (empty($this->pid_file)) return true;
@@ -102,6 +123,9 @@ GLOB_MARK;
         return true;
     }
 
+    /**
+     * @throws Exception
+     */
     protected function init()
     {
         $this->params = getopt(implode('', array_values($this->args)), array_keys($this->args));
@@ -177,6 +201,9 @@ GLOB_MARK;
         return null;
     }
 
+    /**
+     *
+     */
     public function __destruct(){
         if(file_exists($this->pid_file)){
             @unlink($this->pid_file);
