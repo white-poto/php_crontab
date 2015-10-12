@@ -6,8 +6,8 @@
  * Date: 2015/10/12
  * Time: 9:28
  */
-error_reporting(E_ALL);
-class MissionTest extends PHPUnit_Framework_TestCase
+
+class MissionTest extends TestSuite
 {
     /**
      * @var \Jenner\Crontab\Mission
@@ -31,9 +31,7 @@ class MissionTest extends PHPUnit_Framework_TestCase
 
     public function testRun()
     {
-        define('TEST_MODE', false);
         $this->mission->run();
-        define('TEST_MODE', true);
         $this->mission->wait();
         $this->assertEquals($this->mission->exitCode(), 0);
         $out = file_get_contents("/tmp/mission_test.log");
