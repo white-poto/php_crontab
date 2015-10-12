@@ -13,6 +13,7 @@ try{
     $crontab = new Crontab();
     $crontab->start();
 }catch (Exception $e){
+    $crontab->keepPidFile();
     echo "Exception:" . $e->getMessage() . PHP_EOL;
     echo $e->getTraceAsString() . PHP_EOL;
 }
