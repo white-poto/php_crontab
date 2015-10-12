@@ -17,7 +17,7 @@ class Crontab {
         'h' => 'help',
         'c:' => 'config:',
         'p:' => 'port:',
-        'pf:' => 'pid-file:',
+        'f:' => 'pid-file:',
         'l:' => 'log:',
     );
 
