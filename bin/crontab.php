@@ -56,6 +56,11 @@ class Crontab
     protected $missions;
 
     /**
+     * @var bool delete pid file or not
+     */
+    protected $keep_pid_file = false;
+
+    /**
      * @var array console args
      */
     protected $args = array(
@@ -204,8 +209,15 @@ GLOB_MARK;
     /**
      *
      */
+    public function keepPidFile(){
+        $this->keep_pid_file = true;
+    }
+
+    /**
+     *
+     */
     public function __destruct(){
-        if(file_exists($this->pid_file)){
+        if(file_exists($this->pid_file) && !$this->keep_pid_file){
             @unlink($this->pid_file);
         }
     }
