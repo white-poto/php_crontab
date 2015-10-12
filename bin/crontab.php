@@ -44,7 +44,7 @@ class Crontab
     /**
      * @var string pid file
      */
-    protected $pid_file = '/tmp/php_crontab.pid';
+    protected $pid_file = '/var/php_crontab.pid';
 
     /**
      * @var string crontab log
@@ -122,7 +122,6 @@ GLOB_MARK;
         }
 
         $put = file_put_contents($this->pid_file, getmypid());
-        echo file_get_contents($this->pid_file);
         if (!$put) {
             throw new RuntimeException("write pid file failed");
         }
