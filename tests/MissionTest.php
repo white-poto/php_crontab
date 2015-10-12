@@ -6,7 +6,7 @@
  * Date: 2015/10/12
  * Time: 14:52
  */
-class MissionTest extends TestSuite
+class MissionTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var \Jenner\Crontab\Mission
@@ -26,7 +26,7 @@ class MissionTest extends TestSuite
     {
         $this->mission = new \Jenner\Crontab\Mission("mission_test", "ls / -al", "* * * * *", "/tmp/mission_test.log");
         echo "prepare" . PHP_EOL;
-        $this->mission->run();
+        $this->mission->start();
         echo "run" . PHP_EOL;
         $this->mission->wait();
         echo "wait" . PHP_EOL;
