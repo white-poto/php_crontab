@@ -6,6 +6,7 @@
  * Date: 2015/10/12
  * Time: 9:28
  */
+error_reporting(E_ALL);
 class MissionTest extends PHPUnit_Framework_TestCase
 {
     /**
