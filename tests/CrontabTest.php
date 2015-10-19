@@ -23,14 +23,15 @@ class CrontabTest extends PHPUnit_Framework_TestCase
      */
     protected $log_file = "/tmp/mission_test.log";
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "* * * * *", $this->log_file);
         $this->crontab = new \Jenner\Crontab\Crontab(null, array($this->mission));
     }
 
     public function testStart()
     {
-        if(file_exists($this->log_file)){
+        if (file_exists($this->log_file)) {
             unlink($this->log_file);
         }
 
