@@ -68,74 +68,75 @@ http://host:port/stop
 ```
 ```php
 <?php
-$crontab_config = [
-    'test_1' => [
-        'name' => 'test_1', //task name
-        'cmd' => 'php -v', // cli command
-        'output' => '/tmp/test.log', // output file
-        'time' => '* * * * *', //time config
-        'user_name' => 'www', //user
-        'group_name' => 'group_name', // group
+$missions = [
+    [
+        'name' => 'ls',
+        'cmd' => "ls -al",
+        'out' => '/tmp/php_crontab.log',
+        'time' => '* * * * *',
+        'user' => 'www',
+        'group' => 'www'
     ],
-    'single_test' => [
-        'name' => 'php -i',
-        'cmd' => 'php -i',
-        'output' => '/tmp/single_script.log',
-        'time' => [
-            '* * * * *',
-            '* * * * *',
-        ],
+    'mission_ls' => [
+        'name' => 'hostname',
+        'cmd' => "hostname",
+        'out' => '/tmp/php_crontab.log',
+        'time' => '* * * * *',
     ],
 ];
+$logger = new \Monolog\Logger("php_crontab");
+$logger->pushHandler(new \Monolog\Handler\StreamHandler("/tmp/php_crontab.log"));
 
-$time = time();
-$crontab_server = new \Jenner\Zebra\Crontab\Crontab($crontab_config);
-$crontab_server->start($time);
+$tasks = array();
+foreach($missions as $mission){
+    $tasks[] = new \Jenner\Crontab\Mission(
+            $mission['name'],
+            $mission['cmd'],
+            $mission['time'],
+            $mission['out']
+        );
+}
+
+$crontab_server = new \Jenner\Crontab\Crontab($logger, $tasks);
+$crontab_server->start(time());
 ```
 **run as a daemon**
 
 it will check the task configs every minute.
 ```php
-$crontab_config = [
-    'test_1' => [
-        'name' => 'test_1',
-        'cmd' => 'php -r "echo "11111" . PHP_EOL;sleep(60);"',
-        'output' => '/www/test.log',
+$missions = [
+    [
+        'name' => 'ls',
+        'cmd' => "ls -al",
+        'out' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
-        'user_name' => 'www',
-        'group_name' => 'www'
+        'user' => 'www',
+        'group' => 'www'
     ],
-    'single_test' => [
-        'name' => 'php -i',
-        'cmd' => 'php -i',
-        'output' => '/tmp/single_script.log',
-        'time' => [
-            '* * * * *',
-            '* * * * *',
-        ],
+    'mission_ls' => [
+        'name' => 'hostname',
+        'cmd' => "hostname",
+        'out' => '/tmp/php_crontab.log',
+        'time' =>  '* * * * *',
     ],
 ];
 
-$daemon = new \Jenner\Zebra\Crontab\Daemon($crontab_config, "logfile.log");
+$daemon = new \Jenner\Crontab\Daemon($missions);
 $daemon->start();
+```
 
 **run as aa daemon and start the http server**
 ```php
-error_reporting(E_ALL);
-
-$hello_command = "echo \"hello \";";
-$world_command = "sleep(1); echo \"world\";";
-
 $missions = [
     [
-        'name' => 'hello',
-        'cmd' => "php -r '{$hello_command}'",
+        'name' => 'ls',
+        'cmd' => "ls -al",
         'out' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
     ],
     [
-        'name' => 'world',
-        'cmd' => "php -r '{$world_command}'",
+        'name' => 'hostname',
+        'cmd' => "hostname",
         'out' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
     ],
@@ -148,7 +149,7 @@ Then you can manage the crontab task by curl like:
 ```shell
 curl http://127.0.0.1:6364/get_by_name?name=hello
 curl http://127.0.0.1:6364/remove_by_name?name=hello
-curl http://127.0.0.1:6364/missions
+curl http://127.0.0.1:6364/get
 ```
 
 **run the script**
