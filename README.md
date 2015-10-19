@@ -134,6 +134,17 @@ curl http://127.0.0.1:6364/remove_by_name?name=hello
 curl http://127.0.0.1:6364/missions
 ```
 
+**run the script**
+```shell
+[root@jenner php_crontab]# ./bin/php_crontab 
+php_crontab help:
+-c  --config    crontab tasks config file
+-p  --port      http server port
+-f  --pid-file  daemon pid file
+-l  --log       crontab log file
+[root@jenner php_crontab]#nohup ./bin/php_crontab -c xxoo.php -p 8080 -f /var/php_crontab.pid -l /var/logs/php_crontab.log >/dev/null & 
+```
+
 [blog:www.huyanping.cn](http://www.huyanping.cn/ "程序猿始终不够")
 
 

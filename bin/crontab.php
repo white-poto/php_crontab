@@ -79,7 +79,7 @@ class Crontab
     {
         echo <<<GLOB_MARK
 php_crontab help:
--c  --config    crontab missions config file
+-c  --config    crontab tasks config file
 -p  --port      http server port
 -f  --pid-file  daemon pid file
 -l  --log       crontab log file
