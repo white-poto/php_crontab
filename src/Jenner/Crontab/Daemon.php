@@ -14,6 +14,9 @@ use React\EventLoop\Factory;
 
 class Daemon extends AbstractDaemon
 {
+    /**
+     * default daemon log file
+     */
     const LOG_FILE = '/var/log/php_crontab.log';
 
     /**

@@ -56,7 +56,7 @@ class Crontab
     }
 
     /**
-     * @param $missions
+     * @param array $missions
      */
     public function batchAddMissions($missions)
     {
@@ -66,7 +66,7 @@ class Crontab
     }
 
     /**
-     * @param $time integer start time
+     * @param integer $time start time
      */
     public function start($time = null)
     {

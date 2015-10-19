@@ -22,7 +22,7 @@ class Server
     protected $loop;
 
     /**
-     * @var
+     * @var HttpDaemon
      */
     protected $daemon;
 

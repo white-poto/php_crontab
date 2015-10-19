@@ -19,43 +19,43 @@ class Mission extends Process
     const DEFAULT_FILE = '/dev/null';
 
     /**
-     * @var null
+     * @var string mission name
      */
     protected $name;
     /**
-     * @var
+     * @var string cli command
      */
     protected $cmd;
     /**
-     * @var
+     * @var string crontab time config
      */
     protected $time;
     /**
-     * @var null
+     * @var string STDOUT file
      */
     protected $out;
     /**
-     * @var null
+     * @var string the user of task process
      */
     protected $user;
     /**
-     * @var null
+     * @var string the user's group of task process
      */
     protected $group;
 
     /**
-     * @var null
+     * @var string comment of crontab task
      */
     protected $comment;
 
     /**
-     * @param null $name
-     * @param $cmd
-     * @param $time
-     * @param null $out
-     * @param null $user
-     * @param null $group
-     * @param null $comment
+     * @param string $name
+     * @param string $cmd
+     * @param string $time
+     * @param string|null $out
+     * @param string|null $user
+     * @param string|null $group
+     * @param string|null $comment
      */
     public function __construct(
         $name,
@@ -78,7 +78,7 @@ class Mission extends Process
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getName()
     {
@@ -86,7 +86,7 @@ class Mission extends Process
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCmd()
     {
@@ -94,7 +94,7 @@ class Mission extends Process
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getTime()
     {
@@ -102,7 +102,7 @@ class Mission extends Process
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getOut()
     {
@@ -110,7 +110,7 @@ class Mission extends Process
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getUser()
     {
@@ -118,7 +118,7 @@ class Mission extends Process
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getGroup()
     {

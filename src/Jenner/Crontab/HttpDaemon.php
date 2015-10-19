@@ -12,10 +12,21 @@ use React\EventLoop\Factory;
 
 class HttpDaemon extends Daemon
 {
+    /**
+     * default daemon log file
+     */
     const LOG_FILE = '/var/log/php_crontab.log';
 
+    /**
+     * @var int http server port
+     */
     protected $port;
 
+    /**
+     * @param array $tasks
+     * @param null|string $logfile
+     * @param int $port
+     */
     public function __construct($tasks, $logfile, $port = 6364)
     {
         parent::__construct($tasks, $logfile);
@@ -43,6 +54,9 @@ class HttpDaemon extends Daemon
         $loop->run();
     }
 
+    /**
+     * start crontab every minute
+     */
     public function crontabCallback()
     {
         $pid = pcntl_fork();
@@ -58,6 +72,9 @@ class HttpDaemon extends Daemon
         }
     }
 
+    /**
+     * recover the sub processes
+     */
     public function processRecoverCallback(){
         while (($pid = pcntl_waitpid(0, $status, WNOHANG)) > 0) {
             $message = "process exit. pid:" . $pid . ". exit code:" . $status;
@@ -66,6 +83,7 @@ class HttpDaemon extends Daemon
     }
 
     /**
+     * add task
      * @param $task
      */
     public function add($task)
@@ -74,6 +92,7 @@ class HttpDaemon extends Daemon
     }
 
     /**
+     * get task by name
      * @param $name
      * @return bool
      */
@@ -87,6 +106,7 @@ class HttpDaemon extends Daemon
     }
 
     /**
+     * remove task by name
      * @param $name
      */
     public function removeByName($name)
@@ -95,7 +115,7 @@ class HttpDaemon extends Daemon
     }
 
     /**
-     *
+     * clear all tasks
      */
     public function clear()
     {
@@ -104,6 +124,7 @@ class HttpDaemon extends Daemon
     }
 
     /**
+     * get all tasks
      * @return array
      */
     public function get()

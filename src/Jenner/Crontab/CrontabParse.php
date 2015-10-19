@@ -112,6 +112,7 @@ class CrontabParse
             }
         }
         ksort($result);
+
         return $result;
     }
 }
