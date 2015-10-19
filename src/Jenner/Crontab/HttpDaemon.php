@@ -75,7 +75,8 @@ class HttpDaemon extends Daemon
     /**
      * recover the sub processes
      */
-    public function processRecoverCallback(){
+    public function processRecoverCallback()
+    {
         while (($pid = pcntl_waitpid(0, $status, WNOHANG)) > 0) {
             $message = "process exit. pid:" . $pid . ". exit code:" . $status;
             $this->logger->info($message);
