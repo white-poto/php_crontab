@@ -15,7 +15,7 @@ If we have many crontab tasks, there will be some problems like:
 + The crontab tasks are managed in a text file. If there are no comment, it will be 
 hard for fresh man to understand what they are.
 + If the crontab tasks are distributed in different servers, it will be hard to manage them.
-+ If you want to collect the crontab tasks' logs, it will not be easy. 
++ If you want to collect the crontab tasks' logs, it will be not easy. 
 + Tasks of different users must written in different files.
 Based on the above reasons, we need a crontab manager which can manage crontab tasks together and configure the tasks.
 
@@ -23,7 +23,7 @@ How to use it?
 ---------------
 There are two ways to use php_crontab to manage you crontab tasks. 
 You can just write a php script and add it to the crontab config file 
-with the command `crontab -e`. The php script should run every minute. For example `tests/simple.php`
+with the command `crontab -e`. The php script should run every minute. For example `tests/simple.php`  
 Or you can write a php daemon script which will run as a service and will not exit until someone kill it.
 It will check the tasks every minute. For example `tests/daemon.php`
 
