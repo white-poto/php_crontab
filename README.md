@@ -40,9 +40,26 @@ What's more? You can develop a web application to manage them.
 + Based on react/event-loop, it can run as a daemon.
 + A HTTP server which you can manage the crontab tasks through it.
 
-TODO
+HTTP interfaces
 -------------
-+ Add http interface to manage the tasks configs.
++ `add` add new task to crontab server
++ `get_by_name` get task by name
++ `remove_by_name` remove task by name
++ `clear` clear all task
++ `get` get all tasks
++ `start` start crontab loop
++ `stop` stop crontab loop
+
+examples:
+```shell
+http://host:port/add?name=name&cmd=cmd&time=time&out=out&user=user&group=group&comment=comment
+http://host:port/get_by_name?name=name
+http://host:port/remove_by_name?name=name
+http://host:port/clear
+http://host:port/get
+http://host:port/start
+http://host:port/stop
+```
 
 
 **run based on crontab service：**

@@ -39,7 +39,7 @@ class Server
         'get_by_name' => 'getByName',
         'remove_by_name' => 'removeByName',
         'clear' => 'clear',
-        'missions' => 'missions',
+        'get' => 'missions',
         'start' => 'begin',
         'stop' => 'stop',
     );
