@@ -4,7 +4,7 @@ php_crontab
 [![Latest Stable Version](http://img.shields.io/packagist/v/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
 [![License](https://img.shields.io/packagist/l/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
 
-php crontab base on pcntl and libev
+php crontab base on pcntl and react/event-loop
 
 [中文说明](https://github.com/huyanping/php_crontab/blob/master/README.zh.md "中文说明")
 
@@ -37,7 +37,7 @@ What's more? You can develop a web application to manage them.
 + You can set the user and group of a crontab task
 + You can set more than one time configs to one crontab task.
 + STDOUT can be redirected
-+ Based on libev, it can run as a daemon.
++ Based on react/event-loop, it can run as a daemon.
 + A HTTP server which you can manage the crontab tasks through it.
 
 TODO
