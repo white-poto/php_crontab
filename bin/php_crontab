@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 PHP_CRONTAB_HOME=$(dirname $(cd "$(dirname "$0")"; pwd))
 cd $PHP_CRONTAB_HOME
-php bin/php_crontab.php $@
+php bin/crontab.php $@
 
