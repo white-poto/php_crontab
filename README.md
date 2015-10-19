@@ -10,21 +10,21 @@ php crontab base on pcntl and libev
 
 Why use php_crontab
 ------------
-When we have a handful of crontab task, crontab service is enough for us to manager them. 
-If we have many crontab task, there will be some problerm like:
-+ The crontab tasks is managed in a text file. If there is no comment, it will be 
-hard for fresh man to understand what is it.
-+ If the crontab task is distributed in different servers, it is hard to manage them.
-+ If you want to collect logs of crontab tasks, it will not be easy. 
-+ Different task of users must written in different files.
+When we have a handful of crontab tasks, crontab service is enough for us to manage them. 
+If we have many crontab tasks, there will be some problems like:
++ The crontab tasks are managed in a text file. If there are no comment, it will be 
+hard for fresh man to understand what they are.
++ If the crontab tasks are distributed in different servers, it will be hard to manage them.
++ If you want to collect the crontab tasks' logs, it will not be easy. 
++ Tasks of different users must written in different files.
 Based on the above reasons, we need a crontab manager which can manage crontab tasks together and configure the tasks.
 
 How to use it?
 ---------------
-There is two ways to use php_crontab to manage you crontab tasks. 
+There are two ways to use php_crontab to manage you crontab tasks. 
 You can just write a php script and add it to the crontab config file 
-with commnad `crontab -e`. The php script should run every minute. For example `tests/simple.php`
-Or you can write a php daemon which will run as a service and will not exit until someone kill it.
+with the command `crontab -e`. The php script should run every minute. For example `tests/simple.php`
+Or you can write a php daemon script which will run as a service and will not exit until someone kill it.
 It will check the tasks every minute. For example `tests/daemon.php`
 
 Properties
@@ -38,7 +38,7 @@ What's more? You can develop a web application to manage them.
 + You can set more than one time configs to one crontab task.
 + STDOUT can be redirected
 + Based on libev, it can run as a daemon.
-+ A HTTP server which you can manage the crontab task through it.
++ A HTTP server which you can manage the crontab tasks through it.
 
 TODO
 -------------
