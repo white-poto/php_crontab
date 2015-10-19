@@ -77,27 +77,20 @@ $missions = [
         'user' => 'www',
         'group' => 'www'
     ],
-    'mission_ls' => [
+    [
         'name' => 'hostname',
         'cmd' => "hostname",
         'out' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
     ],
 ];
-$logger = new \Monolog\Logger("php_crontab");
-$logger->pushHandler(new \Monolog\Handler\StreamHandler("/tmp/php_crontab.log"));
 
 $tasks = array();
 foreach($missions as $mission){
-    $tasks[] = new \Jenner\Crontab\Mission(
-            $mission['name'],
-            $mission['cmd'],
-            $mission['time'],
-            $mission['out']
-        );
+    $tasks[] = new \Jenner\Crontab\Mission($mission['name'], $mission['cmd'], $mission['time'], $mission['out']);
 }
 
-$crontab_server = new \Jenner\Crontab\Crontab($logger, $tasks);
+$crontab_server = new \Jenner\Crontab\Crontab(null, $tasks);
 $crontab_server->start(time());
 ```
 **run as a daemon**
@@ -113,7 +106,7 @@ $missions = [
         'user' => 'www',
         'group' => 'www'
     ],
-    'mission_ls' => [
+    [
         'name' => 'hostname',
         'cmd' => "hostname",
         'out' => '/tmp/php_crontab.log',

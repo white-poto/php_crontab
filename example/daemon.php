@@ -22,7 +22,7 @@ $missions = [
         'user' => 'www',
         'group' => 'www'
     ],
-    'mission_ls' => [
+    [
         'name' => 'hostname',
         'cmd' => "hostname",
         'out' => '/tmp/php_crontab.log',

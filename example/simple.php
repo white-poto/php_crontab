@@ -22,15 +22,14 @@ $missions = [
         'user' => 'www',
         'group' => 'www'
     ],
-    'mission_ls' => [
+    [
         'name' => 'hostname',
         'cmd' => "hostname",
         'out' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
     ],
 ];
-$logger = new \Monolog\Logger("php_crontab");
-$logger->pushHandler(new \Monolog\Handler\StreamHandler("/tmp/php_crontab.log"));
+
 
 $tasks = array();
 foreach($missions as $mission){
@@ -41,6 +40,9 @@ foreach($missions as $mission){
             $mission['out']
         );
 }
+
+$logger = new \Monolog\Logger("php_crontab");
+$logger->pushHandler(new \Monolog\Handler\StreamHandler("/tmp/php_crontab.log"));
 
 $crontab_server = new \Jenner\Crontab\Crontab($logger, $tasks);
 $crontab_server->start(time());
