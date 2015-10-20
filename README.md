@@ -42,7 +42,7 @@ What's more? You can develop a web application to manage them.
 
 HTTP interfaces
 -------------
-HTTP METHOD: GET  
+HTTP METHOD: `GET`  
 + `add` add new task to crontab server
 + `get_by_name` get task by name
 + `remove_by_name` remove task by name
