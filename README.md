@@ -118,7 +118,7 @@ $daemon = new \Jenner\Crontab\Daemon($missions);
 $daemon->start();
 ```
 
-**run as aa daemon and start the http server**
+**run as a daemon and start the http server**
 ```php
 $missions = [
     [
