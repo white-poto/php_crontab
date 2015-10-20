@@ -64,7 +64,7 @@ class Daemon extends AbstractDaemon
         $loop = Factory::create();
 
         // add periodic timer
-        $loop->addPeriodicTimer(1, function () use ($crontab) {
+        $loop->addPeriodicTimer(60, function () use ($crontab) {
             $pid = pcntl_fork();
             if ($pid > 0) {
                 return;
