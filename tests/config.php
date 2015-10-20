@@ -12,8 +12,6 @@ return [
         'cmd' => "ls -al",
         'out' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
-        'user' => 'www',
-        'group' => 'www'
     ],
     [
         'name' => 'hostname',
