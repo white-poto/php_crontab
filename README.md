@@ -141,8 +141,8 @@ $http_daemon->start($port = 6364);
 ```
 Then you can manage the crontab task by curl like:
 ```shell
-curl http://127.0.0.1:6364/get_by_name?name=hello
-curl http://127.0.0.1:6364/remove_by_name?name=hello
+curl http://127.0.0.1:6364/get_by_name?name=ls
+curl http://127.0.0.1:6364/remove_by_name?name=hostname
 curl http://127.0.0.1:6364/get
 ```
 
