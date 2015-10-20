@@ -8,17 +8,17 @@
 
 return [
     [
-        'name' => 'hello',
-        'cmd' => "php -r '{$hello_command}'",
+        'name' => 'ls',
+        'cmd' => "ls -al",
         'out' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
         'user' => 'www',
         'group' => 'www'
     ],
-    'mission_ls' => [
-        'name' => 'world',
-        'cmd' => "php -r '{$world_command}'",
+    [
+        'name' => 'hostname',
+        'cmd' => "hostname",
         'out' => '/tmp/php_crontab.log',
-        'time' => '* * * * *',
+        'time' =>  '* * * * *',
     ],
 ];
