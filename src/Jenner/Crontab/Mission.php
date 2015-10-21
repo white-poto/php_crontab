@@ -78,6 +78,11 @@ class Mission extends Process
         $this->comment = $comment;
     }
 
+    /**
+     * get or set name
+     * @param null $name
+     * @return string
+     */
     public function name($name = null)
     {
         if(!is_null($name)){
@@ -87,6 +92,11 @@ class Mission extends Process
         }
     }
 
+    /**
+     * get or set cmd
+     * @param null $cmd
+     * @return string
+     */
     public function cmd($cmd = null)
     {
         if(!is_null($cmd)){
@@ -97,6 +107,11 @@ class Mission extends Process
     }
 
 
+    /**
+     * get or set time
+     * @param null $time
+     * @return null
+     */
     public function time($time = null)
     {
         if(!is_null($time)){
@@ -106,6 +121,11 @@ class Mission extends Process
         }
     }
 
+    /**
+     * get or set out
+     * @param null $out
+     * @return null|string
+     */
     public function out($out = null)
     {
         if(!is_null($out)){
@@ -115,6 +135,11 @@ class Mission extends Process
         }
     }
 
+    /**
+     * get or set user
+     * @param null $user
+     * @return null|string
+     */
     public function user($user = null)
     {
         if(!is_null($user)){
@@ -125,6 +150,11 @@ class Mission extends Process
     }
 
 
+    /**
+     * get or set group
+     * @param null $group
+     * @return null|string
+     */
     public function group($group = null)
     {
         if(!is_null($group)){
