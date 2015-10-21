@@ -78,52 +78,60 @@ class Mission extends Process
         $this->comment = $comment;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function name($name = null)
     {
-        return $this->name;
+        if(!is_null($name)){
+            $this->name = $name;
+        }else{
+            return $this->name;
+        }
     }
 
-    /**
-     * @return string
-     */
-    public function getCmd()
+    public function cmd($cmd = null)
     {
-        return $this->cmd;
+        if(!is_null($cmd)){
+            $this->cmd = $cmd;
+        }else{
+            return $this->cmd;
+        }
     }
 
-    /**
-     * @return string
-     */
-    public function getTime()
+
+    public function time($time = null)
     {
-        return $this->time;
+        if(!is_null($time)){
+            $this->time = $time;
+        }else{
+            return $time;
+        }
     }
 
-    /**
-     * @return string
-     */
-    public function getOut()
+    public function out($out = null)
     {
-        return $this->out;
+        if(!is_null($out)){
+            $this->out = $out;
+        }else{
+            return $this->out;
+        }
     }
 
-    /**
-     * @return string
-     */
-    public function getUser()
+    public function user($user = null)
     {
-        return $this->user;
+        if(!is_null($user)){
+            $this->user = $user;
+        }else{
+            return $this->user;
+        }
     }
 
-    /**
-     * @return string
-     */
-    public function getGroup()
+
+    public function group($group = null)
     {
-        return $this->group;
+        if(!is_null($group)){
+            $this->group = $group;
+        }else{
+            return $this->group;
+        }
     }
 
     /**
@@ -132,7 +140,7 @@ class Mission extends Process
      */
     public function needRun($time)
     {
-        if ($time - CrontabParse::parse($this->getTime(), $time) == 0) {
+        if ($time - CrontabParse::parse($this->time(), $time) == 0) {
             return true;
         }
         return false;
@@ -174,7 +182,7 @@ class Mission extends Process
             throw new \RuntimeException("output file is not writable");
         }
 
-        $cmd = $this->cmd . ' >> ' . $output_file;
+        $cmd = $this->cmd . ' >> ' . $output_file . ' 2>&1';
         exec($cmd, $output, $status);
 
         exit($status);
