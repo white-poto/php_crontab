@@ -6,7 +6,7 @@
  * Time: 下午5:00
  */
 
-namespace Jenner\Crontab;
+namespace Jenner\Crontab\Parser;
 
 
     /**

@@ -9,6 +9,7 @@
 namespace Jenner\Crontab;
 
 
+use Jenner\Crontab\Parser\CrontabParse;
 use Jenner\SimpleFork\Process;
 
 class Mission extends Process
