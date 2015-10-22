@@ -18,6 +18,12 @@ class JobParseTest extends PHPUnit_Framework_TestCase
         $this->job_parser = new \Jenner\Crontab\Parser\JobParse();
     }
 
+    /**
+     * @dataProvider parseProvider
+     * @param $raw
+     * @param $time
+     * @param $command
+     */
     public function testParse($raw, $time, $command)
     {
         $this->job_parser->parse($raw);
