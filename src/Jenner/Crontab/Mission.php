@@ -213,6 +213,12 @@ class Mission extends Process
         }
 
         $cmd = $this->cmd . ' >> ' . $output_file . ' 2>&1';
+
+        $process = new \Symfony\Component\Process\Process($cmd);
+        $process->run();
+        $process->wait();
+        $out = $process->getOutput();
+
         exec($cmd, $output, $status);
 
         exit($status);

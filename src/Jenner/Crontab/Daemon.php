@@ -8,8 +8,7 @@
 
 namespace Jenner\Crontab;
 
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
+use Jenner\Crontab\Logger\CrontabLoggerFactory;
 use React\EventLoop\Factory;
 
 class Daemon extends AbstractDaemon
@@ -43,14 +42,7 @@ class Daemon extends AbstractDaemon
     {
         $this->setTasks($tasks);
 
-        $logger = new Logger("php_crontab");
-        if (!empty($logfile)) {
-            $logger->pushHandler(new StreamHandler($logfile));
-        } else {
-            $logger->pushHandler(new StreamHandler(self::LOG_FILE));
-        }
-        $this->logger = $logger;
-
+        $logger = CrontabLoggerFactory::getInstance($logfile);
         parent::__construct($logger);
     }
 
