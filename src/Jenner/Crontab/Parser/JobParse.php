@@ -12,12 +12,12 @@ namespace Jenner\Crontab\Parser;
 class JobParse
 {
     /**
-     * @var
+     * @var string crontab time config
      */
     protected $time;
 
     /**
-     * @var
+     * @var string cli command
      */
     protected $command;
 

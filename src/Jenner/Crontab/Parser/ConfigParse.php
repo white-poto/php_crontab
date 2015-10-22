@@ -11,6 +11,11 @@ namespace Jenner\Crontab\Parser;
 
 class ConfigParse
 {
+    /**
+     * parse the system crontab service's config file
+     * @param $file
+     * @return array
+     */
     public static function parseFile($file)
     {
         if (!file_exists($file) || !is_readable($file)) {
