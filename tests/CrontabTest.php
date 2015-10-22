@@ -16,12 +16,11 @@ class CrontabTest extends PHPUnit_Framework_TestCase
 
     public function testStart()
     {
-        $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "* * * * *", $this->log_file);
-        $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
-
         if (file_exists($this->log_file)) {
             unlink($this->log_file);
         }
+        $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "* * * * *", $this->log_file);
+        $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
         $crontab->start(time());
         $out = file_get_contents($this->log_file);
@@ -29,18 +28,16 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($out, $except);
     }
 
-    public function testNotStart(){
-        $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "3 * * * *", $this->log_file);
-        $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
-
+    public function testNotStart()
+    {
         if (file_exists($this->log_file)) {
             unlink($this->log_file);
         }
+        $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "3 * * * *", $this->log_file);
+        $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
         $crontab->start(time());
-        $out = file_get_contents($this->log_file);
-        $except = shell_exec("ls /");
-        $this->assertEquals($out, $except);
+        $this->assertFalse(file_exists($this->log_file));
     }
 
 }
