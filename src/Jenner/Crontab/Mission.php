@@ -170,7 +170,7 @@ class Mission extends Process
      */
     public function needRun($time)
     {
-        if ($time - CrontabParse::parse($this->time(), $time) == 0) {
+        if ($time - CrontabParse::parse($this->time(), $time) < 60) {
             return true;
         }
         return false;
