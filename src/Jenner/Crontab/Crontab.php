@@ -90,6 +90,7 @@ class Crontab
             }
 
             $pool->wait();
+            echo '------------------' . PHP_EOL;
             var_dump($pool->aliveCount());
         } catch (\Exception $e) {
             $this->logException($e);
