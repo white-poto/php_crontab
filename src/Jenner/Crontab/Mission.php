@@ -213,6 +213,7 @@ class Mission extends Process
         }
 
         $cmd = $this->cmd . ' >> ' . $output_file . ' 2>&1';
+        echo $cmd . PHP_EOL;
         exec($cmd, $output, $status);
 
         exit($status);
