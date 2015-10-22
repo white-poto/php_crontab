@@ -8,7 +8,7 @@ php crontab base on pcntl and react/event-loop
 
 [中文说明](https://github.com/huyanping/php_crontab/blob/master/README.zh.md "中文说明")
 
-Why use php_crontab
+Why use php_crontab?
 ------------
 When we have a handful of crontab tasks, crontab service is enough for us to manage them. 
 If we have many crontab tasks, there will be some problems like:
@@ -19,9 +19,9 @@ hard for fresh man to understand what they are.
 + Tasks of different users must written in different files.
 Based on the above reasons, we need a crontab manager which can manage crontab tasks together and configure the tasks.
 
-How to use it?
+How to use php_crontab?
 ---------------
-There are two ways to use php_crontab to manage you crontab tasks. 
+There are two ways to use php_crontab to manage your crontab tasks. 
 You can just write a php script and add it to the crontab config file 
 with the command `crontab -e`. The php script should run every minute. For example `tests/simple.php`  
 Or you can write a php daemon script which will run as a service and will not exit until someone kill it.
@@ -35,7 +35,6 @@ What's more? You can develop a web application to manage them.
 + The tasks of different users can be managed together.
 + Multi-Process, every task is a process.
 + You can set the user and group of a crontab task
-+ You can set more than one time configs to one crontab task.
 + STDOUT can be redirected
 + Based on react/event-loop, it can run as a daemon.
 + A HTTP server which you can manage the crontab tasks through it.
@@ -63,7 +62,7 @@ http://host:port/stop
 ```
 
 
-**run based on crontab service：**
+**run based on crontab service**
 ```shell
 * * * * * php demo.php
 ```

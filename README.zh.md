@@ -1,113 +1,159 @@
-php_crontab 基于PHP的定时任务管理器
+php_crontab 
 =============
 [![Total Downloads](https://img.shields.io/packagist/dt/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
 [![Latest Stable Version](http://img.shields.io/packagist/v/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
 [![License](https://img.shields.io/packagist/l/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
-为什么使用PHP管理crontab
+
+基于pcntl和react/event-loop的定时任务管理器
+
+[英文说明](https://github.com/huyanping/php_crontab/blob/master/README.md "英文说明")
+
+为什么使用php_crontab？
 ------------
-一般在定时任务较少的情况下，使用原生的crontab服务一般不会有什么问题，但当定时任务较多时就会产生如下问题：
-+ 文本形式的定时任务可读性很差，在没有任何注释的情况下，新人很难在不读源码的情况下了解定时任务的业务逻辑
-+ 在分布式的场景中，定时任务会散落到多台机器上，无法统一管理
-+ 定时任务的日志不能集中化管理，对定时任务的运行分析及故障排除比较麻烦
-+ 不同用户下的定时任务需要分开编写，可读性、可维护性差
-基于以上几点原因，我们迫切的需要一个可以集中化管理的、可配置的定时任务管理器
+当我们有少量的定时任务需要管理时，unix的crontab服务时足够的。如果我们有非常多的定时任务
+需要管理时，机会有一些问题，例如：
++ crontab服务通过一个文本文件管理定时任务，如果没有注释，对新人来说去理解他们是比较难的。
++ 如果定时任务分散在许多机器上，管理他们也是比较难的。
++ 如果你想收集他们的日志，同样不会简单。
++ 不同用户的定时任务分散在不同的文件中。
+基于以上几点原因，我们需要一个可以统一管理配置的定时任务管理器。
+
+如何使用php_crontab？
+---------------
+有两种方式使用php_crontab管理你的定时任务。
+你可以写一个脚本，然后把它加入到crontab服务器中，每分钟执行一次。例如`tests/simple`。
+或者你可以写一个守护进程脚本，它会像一个服务一样一只运行，直到你杀死它。
+它将每分钟检查一次定时任务。例如`tests/daemon.php`
 
 特性
 -----------
-+ 定时任务可以不再是以文本方式的形式存在，可以存储在缓冲、数据库中，甚至你可以开发管理功能，在后台对定时任务进行编辑
-+ 定时任务的日志是可配置的，你可以按照业务需求，对日志进行差异化配置
-+ crontab服务在不同用户下的定时任务需要分开编写，使用php_crontab管理后，可以集中配置脚本执行权限
++ 定时任务管理可以被存储在任何地方。例如：mysql、redis等。
++ 定时任务的日志可以根据你的需要进行配置
++ 多个用户的定时任务可以统一管理
++ 多进程，每个任务一个进程
++ 你可以为每个任务设置用户和用户组
++ 标准输出可以进行重定向
++ 基于react/event-loop，它可以作为一个守护进程运行
++ 一个HTTP服务器，你可以通过它管理定时任务
 
-使用方式如下：
-+ 编写一个任务管理器，可参考test/simple.php
-+ 将上述脚本添加到crontab中，一分钟执行一次
-
-特性
------------
-+ 采用多进程，一个任务为一个进程，解决串行执行延迟问题
-+ 支持设定用户、用户组
-+ 支持设定多个执行时间
-+ 支持输出重定向
-+ 基于libev的时间事件驱动，支持守护运行
-
-你可以通过如下方式实现分布式定时任务管理
-------------
-+ 定时任务配置信息写入redis单点或集群，使用订阅机制自动分发
-+ 定时任务写入文件，修改时rsync同步
-+ 写入mysql数据库（推荐主从架构），自动同步
-
-TODO
+HTTP 接口
 -------------
-+ 增加HTTP服务
-+ 增加reload功能
+HTTP 方法: `GET`  
++ `add` 增加任务
++ `get_by_name` 根据任务名称获取任务
++ `remove_by_name` 根据任务名称删除任务
++ `clear` 删除所有任务
++ `get` 获取所有任务
++ `start` 开始检测定时任务
++ `stop` 停止检测定时任务
+
+示例:
+```shell
+http://host:port/add?name=name&cmd=cmd&time=time&out=out&user=user&group=group&comment=comment
+http://host:port/get_by_name?name=name
+http://host:port/remove_by_name?name=name
+http://host:port/clear
+http://host:port/get
+http://host:port/start
+http://host:port/stop
+```
 
 
-**基于crontab运行：**
+**基于crontab服务运行**
 ```shell
 * * * * * php demo.php
 ```
 ```php
 <?php
-$crontab_config = [
-    'test_1' => [
-        'name' => '服务监控1', //任务名称
-        'cmd' => 'php -v', //需要执行的cli命令
-        'output' => '/tmp/test.log', //输出重定向文件
-        'time' => '* * * * *', //定时任务时间配置，与crontab抑制
-        'user_name' => 'www', //cli命令运行的用户身份
-        'group_name' => 'group_name', //cli命令运行的用户组归属
-    ],
-    'single_test' => [
-        'name' => 'php -i',
-        'cmd' => 'php -i',
-        'output' => '/tmp/single_script.log',
-        'time' => [
-            '* * * * *',
-            '* * * * *',
-        ],
-    ],
-];
-
-$time = time();
-$crontab_server = new \Jenner\Zebra\Crontab\Crontab($crontab_config);
-$crontab_server->start($time);
-```
-**独立进程运行**
-
-每分钟触发一次
-```php
-$crontab_config = [
-    'test_1' => [
-        'name' => '服务监控1',
-        'cmd' => 'php -r "echo "11111" . PHP_EOL;sleep(60);"',
-        'output' => '/www/test.log',
+$missions = [
+    [
+        'name' => 'ls',
+        'cmd' => "ls -al",
+        'out' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
-        'user_name' => 'www',
-        'group_name' => 'www'
+        'user' => 'www',
+        'group' => 'www'
     ],
-    'single_test' => [
-        'name' => 'php -i',
-        'cmd' => 'php -i',
-        'output' => '/tmp/single_script.log',
-        'time' => [
-            '* * * * *',
-            '* * * * *',
-        ],
+    [
+        'name' => 'hostname',
+        'cmd' => "hostname",
+        'out' => '/tmp/php_crontab.log',
+        'time' => '* * * * *',
     ],
 ];
 
-$daemon = new \Jenner\Zebra\Crontab\Daemon($crontab_config, "logfile.log");
+$tasks = array();
+foreach($missions as $mission){
+    $tasks[] = new \Jenner\Crontab\Mission($mission['name'], $mission['cmd'], $mission['time'], $mission['out']);
+}
+
+$crontab_server = new \Jenner\Crontab\Crontab(null, $tasks);
+$crontab_server->start(time());
+```
+**作为一个守护进程运行**
+
+it will check the task configs every minute.
+```php
+$missions = [
+    [
+        'name' => 'ls',
+        'cmd' => "ls -al",
+        'out' => '/tmp/php_crontab.log',
+        'time' => '* * * * *',
+        'user' => 'www',
+        'group' => 'www'
+    ],
+    [
+        'name' => 'hostname',
+        'cmd' => "hostname",
+        'out' => '/tmp/php_crontab.log',
+        'time' =>  '* * * * *',
+    ],
+];
+
+$daemon = new \Jenner\Crontab\Daemon($missions);
 $daemon->start();
 ```
 
+**作为守护进程运行同时启动一个http server**
+```php
+$missions = [
+    [
+        'name' => 'ls',
+        'cmd' => "ls -al",
+        'out' => '/tmp/php_crontab.log',
+        'time' => '* * * * *',
+    ],
+    [
+        'name' => 'hostname',
+        'cmd' => "hostname",
+        'out' => '/tmp/php_crontab.log',
+        'time' => '* * * * *',
+    ],
+];
 
-工具短小，但很精悍
------------
-在分布式场景中，你可以把定时任务写入数据库中进行统一管理，你可以设定哪些定时任务是由哪些机器执行，
-然后通过生成文本文件的方式发送到所有机器上，再由这些机器上的phpCrontab读取处理；从而实现分布式场景下的定时任务统一管理。
+$http_daemon = new \Jenner\Crontab\HttpDaemon($missions, "php_crontab.log");
+$http_daemon->start($port = 6364);
+```
+Then you can manage the crontab task by curl like:
+```shell
+curl http://127.0.0.1:6364/get_by_name?name=ls
+curl http://127.0.0.1:6364/remove_by_name?name=hostname
+curl http://127.0.0.1:6364/get
+```
 
+**启动脚本**
+```shell
+[root@jenner php_crontab]# ./bin/php_crontab 
+php_crontab help:
+-c  --config    crontab tasks config file
+-p  --port      http server port
+-f  --pid-file  daemon pid file
+-l  --log       crontab log file
+[root@jenner php_crontab]#nohup ./bin/php_crontab -c xxoo.php -p 8080 -f /var/php_crontab.pid -l /var/logs/php_crontab.log >/dev/null & 
+```
 
-[博客地址:www.huyanping.cn](http://www.huyanping.cn/ "程序猿始终不够")
+[blog:www.huyanping.cn](http://www.huyanping.cn/ "程序猿始终不够")
 
 
 
