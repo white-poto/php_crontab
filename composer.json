@@ -20,7 +20,8 @@
         "ext-posix": "*",
         "jenner/simple_fork": "0.5",
         "monolog/monolog": "1.17.1",
-        "react/http": "v0.4.1"
+        "react/http": "v0.4.1",
+        "symfony/process": "v2.7.5"
     },
     "suggest": {
         "ext-libevent": ">=0.1.0",
