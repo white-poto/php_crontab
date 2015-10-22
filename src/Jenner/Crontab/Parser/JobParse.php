@@ -66,7 +66,7 @@ class JobParse
         $time_info = array_slice($info, 0, 5);
         $this->time = implode(' ', $time_info);
 
-        $this->command = implode(' ', array_slice($info, 6));
+        $this->command = implode(' ', array_slice($info, 5));
     }
 
     /**
