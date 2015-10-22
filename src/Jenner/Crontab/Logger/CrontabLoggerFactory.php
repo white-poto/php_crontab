@@ -9,7 +9,6 @@
 namespace Jenner\Crontab\Logger;
 
 
-use Monolog\Handler\NullHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 

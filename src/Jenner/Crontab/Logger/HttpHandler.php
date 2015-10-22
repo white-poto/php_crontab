@@ -23,7 +23,8 @@ class HttpHandler implements HandlerInterface
 
     protected $url;
 
-    public function __construct($url){
+    public function __construct($url)
+    {
         $this->client = new Client();
         $this->url = $url;
     }
@@ -72,7 +73,7 @@ class HttpHandler implements HandlerInterface
      */
     public function handleBatch(array $records)
     {
-        foreach($records as $record){
+        foreach ($records as $record) {
             $this->handle($record);
         }
     }

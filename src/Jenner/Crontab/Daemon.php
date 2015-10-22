@@ -44,7 +44,7 @@ class Daemon extends AbstractDaemon
     {
         $this->setTasks($tasks);
 
-        if(is_null($logger)){
+        if (is_null($logger)) {
             $logger = CrontabLoggerFactory::getInstance(self::LOG_FILE);
         }
 
