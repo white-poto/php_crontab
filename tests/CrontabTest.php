@@ -36,10 +36,6 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         }
 
         $this->crontab->start(time());
-        sleep(5);
-        if(!file_exists($this->log_file)){
-            echo "file not exists" . PHP_EOL;
-        }
         $out = file_get_contents($this->log_file);
         $except = shell_exec("ls /");
         $this->assertEquals($out, $except);
