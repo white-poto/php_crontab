@@ -117,7 +117,7 @@ class Mission extends Process
         if(!is_null($time)){
             $this->time = $time;
         }else{
-            return $time;
+            return $this->time;
         }
     }
 
