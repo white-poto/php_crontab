@@ -9,6 +9,7 @@
 namespace Jenner\Crontab;
 
 use Jenner\Crontab\Logger\CrontabLoggerFactory;
+use Psr\Log\LoggerInterface;
 use React\EventLoop\Factory;
 
 class Daemon extends AbstractDaemon
@@ -36,13 +37,16 @@ class Daemon extends AbstractDaemon
 
     /**
      * @param $tasks array
-     * @param $logfile string
+     * @param LoggerInterface $logger
      */
-    public function __construct($tasks, $logfile = null)
+    public function __construct($tasks, LoggerInterface $logger = null)
     {
         $this->setTasks($tasks);
 
-        $logger = CrontabLoggerFactory::getInstance($logfile);
+        if(is_null($logger)){
+            $logger = CrontabLoggerFactory::getInstance(self::LOG_FILE);
+        }
+
         parent::__construct($logger);
     }
 

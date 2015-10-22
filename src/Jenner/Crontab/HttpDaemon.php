@@ -8,6 +8,7 @@
 
 namespace Jenner\Crontab;
 
+use Psr\Log\LoggerInterface;
 use React\EventLoop\Factory;
 
 class HttpDaemon extends Daemon
@@ -24,12 +25,12 @@ class HttpDaemon extends Daemon
 
     /**
      * @param array $tasks
-     * @param null|string $logfile
+     * @param LoggerInterface $logger
      * @param int $port
      */
-    public function __construct($tasks, $logfile, $port = 6364)
+    public function __construct($tasks, LoggerInterface $logger, $port = 6364)
     {
-        parent::__construct($tasks, $logfile);
+        parent::__construct($tasks, $logger);
         $this->port = $port;
     }
 

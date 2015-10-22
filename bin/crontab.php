@@ -172,10 +172,12 @@ GLOB_MARK;
      */
     public function factory()
     {
+        $logger = new \Monolog\Logger('php_crontab');
+        $logger->pushHandler(new \Monolog\Handler\StreamHandler($this->log));
         if (!empty($this->port)) {
-            return new \Jenner\Crontab\HttpDaemon($this->missions, $this->log, $this->port);
+            return new \Jenner\Crontab\HttpDaemon($this->missions, $logger, $this->port);
         }
-        return new \Jenner\Crontab\Daemon($this->missions, $this->log);
+        return new \Jenner\Crontab\Daemon($this->missions, $logger);
     }
 
     /**

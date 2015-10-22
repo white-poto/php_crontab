@@ -63,7 +63,9 @@ http://host:port/stop
 
 TODO
 ------------------
-+ command output redirect to anywhere you what.
++ add log handler interface
++ add http log handler, socket log handler, file handler and so on.
++ separate stdout and stderr. use different handlers
 
 
 **run based on crontab service**

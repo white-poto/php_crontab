@@ -23,7 +23,7 @@ class CrontabLoggerFactory
     /**
      * @var LoggerInterface[]
      */
-    protected static $instances;
+    protected static $instance;
 
     /**
      * @param null $file
@@ -31,18 +31,10 @@ class CrontabLoggerFactory
      */
     public static function getInstance($file = null)
     {
-        if (is_null($file)) {
-            $logger = new Logger(self::NAME);
-            $logger->pushHandler(new NullHandler());
-            return $logger;
+        if (!is_object(self::$instance) || !(self::$instance instanceof LoggerInterface)) {
+            self::$instance = new Logger("php_crontab");
         }
 
-        if (empty(self::$instances)) self::$instances = array();
-
-        if (!array_key_exists($file, self::$instances) || !is_object(self::$instances[$file])) {
-            self::$instances[$file] = new Logger("php_crontab");
-        }
-
-        return self::$instances[$file];
+        return self::$instance;
     }
 }
