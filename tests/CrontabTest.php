@@ -25,7 +25,7 @@ class CrontabTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "* * * * *", $this->log_file);
+        $this->mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "3 * * * *", $this->log_file);
         $this->crontab = new \Jenner\Crontab\Crontab(null, array($this->mission));
     }
 
