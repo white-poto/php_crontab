@@ -18,6 +18,16 @@ class JobParseTest extends PHPUnit_Framework_TestCase
         $this->job_parser = new \Jenner\Crontab\Parser\JobParse();
     }
 
+
+    public function parseProvider(){
+        return array(
+            array('* * * * * ls -al > test.log', '* * * * *', 'ls -al > test.log'),
+            array('* * * *  * ls -al > test.log', '* * * * *', 'ls -al > test.log'),
+            array('* * * * * ls   -al > test.log', '* * * * *', 'ls -al > test.log'),
+            array('* * * * * ls   -al  >  test.log', '* * * * *', 'ls -al > test.log'),
+        );
+    }
+
     /**
      * @dataProvider parseProvider
      * @param $raw
@@ -32,12 +42,4 @@ class JobParseTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->job_parser->command(), $command);
     }
 
-    public function parseProvider(){
-        return array(
-            array('* * * * * ls -al > test.log', '* * * * *', 'ls -al > test.log'),
-            array('* * * *  * ls -al > test.log', '* * * * *', 'ls -al > test.log'),
-            array('* * * * * ls   -al > test.log', '* * * * *', 'ls -al > test.log'),
-            array('* * * * * ls   -al  >  test.log', '* * * * *', 'ls -al > test.log'),
-        );
-    }
 }
