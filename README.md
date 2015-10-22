@@ -61,6 +61,10 @@ http://host:port/start
 http://host:port/stop
 ```
 
+TODO
+------------------
++ command output redirect to anywhere you what.
+
 
 **run based on crontab service**
 ```shell
