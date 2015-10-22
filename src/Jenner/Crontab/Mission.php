@@ -170,9 +170,6 @@ class Mission extends Process
      */
     public function needRun($time)
     {
-        echo '++++++++++++++++++++' . PHP_EOL;
-        echo $this->time() . PHP_EOL;
-        var_dump(CrontabParse::parse($this->time(), $time));
         if ($time - CrontabParse::parse($this->time(), $time) < 60) {
             return true;
         }

@@ -78,9 +78,7 @@ class Crontab
             $pool = new Pool();
 
             foreach ($this->missions as $mission) {
-                echo '=================' . PHP_EOL;
                 if (!$mission->needRun($time)) continue;
-                echo '------------------' . PHP_EOL;
                 try {
                     $mission->start();
                 } catch (\Exception $e) {
@@ -92,8 +90,6 @@ class Crontab
             }
 
             $pool->wait();
-
-            var_dump($pool->aliveCount());
         } catch (\Exception $e) {
             $this->logException($e);
         }
