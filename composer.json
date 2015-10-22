@@ -23,10 +23,16 @@
         "react/http": "v0.4.1",
         "symfony/process": "v2.7.5"
     },
+    "require-dev": {
+        "guzzle/guzzle": "v3.9.3",
+        "ext-redis": "*"
+    },
     "suggest": {
         "ext-libevent": ">=0.1.0",
         "ext-event": "~1.0",
-        "ext-libev": "*"
+        "ext-libev": "*",
+        "guzzle/guzzle": "v3.9.3",
+        "ext-redis": "*"
     },
     "autoload": {
         "psr-0": {

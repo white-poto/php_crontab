@@ -16,11 +16,6 @@ use Psr\Log\LoggerInterface;
 class Mission extends Process
 {
     /**
-     * default log file
-     */
-    const DEFAULT_FILE = '/dev/null';
-
-    /**
      * @var string mission name
      */
     protected $name;
