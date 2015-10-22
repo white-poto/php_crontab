@@ -32,9 +32,13 @@ class Mission extends Process
      */
     protected $time;
     /**
-     * @var string STDOUT file
+     * @var string where stdout log to
      */
     protected $out;
+    /**
+     * @var string where stderr log to
+     */
+    protected $err;
     /**
      * @var string the user of task process
      */
@@ -54,6 +58,7 @@ class Mission extends Process
      * @param string $cmd
      * @param string $time
      * @param string|null $out
+     * @param string|null $err
      * @param string|null $user
      * @param string|null $group
      * @param string|null $comment
@@ -63,6 +68,7 @@ class Mission extends Process
         $cmd,
         $time,
         $out = null,
+        $err = null,
         $user = null,
         $group = null,
         $comment = null
@@ -73,6 +79,7 @@ class Mission extends Process
         $this->cmd = $cmd;
         $this->time = $time;
         $this->out = $out;
+        $this->err = $err;
         $this->user = $user;
         $this->group = $group;
         $this->comment = $comment;
@@ -80,28 +87,30 @@ class Mission extends Process
 
     /**
      * get or set name
+     *
      * @param null $name
      * @return string
      */
     public function name($name = null)
     {
-        if(!is_null($name)){
+        if (!is_null($name)) {
             $this->name = $name;
-        }else{
+        } else {
             return $this->name;
         }
     }
 
     /**
      * get or set cmd
+     *
      * @param null $cmd
      * @return string
      */
     public function cmd($cmd = null)
     {
-        if(!is_null($cmd)){
+        if (!is_null($cmd)) {
             $this->cmd = $cmd;
-        }else{
+        } else {
             return $this->cmd;
         }
     }
@@ -109,42 +118,60 @@ class Mission extends Process
 
     /**
      * get or set time
+     *
      * @param null $time
      * @return null
      */
     public function time($time = null)
     {
-        if(!is_null($time)){
+        if (!is_null($time)) {
             $this->time = $time;
-        }else{
+        } else {
             return $this->time;
         }
     }
 
     /**
      * get or set out
+     *
      * @param null $out
      * @return null|string
      */
     public function out($out = null)
     {
-        if(!is_null($out)){
+        if (!is_null($out)) {
             $this->out = $out;
-        }else{
+        } else {
             return $this->out;
         }
     }
 
     /**
+     * get or set err
+     *
+     * @param null $err
+     * @return null|string
+     */
+    public function err($err = null)
+    {
+        if (!is_null($err)) {
+            $this->err = $err;
+        } else {
+            return $this->err;
+        }
+    }
+
+    /**
      * get or set user
+     *
      * @param null $user
      * @return null|string
      */
     public function user($user = null)
     {
-        if(!is_null($user)){
+        if (!is_null($user)) {
             $this->user = $user;
-        }else{
+        } else {
             return $this->user;
         }
     }
@@ -152,19 +179,22 @@ class Mission extends Process
 
     /**
      * get or set group
+     *
      * @param null $group
      * @return null|string
      */
     public function group($group = null)
     {
-        if(!is_null($group)){
+        if (!is_null($group)) {
             $this->group = $group;
-        }else{
+        } else {
             return $this->group;
         }
     }
 
     /**
+     * if the time is right
+     *
      * @param $time
      * @return bool
      */
