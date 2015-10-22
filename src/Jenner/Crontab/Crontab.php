@@ -85,6 +85,7 @@ class Crontab
                 } catch (\Exception $e) {
                     $this->logException($e);
                 }
+                echo '=================' . PHP_EOL;
 
                 $pool->submit($mission);
             }
