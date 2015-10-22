@@ -25,7 +25,8 @@ class Daemon extends AbstractDaemon
      *  task_name => [
      *      'name'=>'task_name',
      *      'cmd'=>'shell command',
-     *      'out'=>'output filename',
+     *      'out'=>'output',
+     *      'err'=>'errout'
      *      'time'=>'* * * * *',
      *      'user'=>'process user',
      *      'group'=>'process group',

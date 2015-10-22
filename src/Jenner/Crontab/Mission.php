@@ -11,6 +11,7 @@ namespace Jenner\Crontab;
 
 use Jenner\Crontab\Parser\CrontabParse;
 use Jenner\SimpleFork\Process;
+use Psr\Log\LoggerInterface;
 
 class Mission extends Process
 {
@@ -32,11 +33,11 @@ class Mission extends Process
      */
     protected $time;
     /**
-     * @var string where stdout log to
+     * @var LoggerInterface where stdout log to
      */
     protected $out;
     /**
-     * @var string where stderr log to
+     * @var LoggerInterface where stderr log to
      */
     protected $err;
     /**
@@ -57,8 +58,8 @@ class Mission extends Process
      * @param string $name
      * @param string $cmd
      * @param string $time
-     * @param string|null $out
-     * @param string|null $err
+     * @param LoggerInterface $out
+     * @param LoggerInterface $err
      * @param string|null $user
      * @param string|null $group
      * @param string|null $comment
@@ -67,8 +68,8 @@ class Mission extends Process
         $name,
         $cmd,
         $time,
-        $out = null,
-        $err = null,
+        LoggerInterface $out = null,
+        LoggerInterface $err = null,
         $user = null,
         $group = null,
         $comment = null
@@ -134,10 +135,10 @@ class Mission extends Process
     /**
      * get or set out
      *
-     * @param null $out
+     * @param LoggerInterface $out
      * @return null|string
      */
-    public function out($out = null)
+    public function out(LoggerInterface $out = null)
     {
         if (!is_null($out)) {
             $this->out = $out;
@@ -149,10 +150,10 @@ class Mission extends Process
     /**
      * get or set err
      *
-     * @param null $err
+     * @param LoggerInterface $err
      * @return null|string
      */
-    public function err($err = null)
+    public function err(LoggerInterface $err = null)
     {
         if (!is_null($err)) {
             $this->err = $err;
@@ -227,31 +228,16 @@ class Mission extends Process
      */
     public function run()
     {
-        $output_file = $this->out;
-
-        $this->setUserAndGroup();
-
-        if (!file_exists($output_file)) {
-            $create_file = touch($output_file);
-            if ($create_file === false) {
-                $message = "can not create output file";
-                throw new \RuntimeException($message);
+        $out = $this->out;
+        $err = $this->err;
+        $process = new \Symfony\Component\Process\Process($this->cmd);
+        $process->run(function ($type, $buffer) use ($out, $err) {
+            if ($type == \Symfony\Component\Process\Process::ERR) {
+                $err->error($buffer);
+            } else {
+                $out->info($buffer);
             }
-        }
-        if (!is_writable($output_file)) {
-            throw new \RuntimeException("output file is not writable");
-        }
-
-        $cmd = $this->cmd . ' >> ' . $output_file . ' 2>&1';
-
-        $process = new \Symfony\Component\Process\Process($cmd);
-        $process->run();
-        $process->wait();
-        $out = $process->getOutput();
-
-        exec($cmd, $output, $status);
-
-        exit($status);
+        });
     }
 
     /**
