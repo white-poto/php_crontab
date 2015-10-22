@@ -79,6 +79,7 @@ class Crontab
 
             foreach ($this->missions as $mission) {
                 if (!$mission->needRun($time)) continue;
+                echo 'run' . PHP_EOL;
                 try {
                     $mission->start();
                 } catch (\Exception $e) {
