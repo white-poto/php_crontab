@@ -21,7 +21,7 @@ class CrontabTest extends PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    protected $log_file = "/tmp/mission_test.log";
+    protected $log_file = "/tmp/crontab_test.log";
 
     public function setUp()
     {
