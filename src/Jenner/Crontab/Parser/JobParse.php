@@ -22,16 +22,6 @@ class JobParse
     protected $command;
 
     /**
-     * @var
-     */
-    protected $output;
-
-    /**
-     * @var
-     */
-    protected $overwrite;
-
-    /**
      * @param null $raw
      */
     public function __construct($raw = null)
@@ -68,32 +58,6 @@ class JobParse
     }
 
     /**
-     * @param null $output
-     * @return mixed
-     */
-    public function output($output = null)
-    {
-        if (!is_null($output)) {
-            $this->output = $output;
-        } else {
-            return $this->output;
-        }
-    }
-
-    /**
-     * @param null $overwrite
-     * @return mixed
-     */
-    public function overwrite($overwrite = null)
-    {
-        if (!is_null($overwrite)) {
-            $this->overwrite = $overwrite;
-        } else {
-            return $this->overwrite;
-        }
-    }
-
-    /**
      * @param $raw
      */
     public function parse($raw)
@@ -102,15 +66,7 @@ class JobParse
         $time_info = array_slice($info, 0, 5);
         $this->time = implode(' ', $time_info);
 
-        for ($i = count($info); $i >= 0; $i--) {
-            $value = $info[$i];
-            if ($value != '>>' || $value != '>') continue;
-            if ($value == '>>') $this->overwrite = false;
-            else $this->overwrite = true;
-
-            $this->output = $info[$i - 1];
-            break;
-        }
+        $this->command = implode(' ', array_slice($info, 6));
     }
 
     /**
@@ -119,13 +75,6 @@ class JobParse
     public function render()
     {
         $raw = $this->time . ' ' . $this->command;
-        if (empty($this->output)) return $raw;
-
-        if ($this->overwrite === true) {
-            $raw .= ' > ' . $this->output;
-        } else {
-            $raw .= ' >> ' . $this->output;
-        }
 
         return $raw;
     }
@@ -135,10 +84,11 @@ class JobParse
      */
     public function getTask()
     {
+        $name = uniqid('cron-', true) . mt_rand(0, 1000000);
         return array(
+            'name' => $name,
             'time' => $this->time,
             'cmd' => $this->command,
-            'out' => $this->output,
         );
     }
 }
