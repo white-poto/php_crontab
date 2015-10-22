@@ -18,7 +18,6 @@ class JobParseTest extends PHPUnit_Framework_TestCase
         $this->job_parser = new \Jenner\Crontab\Parser\JobParse();
     }
 
-
     public function parseProvider(){
         return array(
             array('* * * * * ls -al > test.log', '* * * * *', 'ls -al > test.log'),
@@ -36,7 +35,6 @@ class JobParseTest extends PHPUnit_Framework_TestCase
      */
     public function testParse($raw, $time, $command)
     {
-        var_dump(func_get_args());
         $this->job_parser->parse($raw);
         $this->assertEquals($this->job_parser->time(), $time);
         $this->assertEquals($this->job_parser->command(), $command);
