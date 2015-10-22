@@ -9,16 +9,13 @@
 namespace Jenner\Crontab\Logger;
 
 
+use Jenner\Crontab\Crontab;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
 class CrontabLoggerFactory
 {
-
-    /**
-     * logger name
-     */
-    const NAME = 'php_crontab';
     /**
      * @var LoggerInterface[]
      */
@@ -31,7 +28,8 @@ class CrontabLoggerFactory
     public static function getInstance($file = null)
     {
         if (!is_object(self::$instance) || !(self::$instance instanceof LoggerInterface)) {
-            self::$instance = new Logger("php_crontab");
+            self::$instance = new Logger(Crontab::NAME);
+            self::$instance->pushHandler(new StreamHandler($file));
         }
 
         return self::$instance;

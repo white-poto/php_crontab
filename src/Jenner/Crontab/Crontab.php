@@ -15,6 +15,7 @@ use Psr\Log\LoggerInterface;
 
 class Crontab
 {
+    const NAME = 'php_crontab';
     /**
      * @var array of Mission
      */
@@ -38,7 +39,7 @@ class Crontab
     {
         set_time_limit(0);
         if (is_null($logger)) {
-            $this->logger = new Logger("php_crontab");
+            $this->logger = new Logger(self::NAME);
             $this->logger->pushHandler(new NullHandler());
         } else {
             $this->logger = $logger;

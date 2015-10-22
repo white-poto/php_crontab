@@ -20,7 +20,15 @@ class MissionTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "* * * * *", $this->log_file);
+        $logger = new \Monolog\Logger("php_crontab");
+        $logger->pushHandler(new \Monolog\Handler\StreamHandler($this->log_file));
+
+        $this->mission = new \Jenner\Crontab\Mission(
+            "mission_test",
+            "ls /",
+            "* * * * *",
+            $logger
+        );
     }
 
     public function testNeed()

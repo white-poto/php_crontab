@@ -13,10 +13,6 @@ use React\EventLoop\Factory;
 
 class HttpDaemon extends Daemon
 {
-    /**
-     * default daemon log file
-     */
-    const LOG_FILE = '/var/log/php_crontab.log';
 
     /**
      * @var int http server port

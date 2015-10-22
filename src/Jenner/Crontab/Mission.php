@@ -11,6 +11,8 @@ namespace Jenner\Crontab;
 
 use Jenner\Crontab\Parser\CrontabParse;
 use Jenner\SimpleFork\Process;
+use Monolog\Handler\NullHandler;
+use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
 class Mission extends Process
@@ -74,11 +76,22 @@ class Mission extends Process
         $this->name = $name;
         $this->cmd = $cmd;
         $this->time = $time;
-        $this->out = $out;
-        $this->err = $err;
         $this->user = $user;
         $this->group = $group;
         $this->comment = $comment;
+
+        if(is_null($out)){
+            $this->out = new Logger(Crontab::NAME);
+            $this->out->pushHandler(new NullHandler());
+        }else{
+            $this->out = $out;
+        }
+        if(is_null($err)){
+            $this->err = new Logger(Crontab::NAME);
+            $this->err->pushHandler(new NullHandler());
+        }else{
+            $this->err = $err;
+        }
     }
 
     /**
@@ -212,6 +225,7 @@ class Mission extends Process
             'cmd' => $this->cmd,
             'time' => $this->time,
             'out' => $this->out,
+            'err' => $this->err,
             'user' => $this->user,
             'group' => $this->group,
             'comment' => $this->comment,
