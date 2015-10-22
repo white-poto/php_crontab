@@ -29,9 +29,6 @@ class JobParseTest extends PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider parseProvider
-     * @param $raw
-     * @param $time
-     * @param $command
      */
     public function testParse($raw, $time, $command)
     {
