@@ -50,6 +50,8 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($stdout, $except);
         $stderr = file_get_contents($this->err_file);
         $except = shell_exec('ddddeeee');
+        var_dump($except);
+        var_dump($stderr);
         $this->assertEquals($stderr, $except);
     }
 
