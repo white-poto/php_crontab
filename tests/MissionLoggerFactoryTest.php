@@ -14,6 +14,7 @@ class MissionLoggerFactoryTest extends PHPUnit_Framework_TestCase
             array('file:///tmp/php_crontab.log'),
             array('tcp://127.0.0.1:80'),
             array('udp://127.0.0.1:80'),
+            array('unix:///tmp/test.socket'),
         );
     }
 
@@ -25,5 +26,26 @@ class MissionLoggerFactoryTest extends PHPUnit_Framework_TestCase
     {
         $handler = \Jenner\Crontab\Logger\MissionLoggerFactory::getHandler($stream);
         $this->assertInstanceOf("Monolog\\Handler\\StreamHandler", $handler);
+    }
+
+    public function testHttpHandler()
+    {
+        $handler = \Jenner\Crontab\Logger\MissionLoggerFactory::getHandler("http://www.huyanping.cn");
+        $this->assertInstanceOf("Jenner\\Crontab\\Logger\\HttpHandler", $handler);
+    }
+
+    public function testRedisHandler()
+    {
+        $handler = \Jenner\Crontab\Logger\MissionLoggerFactory::getHandler("redis://127.0.0.1:6379/key");
+        $this->assertInstanceOf("Monolog\\Handler\\RedisHandler", $handler);
+    }
+
+    public function testCustomHandler()
+    {
+        $handler = \Jenner\Crontab\Logger\MissionLoggerFactory::getHandler("custom://CustomHandler?param_1=param_1&param_2=param_2");
+        $this->assertInstanceOf("Monolog\\Handler\\HandlerInterface", $handler);
+        $reflect = new ReflectionObject($handler);
+        $this->assertEquals($reflect->getProperty("param_1"), "param_1");
+        $this->assertEquals($reflect->getProperty("param_2"), "param_2");
     }
 }
