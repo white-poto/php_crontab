@@ -39,6 +39,16 @@ What's more? You can develop a web application to manage them.
 + Based on react/event-loop, it can run as a daemon.
 + A HTTP server which you can manage the crontab tasks through it.
 
+Output Config
+-----------
++ `file:///path/to/file` 
++ `unix:///path/to/sock`
++ `tcp://host:port`
++ `udp://host:port`
++ `redis://host:port/queue_key`
++ `http://host:port/path`
++ `custom://namespace\\class_name?params`
+
 HTTP interfaces
 -------------
 HTTP METHOD: `GET`  
@@ -78,7 +88,7 @@ $missions = [
     [
         'name' => 'ls',
         'cmd' => "ls -al",
-        'out' => '/tmp/php_crontab.log',
+        'out' => 'file:///tmp/php_crontab.log',
         'time' => '* * * * *',
         'user' => 'www',
         'group' => 'www'
@@ -86,7 +96,7 @@ $missions = [
     [
         'name' => 'hostname',
         'cmd' => "hostname",
-        'out' => '/tmp/php_crontab.log',
+        'out' => 'unix:///tmp/php_crontab.sock',
         'time' => '* * * * *',
     ],
 ];
@@ -107,16 +117,14 @@ $missions = [
     [
         'name' => 'ls',
         'cmd' => "ls -al",
-        'out' => '/tmp/php_crontab.log',
+        'out' => 'file:///tmp/php_crontab.log',
         'time' => '* * * * *',
-        'user' => 'www',
-        'group' => 'www'
     ],
     [
         'name' => 'hostname',
         'cmd' => "hostname",
-        'out' => '/tmp/php_crontab.log',
-        'time' =>  '* * * * *',
+        'out' => 'unix:///tmp/php_crontab.sock',
+        'time' => '* * * * *',
     ],
 ];
 
@@ -130,13 +138,13 @@ $missions = [
     [
         'name' => 'ls',
         'cmd' => "ls -al",
-        'out' => '/tmp/php_crontab.log',
+        'out' => 'file:///tmp/php_crontab.log',
         'time' => '* * * * *',
     ],
     [
         'name' => 'hostname',
         'cmd' => "hostname",
-        'out' => '/tmp/php_crontab.log',
+        'out' => 'unix:///tmp/php_crontab.sock',
         'time' => '* * * * *',
     ],
 ];
