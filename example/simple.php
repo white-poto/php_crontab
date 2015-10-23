@@ -34,8 +34,7 @@ $missions = [
 
 $tasks = array();
 foreach($missions as $mission){
-    $mission_logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
-    $mission_logger->pushHandler(new \Monolog\Handler\StreamHandler($mission['out']));
+    $mission_logger = \Jenner\Crontab\Logger\MissionLoggerFactory::create($mission['out']);
     $tasks[] = new \Jenner\Crontab\Mission(
             $mission['name'],
             $mission['cmd'],
