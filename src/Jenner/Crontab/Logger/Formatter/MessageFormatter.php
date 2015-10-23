@@ -38,6 +38,8 @@ class MessageFormatter implements FormatterInterface
             $message .= $record . PHP_EOL;
         }
 
+        echo $message . PHP_EOL;
+
         return $message;
     }
 }
