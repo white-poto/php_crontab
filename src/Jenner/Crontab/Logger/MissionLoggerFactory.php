@@ -110,8 +110,10 @@ class MissionLoggerFactory
      */
     protected static function getProtocol($stream)
     {
+        if(strpos($stream, 'unix') === 0){
+            return 'unix';
+        }
         $stream_info = parse_url($stream);
-        var_dump($stream_info);
         if (!array_key_exists('scheme', $stream_info)) {
             throw new \InvalidArgumentException("stream format error");
         }
