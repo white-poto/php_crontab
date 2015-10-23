@@ -17,7 +17,7 @@ $missions = [
     [
         'name' => 'ls',
         'cmd' => "ls -al",
-        'out' => '/tmp/php_crontab.log',
+        'out' => 'file:///tmp/php_crontab.log',
         'time' => '* * * * *',
         'user' => 'www',
         'group' => 'www'
@@ -25,7 +25,7 @@ $missions = [
     [
         'name' => 'hostname',
         'cmd' => "hostname",
-        'out' => '/tmp/php_crontab.log',
+        'out' => 'file:///tmp/php_crontab.log',
         'time' =>  '* * * * *',
     ],
 ];

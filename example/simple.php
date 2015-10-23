@@ -17,7 +17,7 @@ $missions = [
     [
         'name' => 'ls',
         'cmd' => "ls -al",
-        'out' => '/tmp/php_crontab.log',
+        'out' => 'file:///tmp/php_crontab.log',
         'time' => '* * * * *',
         'user' => 'www',
         'group' => 'www'
@@ -25,24 +25,27 @@ $missions = [
     [
         'name' => 'hostname',
         'cmd' => "hostname",
-        'out' => '/tmp/php_crontab.log',
+        'out' => 'file:///tmp/php_crontab.log',
         'time' => '* * * * *',
     ],
 ];
 
 
+
 $tasks = array();
 foreach($missions as $mission){
+    $mission_logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
+    $mission_logger->pushHandler(new \Monolog\Handler\StreamHandler($mission['out']));
     $tasks[] = new \Jenner\Crontab\Mission(
             $mission['name'],
             $mission['cmd'],
             $mission['time'],
-            $mission['out']
+            $mission_logger
         );
 }
 
-$logger = new \Monolog\Logger("php_crontab");
-$logger->pushHandler(new \Monolog\Handler\StreamHandler("/tmp/php_crontab.log"));
+$logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
+$logger->pushHandler(new \Monolog\Handler\StreamHandler("/var/log/php_crontab.log"));
 
 $crontab_server = new \Jenner\Crontab\Crontab($logger, $tasks);
 $crontab_server->start(time());

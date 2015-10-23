@@ -17,16 +17,18 @@ $missions = [
     [
         'name' => 'ls',
         'cmd' => "ls -al",
-        'out' => '/tmp/php_crontab.log',
+        'out' => 'file:///tmp/php_crontab.log',
         'time' => '* * * * *',
     ],
     [
         'name' => 'hostname',
         'cmd' => "hostname",
-        'out' => '/tmp/php_crontab.log',
+        'out' => 'file:///tmp/php_crontab.log',
         'time' => '* * * * *',
     ],
 ];
+$logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
+$logger->pushHandler(new \Monolog\Handler\StreamHandler("/var/log/php_crontab.log"));
 
-$http_daemon = new \Jenner\Crontab\HttpDaemon($missions, "php_crontab.log");
+$http_daemon = new \Jenner\Crontab\HttpDaemon($missions, $logger);
 $http_daemon->start();
