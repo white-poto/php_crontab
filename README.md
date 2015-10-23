@@ -78,7 +78,7 @@ http://host:port/stop
 
 TODO
 ------------------
-+ add log handler interface
++ add log handler interface.
 + add http log handler, socket log handler, file handler and so on.
 + separate stdout and stderr. use different handlers
 
