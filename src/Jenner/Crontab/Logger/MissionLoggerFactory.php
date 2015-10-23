@@ -75,6 +75,7 @@ class MissionLoggerFactory
         if (array_key_exists('query', $stream_info)) {
             parse_str($stream_info['query'], $params);
         }
+        var_dump($params);
         $reflect = new \ReflectionClass($class_name);
         $handler_interface = "Monolog\\Handler\\HandlerInterface";
         if (!$reflect->isSubclassOf($handler_interface)) {
