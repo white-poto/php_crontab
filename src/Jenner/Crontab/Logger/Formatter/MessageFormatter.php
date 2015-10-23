@@ -22,6 +22,7 @@ class MessageFormatter implements FormatterInterface
      */
     public function format(array $record)
     {
+        print_r($record);
         return $record['message'];
     }
 

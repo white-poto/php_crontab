@@ -244,7 +244,6 @@ class Mission extends Process
             if ($type == \Symfony\Component\Process\Process::ERR) {
                 $err->error($buffer);
             } else {
-                var_dump($buffer);
                 $out->info($buffer);
             }
         });
