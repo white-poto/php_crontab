@@ -21,6 +21,7 @@ Based on the above reasons, we need a crontab manager which can manage crontab t
 
 How to use php_crontab?
 ---------------
+First `composer require jenner/crontab`.    
 There are two ways to use php_crontab to manage your crontab tasks. 
 You can just write a php script and add it to the crontab config file 
 with the command `crontab -e`. The php script should run every minute. For example `tests/simple.php`  
