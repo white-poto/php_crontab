@@ -41,7 +41,7 @@ class CrontabTest extends PHPUnit_Framework_TestCase
 
         $out = \Jenner\Crontab\Logger\MissionLoggerFactory::create($this->log_file);
         $err = \Jenner\Crontab\Logger\MissionLoggerFactory::create($this->err_file);
-        $mission = new \Jenner\Crontab\Mission("mission_test", "ls / && ddddeee", "* * * * *", $out, $err);
+        $mission = new \Jenner\Crontab\Mission("mission_test", "ls / && command_not_exists", "* * * * *", $out, $err);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
         $crontab->start(time());
@@ -49,7 +49,7 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         $except = shell_exec("ls /");
         $this->assertEquals($stdout, $except);
         $stderr = file_get_contents($this->err_file);
-        $except = shell_exec('ddddeee 2>&1');
+        $except = shell_exec('command_not_exists 2>&1');
         $this->assertEquals($stderr, $except);
     }
 
