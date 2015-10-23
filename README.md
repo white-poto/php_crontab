@@ -49,7 +49,8 @@ You can redirect the output(stdout and stderr) to anywhere you what, like:
 + `redis://host:port/queue_key`
 + `http://host:port/path`
 + `custom://namespace\\class_name?params`  
-Note that the custom class must be an instance of `\Monolog\Handler\HandlerInterface`
+Note that the custom class must be an instance of `\Monolog\Handler\HandlerInterface`, 
+and you can pass params to your custom class's `__construct` by query string.
 
 HTTP interfaces
 -------------
