@@ -41,13 +41,15 @@ What's more? You can develop a web application to manage them.
 
 Output Config
 -----------
+You can redirect the output(stdout and stderr) to anywhere you what, like:
 + `file:///path/to/file` 
 + `unix:///path/to/sock`
 + `tcp://host:port`
 + `udp://host:port`
 + `redis://host:port/queue_key`
 + `http://host:port/path`
-+ `custom://namespace\\class_name?params`
++ `custom://namespace\\class_name?params`  
+Note that the custom class must be an instance of `\Monolog\Handler\HandlerInterface`
 
 HTTP interfaces
 -------------
