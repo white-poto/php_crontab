@@ -16,12 +16,11 @@ class MissionTest extends PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    protected $log_file = "/tmp/mission_test.log";
+    protected $log_file = "file:///tmp/mission_test.log";
 
     public function setUp()
     {
-        $logger = new \Monolog\Logger("php_crontab");
-        $logger->pushHandler(new \Monolog\Handler\StreamHandler($this->log_file));
+        $logger = \Jenner\Crontab\Logger\MissionLoggerFactory::create($this->log_file);
 
         $this->mission = new \Jenner\Crontab\Mission(
             "mission_test",
