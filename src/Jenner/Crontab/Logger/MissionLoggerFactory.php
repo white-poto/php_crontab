@@ -26,7 +26,13 @@ class MissionLoggerFactory
     public static function create($stream)
     {
         $logger = new Logger(self::NAME);
+        $handler = self::getHandler($stream);
+        $logger->pushHandler($handler);
 
+        return $logger;
+    }
+
+    public static function getHandler($stream){
         $protocol = self::getProtocol($stream);
         switch ($protocol) {
             case 'tcp' :
@@ -37,22 +43,16 @@ class MissionLoggerFactory
                     $message = "connect to socket server failed. errno:" . $error . '. error:' . $error;
                     throw new \RuntimeException($message);
                 }
-                $logger->pushHandler(new StreamHandler($socket));
-                return $logger;
+                return new StreamHandler($socket);
             case 'http':
-                $handler = new HttpHandler($stream);
-                $logger->pushHandler($handler);
-                return $logger;
+                return new HttpHandler($stream);
             case 'redis':
-                $handler = self::getRedisHandler($stream);
-                $logger->pushHandler($handler);
-                return $logger;
+                return self::getRedisHandler($stream);
             case 'custom':
-                $handler = self::getCustomHandler($stream);
-                $logger->pushHandler($handler);
-                return $logger;
+                return self::getCustomHandler($stream);
+            default:
+                throw new \InvalidArgumentException("stream format is error");
         }
-
     }
 
     /**
