@@ -23,8 +23,8 @@ $missions = [
     [
         'name' => 'hostname',
         'cmd' => "hostname",
-        'out' => 'file:///tmp/php_crontab.log',
-        'time' => '* * * * *',
+        'out' => 'unix:///tmp/php_crontab.sock',
+        'time' =>  '* * * * *',
     ],
 ];
 $logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);

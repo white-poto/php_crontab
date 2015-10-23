@@ -25,7 +25,7 @@ $missions = [
     [
         'name' => 'hostname',
         'cmd' => "hostname",
-        'out' => 'file:///tmp/php_crontab.log',
+        'out' => 'unix:///tmp/php_crontab.sock',
         'time' =>  '* * * * *',
     ],
 ];
