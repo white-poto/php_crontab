@@ -8,4 +8,4 @@ php:
   - 5.6
 
 script:
-  - phpunit --bootstrap vendor/autoload.php tests/
+  - composer self-update && composer update && phpunit --bootstrap vendor/autoload.php tests/
