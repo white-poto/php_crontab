@@ -77,7 +77,7 @@ class MissionLoggerFactory
         }
         $reflect = new \ReflectionClass($class_name);
         $handler_interface = "Monolog\\Handler\\HandlerInterface";
-        if ($reflect->isSubclassOf($handler_interface)) {
+        if (!$reflect->isSubclassOf($handler_interface)) {
             $message = "custom logger is not sub class of " . $handler_interface;
             throw new \RuntimeException($message);
         }
