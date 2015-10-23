@@ -8,8 +8,8 @@
  */
 class CustomHandler implements \Monolog\Handler\HandlerInterface
 {
-    protected $param_1;
-    protected $param_2;
+    public $param_1;
+    public $param_2;
 
     public function __construct($param_1, $param_2){
         $this->param_1 = $param_1;
