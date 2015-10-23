@@ -9,6 +9,7 @@
 namespace Jenner\Crontab\Logger;
 
 
+use Jenner\Crontab\Logger\Formatter\MessageFormatter;
 use Jenner\Crontab\Logger\Handler\HttpHandler;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\RedisHandler;
@@ -33,7 +34,12 @@ class MissionLoggerFactory
         return $logger;
     }
 
+    /**
+     * @param $stream
+     * @return HandlerInterface
+     */
     public static function getHandler($stream){
+        $handler = null;
         $protocol = self::getProtocol($stream);
         switch ($protocol) {
             case 'tcp' :
@@ -44,19 +50,27 @@ class MissionLoggerFactory
                     $message = "connect to socket server failed. errno:" . $error . '. error:' . $error;
                     throw new \RuntimeException($message);
                 }
-                return new StreamHandler($socket);
-            case 'file':
+                $handler = new StreamHandler($socket);
+                break;
+            case 'file' :
                 $stream_info = parse_url($stream);
-                return new StreamHandler($stream_info['path']);
+                $handler = new StreamHandler($stream_info['path']);
+                break;
             case 'http':
-                return new HttpHandler($stream);
+                $handler = new HttpHandler($stream);
+                break;
             case 'redis':
-                return self::getRedisHandler($stream);
+                $handler = self::getRedisHandler($stream);
+                break;
             case 'custom':
-                return self::getCustomHandler($stream);
+                $handler =  self::getCustomHandler($stream);
+                break;
             default:
                 throw new \InvalidArgumentException("stream format is error");
         }
+        $handler->setFormatter(new MessageFormatter());
+
+        return $handler;
     }
 
     /**
@@ -83,7 +97,10 @@ class MissionLoggerFactory
             throw new \RuntimeException($message);
         }
 
-        return $reflect->newInstanceArgs($params);
+        $handler = $reflect->newInstanceArgs($params);
+        $handler->setFormatter(new MessageFormatter());
+
+        return $handler;
     }
 
     /**
@@ -101,7 +118,10 @@ class MissionLoggerFactory
             throw new \RuntimeException("connect to redis failed");
         }
 
-        return new RedisHandler($redis, substr($stream_info['path'], 1));
+        $handler = new RedisHandler($redis, substr($stream_info['path'], 1));
+        $handler->setFormatter(new MessageFormatter());
+
+        return $handler;
     }
 
     /**
