@@ -49,7 +49,7 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         $except = shell_exec("ls /");
         $this->assertEquals($stdout, $except);
         $stderr = file_get_contents($this->err_file);
-        $except = shell_exec('ddddeeee 2>&1');
+        $except = shell_exec('ddddeee 2>&1');
         $this->assertEquals($stderr, $except);
     }
 
