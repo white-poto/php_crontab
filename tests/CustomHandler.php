@@ -12,11 +12,8 @@ class CustomHandler implements \Monolog\Handler\HandlerInterface
     protected $param_2;
 
     public function __construct($param_1, $param_2){
-        print_r(func_get_args());
         $this->param_1 = $param_1;
         $this->param_2 = $param_2;
-        var_dump($this->param_1);
-        var_dump($this->param_2);
     }
 
     /**

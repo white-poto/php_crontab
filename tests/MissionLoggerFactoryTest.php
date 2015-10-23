@@ -46,7 +46,7 @@ class MissionLoggerFactoryTest extends PHPUnit_Framework_TestCase
         $handler = \Jenner\Crontab\Logger\MissionLoggerFactory::getHandler("custom://CustomHandler?param_1=param_1&param_2=param_2");
         $this->assertInstanceOf("Monolog\\Handler\\HandlerInterface", $handler);
         $reflect = new ReflectionObject($handler);
-        $this->assertEquals($reflect->getProperty("param_1"), "param_1");
-        $this->assertEquals($reflect->getProperty("param_2"), "param_2");
+        $this->assertEquals($reflect->getProperty("param_1")->getValue(), "param_1");
+        $this->assertEquals($reflect->getProperty("param_2")->getValue(), "param_2");
     }
 }
