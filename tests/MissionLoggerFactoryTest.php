@@ -15,7 +15,7 @@ class MissionLoggerFactoryTest extends PHPUnit_Framework_TestCase
             array('file:///tmp/php_crontab.log'),
             array('tcp://127.0.0.1:80'),
             array('udp://127.0.0.1:80'),
-            array('unix:///tmp/test.socket'),
+            //array('unix:///tmp/test.socket'),
         );
     }
 
