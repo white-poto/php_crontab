@@ -42,6 +42,10 @@ abstract class AbstractDaemon
         $this->logger = $logger;
     }
 
+    public function correctTime(){
+
+    }
+
     /**
      * start crontab and loop
      */

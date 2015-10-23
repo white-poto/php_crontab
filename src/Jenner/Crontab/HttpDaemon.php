@@ -10,6 +10,7 @@ namespace Jenner\Crontab;
 
 use Psr\Log\LoggerInterface;
 use React\EventLoop\Factory;
+use React\EventLoop\LoopInterface;
 
 class HttpDaemon extends Daemon
 {
@@ -54,19 +55,20 @@ class HttpDaemon extends Daemon
     /**
      * start crontab every minute
      */
-    public function crontabCallback()
+    public function crontabCallback(Crontab $crontab, LoopInterface $loop)
     {
-        $pid = pcntl_fork();
-        if ($pid > 0) {
-            return;
-        } elseif ($pid == 0) {
-            $crontab = $this->createCrontab();
-            $crontab->start(time());
-            exit();
-        } else {
-            $this->logger->error("could not fork");
-            exit();
-        }
+        $loop->addTimer(60 - time() % 60, function() use($crontab){
+            $pid = pcntl_fork();
+            if ($pid > 0) {
+                return;
+            } elseif ($pid == 0) {
+                $crontab->start(time());
+                exit();
+            } else {
+                $this->logger->error("could not fork");
+                exit();
+            }
+        });
     }
 
     /**

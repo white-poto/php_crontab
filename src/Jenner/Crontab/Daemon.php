@@ -62,17 +62,19 @@ class Daemon extends AbstractDaemon
         $loop = Factory::create();
 
         // add periodic timer
-        $loop->addPeriodicTimer(60, function () use ($crontab) {
-            $pid = pcntl_fork();
-            if ($pid > 0) {
-                return;
-            } elseif ($pid == 0) {
-                $crontab->start(time());
-                exit();
-            } else {
-                $this->logger->error("could not fork");
-                exit();
-            }
+        $loop->addPeriodicTimer(60, function () use ($crontab, $loop) {
+            $loop->addTimer(60 - time() % 60, function() use ($crontab){
+                $pid = pcntl_fork();
+                if ($pid > 0) {
+                    return;
+                } elseif ($pid == 0) {
+                    $crontab->start(time());
+                    exit();
+                } else {
+                    $this->logger->error("could not fork");
+                    exit();
+                }
+            });
         });
 
         // recover the sub processes
