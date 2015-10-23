@@ -11,9 +11,9 @@ class CrontabTest extends PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    protected $log_file = "/tmp/crontab_test.log";
+    protected $log_file = "file:///tmp/crontab_test.log";
 
-    protected $err_file = "/tmp/crontab_err.log";
+    protected $err_file = "file:///tmp/crontab_err.log";
 
 
     public function testStart()
@@ -21,8 +21,7 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         if (file_exists($this->log_file)) {
             unlink($this->log_file);
         }
-        $logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
-        $logger->pushHandler(new \Monolog\Handler\StreamHandler($this->log_file));
+        $logger = \Jenner\Crontab\Logger\MissionLoggerFactory::create($this->log_file);
         $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "* * * * *", $logger);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
@@ -39,10 +38,9 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         if(file_exists($this->err_file)){
             unlink($this->err_file);
         }
-        $out = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
-        $out->pushHandler(new \Monolog\Handler\StreamHandler($this->log_file));
-        $err = new \Monolog\Logger(Jenner\Crontab\Crontab::NAME);
-        $err->pushHandler(new \Monolog\Handler\StreamHandler($this->err_file));
+
+        $out = \Jenner\Crontab\Logger\MissionLoggerFactory::create($this->log_file);
+        $err = \Jenner\Crontab\Logger\MissionLoggerFactory::create($this->err_file);
         $mission = new \Jenner\Crontab\Mission("mission_test", "ls / && ddddeee", "* * * * *", $out, $err);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
@@ -60,8 +58,8 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         if (file_exists($this->log_file)) {
             unlink($this->log_file);
         }
-        $logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
-        $logger->pushHandler(new \Monolog\Handler\StreamHandler($this->log_file));
+
+        $logger = \Jenner\Crontab\Logger\MissionLoggerFactory::create($this->log_file);
         $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "3 * * * *", $logger);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
