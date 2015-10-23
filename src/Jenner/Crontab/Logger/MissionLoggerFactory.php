@@ -72,6 +72,7 @@ class MissionLoggerFactory
             throw new \RuntimeException("custom handler class is not exists");
         }
         $params = array();
+        var_dump($stream_info);
         if (array_key_exists('query', $stream_info)) {
             parse_str($stream_info['query'], $params);
         }
