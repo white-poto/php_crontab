@@ -60,6 +60,8 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         if (file_exists($this->log_file)) {
             unlink($this->log_file);
         }
+        $logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
+        $logger->pushHandler(new \Monolog\Handler\StreamHandler($this->log_file));
         $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "3 * * * *", $this->log_file);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
