@@ -68,7 +68,7 @@ class MissionLoggerFactory
     {
         $stream_info = parse_url($stream);
         $class_name = $stream_info['host'];
-        if (class_exists($class_name)) {
+        if (!class_exists($class_name)) {
             throw new \RuntimeException("custom handler class is not exists");
         }
         $params = array();
