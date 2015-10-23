@@ -44,6 +44,9 @@ class MissionLoggerFactory
                     throw new \RuntimeException($message);
                 }
                 return new StreamHandler($socket);
+            case 'file':
+                $stream_info = parse_url($stream);
+                return new StreamHandler($stream_info['path']);
             case 'http':
                 return new HttpHandler($stream);
             case 'redis':
