@@ -9,6 +9,7 @@
 namespace Jenner\Crontab;
 
 use Jenner\Crontab\Logger\CrontabLoggerFactory;
+use Jenner\Crontab\Logger\MissionLoggerFactory;
 use Psr\Log\LoggerInterface;
 use React\EventLoop\Factory;
 
@@ -95,11 +96,14 @@ class Daemon extends AbstractDaemon
         $tasks = $this->formatTasks();
         $missions = array();
         foreach ($tasks as $task) {
+            $out = MissionLoggerFactory::create($task['out']);
+            $err = MissionLoggerFactory::create($task['err']);
             $mission = new Mission(
                 $task['name'],
                 $task['cmd'],
                 $task['time'],
-                $task['out'],
+                $out,
+                $err,
                 $task['user'],
                 $task['group']
             );
