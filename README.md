@@ -65,7 +65,7 @@ HTTP METHOD: `GET`
 + `start` start crontab loop
 + `stop` stop crontab loop
 
-examples:
+Examples:
 ```shell
 http://host:port/add?name=name&cmd=cmd&time=time&out=out&user=user&group=group&comment=comment
 http://host:port/get_by_name?name=name
