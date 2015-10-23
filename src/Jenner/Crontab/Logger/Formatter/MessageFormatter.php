@@ -35,7 +35,7 @@ class MessageFormatter implements FormatterInterface
     {
         $message = '';
         foreach($records as $record){
-            $message .= $message . PHP_EOL;
+            $message .= $record . PHP_EOL;
         }
 
         return $message;
