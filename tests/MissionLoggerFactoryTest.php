@@ -33,7 +33,7 @@ class MissionLoggerFactoryTest extends PHPUnit_Framework_TestCase
     public function testHttpHandler()
     {
         $handler = \Jenner\Crontab\Logger\MissionLoggerFactory::getHandler("http://www.huyanping.cn");
-        $this->assertInstanceOf("Jenner\\Crontab\\Logger\\HttpHandler", $handler);
+        $this->assertInstanceOf("Jenner\\Crontab\\Logger\\Handler\\HttpHandler", $handler);
     }
 
     public function testRedisHandler()
