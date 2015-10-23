@@ -72,7 +72,6 @@ class MissionLoggerFactory
             throw new \RuntimeException("custom handler class is not exists");
         }
         $params = array();
-        var_dump($stream_info);
         if (array_key_exists('query', $stream_info)) {
             parse_str($stream_info['query'], $params);
         }
@@ -112,6 +111,7 @@ class MissionLoggerFactory
     protected static function getProtocol($stream)
     {
         $stream_info = parse_url($stream);
+        var_dump($stream_info);
         if (!array_key_exists('scheme', $stream_info)) {
             throw new \InvalidArgumentException("stream format error");
         }
