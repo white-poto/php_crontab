@@ -9,6 +9,7 @@
 namespace Jenner\Crontab\Logger;
 
 
+use Jenner\Crontab\Logger\Handler\HttpHandler;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\RedisHandler;
 use Monolog\Handler\StreamHandler;
