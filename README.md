@@ -89,6 +89,7 @@ $missions = [
         'name' => 'ls',
         'cmd' => "ls -al",
         'out' => 'file:///tmp/php_crontab.log',
+        'err' => 'file:///tmp/php_crontab.log',
         'time' => '* * * * *',
         'user' => 'www',
         'group' => 'www'
@@ -97,6 +98,7 @@ $missions = [
         'name' => 'hostname',
         'cmd' => "hostname",
         'out' => 'unix:///tmp/php_crontab.sock',
+        'err' => 'unix:///tmp/php_crontab.sock',
         'time' => '* * * * *',
     ],
 ];
@@ -118,12 +120,14 @@ $missions = [
         'name' => 'ls',
         'cmd' => "ls -al",
         'out' => 'file:///tmp/php_crontab.log',
+        'err' => 'file:///tmp/php_crontab.log',
         'time' => '* * * * *',
     ],
     [
         'name' => 'hostname',
         'cmd' => "hostname",
         'out' => 'unix:///tmp/php_crontab.sock',
+        'err' => 'unix:///tmp/php_crontab.sock',
         'time' => '* * * * *',
     ],
 ];
@@ -139,12 +143,14 @@ $missions = [
         'name' => 'ls',
         'cmd' => "ls -al",
         'out' => 'file:///tmp/php_crontab.log',
+        'err' => 'file:///tmp/php_crontab.log',
         'time' => '* * * * *',
     ],
     [
         'name' => 'hostname',
         'cmd' => "hostname",
         'out' => 'unix:///tmp/php_crontab.sock',
+        'err' => 'unix:///tmp/php_crontab.sock',
         'time' => '* * * * *',
     ],
 ];
