@@ -8,7 +8,8 @@
  */
 class MissionLoggerFactoryTest extends PHPUnit_Framework_TestCase
 {
-    public function streamHandlerProvider(){
+    public function streamHandlerProvider()
+    {
         return array(
             array('file:///tmp/php_crontab.log'),
             array('tcp://127.0.0.1:80'),
@@ -16,7 +17,12 @@ class MissionLoggerFactoryTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testStreamHandler($stream){
+    /**
+     * @dataProvider streamHandlerProvider
+     * @param $stream
+     */
+    public function testStreamHandler($stream)
+    {
         $handler = \Jenner\Crontab\Logger\MissionLoggerFactory::getHandler($stream);
         $this->assertInstanceOf("Monolog\\Handler\\StreamHandler", $handler);
     }
