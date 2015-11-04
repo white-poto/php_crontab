@@ -26,6 +26,9 @@ class MissionLoggerFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testStreamHandler($stream)
     {
+        if(gethostname() !== 'huyanping'){
+            $this->markTestSkipped("server is not start");
+        }
         $handler = \Jenner\Crontab\Logger\MissionLoggerFactory::getHandler($stream);
         $this->assertInstanceOf("Monolog\\Handler\\StreamHandler", $handler);
     }
