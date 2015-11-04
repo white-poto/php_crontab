@@ -1,8 +1,9 @@
 php_crontab 
 =============
-[![Total Downloads](https://img.shields.io/packagist/dt/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
-[![Latest Stable Version](http://img.shields.io/packagist/v/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
-[![License](https://img.shields.io/packagist/l/jenner/crontab.svg?style=flat)](https://packagist.org/packages/jenner/crontab)
+[![Latest Stable Version](https://poser.pugx.org/jenner/crontab/v/stable)](https://packagist.org/packages/jenner/crontab) 
+[![Total Downloads](https://poser.pugx.org/jenner/crontab/downloads)](https://packagist.org/packages/jenner/crontab) 
+[![Latest Unstable Version](https://poser.pugx.org/jenner/crontab/v/unstable)](https://packagist.org/packages/jenner/crontab) 
+[![License](https://poser.pugx.org/jenner/crontab/license)](https://packagist.org/packages/jenner/crontab)
 
 php crontab base on pcntl and react/event-loop
 
