@@ -4,6 +4,7 @@ php_crontab
 [![Total Downloads](https://poser.pugx.org/jenner/crontab/downloads)](https://packagist.org/packages/jenner/crontab) 
 [![Latest Unstable Version](https://poser.pugx.org/jenner/crontab/v/unstable)](https://packagist.org/packages/jenner/crontab) 
 [![License](https://poser.pugx.org/jenner/crontab/license)](https://packagist.org/packages/jenner/crontab)
+[![License](https://travis-ci.org/huyanping/simple-fork-php.svg)](https://travis-ci.org/huyanping/simple-fork-php.svgb)
 
 php crontab base on pcntl and react/event-loop
 
