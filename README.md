@@ -30,6 +30,12 @@ with the command `crontab -e`. The php script should run every minute. For examp
 Or you can write a php daemon script which will run as a service and will not exit until someone kill it.
 It will check the tasks every minute. For example `tests/daemon.php`
 
+Import
+------------------
+```shell
+composer require jenner/crontab
+```
+
 Properties
 -----------
 + The crontab tasks can be stored in any way you what. For example, mysql, reids. 
