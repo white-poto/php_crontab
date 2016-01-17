@@ -17,7 +17,7 @@ class Crontab
 {
     const NAME = 'php_crontab';
     /**
-     * @var array of Mission
+     * @var Mission[]
      */
     protected $missions = array();
 

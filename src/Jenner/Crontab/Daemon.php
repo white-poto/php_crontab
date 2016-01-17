@@ -72,7 +72,6 @@ class Daemon extends AbstractDaemon
                     exit();
                 } else {
                     $this->logger->error("could not fork");
-                    exit();
                 }
             });
         });
