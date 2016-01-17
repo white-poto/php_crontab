@@ -134,6 +134,9 @@ class MissionLoggerFactory
         if(strpos($stream, 'unix') === 0){
             return 'unix';
         }
+        if(strpos($stream, '/') === 0) {
+            return "file";
+        }
         $stream_info = parse_url($stream);
         if (!array_key_exists('scheme', $stream_info)) {
             throw new \InvalidArgumentException("stream format error");
