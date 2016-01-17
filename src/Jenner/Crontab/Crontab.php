@@ -86,8 +86,7 @@ class Crontab
                     $this->logException($e);
                 }
 
-
-                $pool->submit($mission);
+                $pool->execute($mission);
             }
 
             $pool->wait();
