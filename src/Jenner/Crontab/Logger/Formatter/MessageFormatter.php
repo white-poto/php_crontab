@@ -34,7 +34,7 @@ class MessageFormatter implements FormatterInterface
     public function formatBatch(array $records)
     {
         $message = '';
-        foreach($records as $record){
+        foreach ($records as $record) {
             $message .= $record . PHP_EOL;
         }
 

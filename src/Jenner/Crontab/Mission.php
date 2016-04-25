@@ -80,16 +80,16 @@ class Mission extends Process
         $this->group = $group;
         $this->comment = $comment;
 
-        if(is_null($out)){
+        if (is_null($out)) {
             $this->out = new Logger(Crontab::NAME);
             $this->out->pushHandler(new NullHandler());
-        }else{
+        } else {
             $this->out = $out;
         }
-        if(is_null($err)){
+        if (is_null($err)) {
             $this->err = new Logger(Crontab::NAME);
             $this->err->pushHandler(new NullHandler());
-        }else{
+        } else {
             $this->err = $err;
         }
     }

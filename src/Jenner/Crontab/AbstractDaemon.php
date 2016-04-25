@@ -42,7 +42,8 @@ abstract class AbstractDaemon
         $this->logger = $logger;
     }
 
-    public function correctTime(){
+    public function correctTime()
+    {
 
     }
 

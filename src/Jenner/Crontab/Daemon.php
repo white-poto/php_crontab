@@ -22,7 +22,7 @@ class Daemon extends AbstractDaemon
 
     /**
      * @var array cron config
-     * format£º[
+     * formatï¿½ï¿½[
      *  task_name => [
      *      'name'=>'task_name',
      *      'cmd'=>'shell command',
@@ -63,7 +63,7 @@ class Daemon extends AbstractDaemon
 
         // add periodic timer
         $loop->addPeriodicTimer(60, function () use ($crontab, $loop) {
-            $loop->addTimer(60 - time() % 60, function() use ($crontab){
+            $loop->addTimer(60 - time() % 60, function () use ($crontab) {
                 $pid = pcntl_fork();
                 if ($pid > 0) {
                     return;

@@ -38,7 +38,8 @@ class MissionLoggerFactory
      * @param $stream
      * @return HandlerInterface
      */
-    public static function getHandler($stream){
+    public static function getHandler($stream)
+    {
         $handler = null;
         $protocol = self::getProtocol($stream);
         switch ($protocol) {
@@ -63,7 +64,7 @@ class MissionLoggerFactory
                 $handler = self::getRedisHandler($stream);
                 break;
             case 'custom':
-                $handler =  self::getCustomHandler($stream);
+                $handler = self::getCustomHandler($stream);
                 break;
             default:
                 throw new \InvalidArgumentException("stream format is error");
@@ -131,10 +132,10 @@ class MissionLoggerFactory
      */
     protected static function getProtocol($stream)
     {
-        if(strpos($stream, 'unix') === 0){
+        if (strpos($stream, 'unix') === 0) {
             return 'unix';
         }
-        if(strpos($stream, '/') === 0) {
+        if (strpos($stream, '/') === 0) {
             return "file";
         }
         $stream_info = parse_url($stream);

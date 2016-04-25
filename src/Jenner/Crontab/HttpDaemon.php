@@ -57,7 +57,7 @@ class HttpDaemon extends Daemon
      */
     public function crontabCallback(Crontab $crontab, LoopInterface $loop)
     {
-        $loop->addTimer(60 - time() % 60, function() use($crontab){
+        $loop->addTimer(60 - time() % 60, function () use ($crontab) {
             $pid = pcntl_fork();
             if ($pid > 0) {
                 return;

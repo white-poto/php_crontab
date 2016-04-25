@@ -10,10 +10,9 @@ namespace Jenner\Crontab\Logger\Handler;
 
 
 use Guzzle\Http\Client;
-use Monolog\Formatter\FormatterInterface;
 use Monolog\Handler\AbstractHandler;
 
-class HttpHandler extends  AbstractHandler
+class HttpHandler extends AbstractHandler
 {
 
     /**
