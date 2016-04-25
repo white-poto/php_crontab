@@ -11,10 +11,17 @@ class CrontabTest extends PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    protected $log_file = "/tmp/crontab_test.log";
+    protected $log_file;
 
-    protected $err_file = "/tmp/crontab_err.log";
+    protected $err_file;
 
+    public function setUp()
+    {
+        $this->log_file = "/tmp/crontab_test.log." . getmypid();
+        $this->err_file = "/tmp/crontab_err.log." . getmypid();
+        if (file_exists($this->log_file)) unlink($this->log_file);
+        if (file_exists($this->err_file)) unlink($this->err_file);
+    }
 
     public function testStart()
     {
@@ -31,11 +38,12 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($out, $except);
     }
 
-    public function testError(){
+    public function testError()
+    {
         if (file_exists($this->log_file)) {
             unlink($this->log_file);
         }
-        if(file_exists($this->err_file)){
+        if (file_exists($this->err_file)) {
             unlink($this->err_file);
         }
 
