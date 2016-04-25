@@ -27,8 +27,12 @@ $missions = [
         'time' =>  '* * * * *',
     ],
 ];
+
 $logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
 $logger->pushHandler(new \Monolog\Handler\StreamHandler("/var/log/php_crontab.log"));
+try{
+    $http_daemon = new \Jenner\Crontab\HttpDaemon($missions, $logger);
+    $http_daemon->start();
+}catch(Exception $e) {
 
-$http_daemon = new \Jenner\Crontab\HttpDaemon($missions, $logger);
-$http_daemon->start();
+}

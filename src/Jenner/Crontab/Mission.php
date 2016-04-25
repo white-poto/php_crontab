@@ -237,6 +237,8 @@ class Mission extends Process
      */
     public function run()
     {
+        $this->setUserAndGroup();
+
         $out = $this->out;
         $err = $this->err;
         $process = new \Symfony\Component\Process\Process($this->cmd);
