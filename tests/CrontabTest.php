@@ -63,7 +63,7 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "3 * * * *", $logger);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
-        $crontab->start(time());
+        $crontab->start(time() - 60);
         $this->assertFalse(file_exists($this->log_file));
     }
 
