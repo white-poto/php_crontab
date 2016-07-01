@@ -105,7 +105,7 @@ class Crontab
     {
         $message = "Exception. message:" . $e->getMessage() .
             ". code:" . $e->getCode() . PHP_EOL .
-            ". trace:" . print_r($e->getTrace(), true);
+            ". trace:" . json_encode($e->getTrace(), true);
 
         $this->logger->error($message);
     }
