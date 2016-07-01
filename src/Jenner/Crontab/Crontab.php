@@ -103,6 +103,7 @@ class Crontab
      */
     protected function logException(\Exception $e)
     {
+        var_dump($e->getTrace());
         $message = "Exception. message:" . $e->getMessage() .
             ". code:" . $e->getCode() . PHP_EOL .
             ". trace:" . implode(PHP_EOL, $e->getTrace());
