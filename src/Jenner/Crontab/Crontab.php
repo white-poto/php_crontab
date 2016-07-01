@@ -81,12 +81,10 @@ class Crontab
             foreach ($this->missions as $mission) {
                 if (!$mission->needRun($time)) continue;
                 try {
-                    $mission->start();
+                    $pool->execute($mission);
                 } catch (\Exception $e) {
                     $this->logException($e);
                 }
-
-                $pool->execute($mission);
             }
 
             $pool->wait();
