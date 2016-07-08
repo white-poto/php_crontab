@@ -40,24 +40,12 @@ Properties
 -----------
 + The crontab tasks can be stored in any way you what. For example, mysql, reids. 
 What's more? You can develop a web application to manage them.
-+ Logs of the crontab tasks can be configured as you want.
 + The tasks of different users can be managed together.
 + Multi-Process, every task is a process.
 + You can set the user and group of a crontab task
 + STDOUT can be redirected
 + Based on react/event-loop, it can run as a daemon.
 + A HTTP server which you can manage the crontab tasks through it.
-
-Output Config
------------
-You can redirect the output(stdout and stderr) to anywhere you what, like:
-+ `file:///path/to/file` 
-+ `unix:///path/to/sock`
-+ `tcp://host:port`
-+ `udp://host:port`
-+ `redis://host:port/queue_key`
-+ `http://host:port/path`
-+ `custom://namespace\\class_name?params`  
   
 Note that the custom class must be an instance of `\Monolog\Handler\HandlerInterface`, 
 and you can pass params to your custom class's `__construct` by query string.
@@ -101,18 +89,20 @@ $missions = [
     [
         'name' => 'ls',
         'cmd' => "ls -al",
-        'out' => 'file:///tmp/php_crontab.log',
-        'err' => 'file:///tmp/php_crontab.log',
+        'out' => '/tmp/php_crontab.log',
+        'err' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
         'user' => 'www',
         'group' => 'www'
     ],
     [
-        'name' => 'hostname',
-        'cmd' => "hostname",
-        'out' => 'unix:///tmp/php_crontab.sock',
-        'err' => 'unix:///tmp/php_crontab.sock',
+        'name' => 'ls',
+        'cmd' => "ls -al",
+        'out' => '/tmp/php_crontab.log',
+        'err' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
+        'user' => 'www',
+        'group' => 'www'
     ],
 ];
 
@@ -132,16 +122,20 @@ $missions = [
     [
         'name' => 'ls',
         'cmd' => "ls -al",
-        'out' => 'file:///tmp/php_crontab.log',
-        'err' => 'file:///tmp/php_crontab.log',
+        'out' => '/tmp/php_crontab.log',
+        'err' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
+        'user' => 'www',
+        'group' => 'www'
     ],
     [
-        'name' => 'hostname',
-        'cmd' => "hostname",
-        'out' => 'unix:///tmp/php_crontab.sock',
-        'err' => 'unix:///tmp/php_crontab.sock',
+        'name' => 'ls',
+        'cmd' => "ls -al",
+        'out' => '/tmp/php_crontab.log',
+        'err' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
+        'user' => 'www',
+        'group' => 'www'
     ],
 ];
 
@@ -155,16 +149,20 @@ $missions = [
     [
         'name' => 'ls',
         'cmd' => "ls -al",
-        'out' => 'file:///tmp/php_crontab.log',
-        'err' => 'file:///tmp/php_crontab.log',
+        'out' => '/tmp/php_crontab.log',
+        'err' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
+        'user' => 'www',
+        'group' => 'www'
     ],
     [
-        'name' => 'hostname',
-        'cmd' => "hostname",
-        'out' => 'unix:///tmp/php_crontab.sock',
-        'err' => 'unix:///tmp/php_crontab.sock',
+        'name' => 'ls',
+        'cmd' => "ls -al",
+        'out' => '/tmp/php_crontab.log',
+        'err' => '/tmp/php_crontab.log',
         'time' => '* * * * *',
+        'user' => 'www',
+        'group' => 'www'
     ],
 ];
 
