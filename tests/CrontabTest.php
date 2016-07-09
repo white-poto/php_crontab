@@ -12,7 +12,9 @@ class CrontabTest extends PHPUnit_Framework_TestCase
     {
         $log_file = "/tmp/test_start.log";
         $logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
-        $logger->pushHandler(new \Monolog\Handler\StreamHandler($log_file));
+        $stream = new \Monolog\Handler\StreamHandler($log_file);
+        $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%", ""));
+        $logger->pushHandler($stream);
         $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "* * * * *", $logger);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
@@ -27,9 +29,13 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         $log_file = "/tmp/test_error.log";
         $err_file = "/tmp/test_error_err.log";
         $out = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
-        $out->pushHandler(new \Monolog\Handler\StreamHandler($log_file));
+        $stream = new \Monolog\Handler\StreamHandler($log_file);
+        $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%", ""));
+        $out->pushHandler($stream);;
         $err = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
-        $err->pushHandler(new \Monolog\Handler\StreamHandler($err_file));
+        $stream = new \Monolog\Handler\StreamHandler($err_file);
+        $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%", ""));
+        $err->pushHandler($stream);
         $mission = new \Jenner\Crontab\Mission("mission_test", "ls / && command_not_exists", "* * * * *", $out, $err);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
@@ -46,7 +52,9 @@ class CrontabTest extends PHPUnit_Framework_TestCase
     {
         $log_file = "/tmp/test_not_start.log";
         $logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
-        $logger->pushHandler(new \Monolog\Handler\StreamHandler($log_file));
+        $stream = new \Monolog\Handler\StreamHandler($log_file);
+        $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%", ""));
+        $logger->pushHandler($stream);
         $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "3 * * * *", $logger);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
