@@ -16,7 +16,7 @@ class MissionTest extends PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    protected $log_file = "file:///tmp/mission_test.log";
+    protected $log_file = "/tmp/mission_test.log";
 
     public function setUp()
     {
