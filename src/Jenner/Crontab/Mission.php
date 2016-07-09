@@ -243,11 +243,11 @@ class Mission extends Process
         $err = $this->err;
         $process = new \Symfony\Component\Process\Process($this->cmd);
         $process->run(function ($type, $buffer) use ($out, $err) {
-            var_dump($out);
-            var_dump($buffer);
             if ($type == \Symfony\Component\Process\Process::ERR) {
                 $err->error($buffer);
             } else {
+                echo 'info-------------------------------' . PHP_EOL;
+                var_dump($buffer);
                 $out->info($buffer);
             }
         });
