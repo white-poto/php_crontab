@@ -18,12 +18,12 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         $stream = new \Monolog\Handler\StreamHandler($log_file);
         $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%", ""));
         $logger->pushHandler($stream);
-        $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "* * * * *", $logger);
+        $mission = new \Jenner\Crontab\Mission("mission_test", "ls / -al", "* * * * *", $logger);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
         $crontab->start(time());
         $out = file_get_contents($log_file);
-        $except = shell_exec("ls /");
+        $except = shell_exec("ls / -al");
         $this->assertEquals($out, $except);
     }
 
