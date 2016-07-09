@@ -41,7 +41,8 @@ class MissionTest extends PHPUnit_Framework_TestCase
 
     public function testRun()
     {
-        $logger = new \Monolog\Logger(new \Monolog\Handler\StreamHandler($this->log_file));
+        $stream = new \Monolog\Handler\StreamHandler($this->log_file);
+        $logger = new \Monolog\Logger($stream);
 
         $this->mission = new \Jenner\Crontab\Mission(
             "mission_test",
@@ -52,6 +53,7 @@ class MissionTest extends PHPUnit_Framework_TestCase
 
         $this->mission->start();
         $this->mission->wait();
+
         $this->assertEquals($this->mission->errno(), 0);
         $out = file_get_contents($this->log_file);
         $except = shell_exec("ls /");
