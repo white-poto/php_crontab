@@ -23,7 +23,7 @@ class CrontabTest extends PHPUnit_Framework_TestCase
 
         $crontab->start(time());
         $out = file_get_contents($log_file);
-        $except = shell_exec("ls / -al");
+        $except = shell_exec("ls /");
         $this->assertEquals($out, $except);
     }
 
