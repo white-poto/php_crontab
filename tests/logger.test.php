@@ -8,6 +8,7 @@
 
 
 require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+$log_file = "/tmp/logger.test.log";
 $logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
 $stream = new \Monolog\Handler\StreamHandler($log_file);
 $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%\n", "Ymd"));
