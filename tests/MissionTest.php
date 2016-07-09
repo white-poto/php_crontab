@@ -20,6 +20,11 @@ class MissionTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+
+    }
+
+    public function testNeed()
+    {
         $logger = new \Monolog\Logger(new \Monolog\Handler\StreamHandler($this->log_file));
 
         $this->mission = new \Jenner\Crontab\Mission(
@@ -28,10 +33,6 @@ class MissionTest extends PHPUnit_Framework_TestCase
             "* * * * *",
             $logger
         );
-    }
-
-    public function testNeed()
-    {
         $this->assertTrue($this->mission->needRun(time()));
         $this->assertTrue($this->mission->needRun(time() + 60));
         $this->assertTrue($this->mission->needRun(time() + 120));
@@ -40,6 +41,14 @@ class MissionTest extends PHPUnit_Framework_TestCase
 
     public function testRun()
     {
+        $logger = new \Monolog\Logger(new \Monolog\Handler\StreamHandler($this->log_file));
+
+        $this->mission = new \Jenner\Crontab\Mission(
+            "mission_test",
+            "ls /",
+            "* * * * *",
+            $logger
+        );
 
         $this->mission->start();
         $this->mission->wait();
