@@ -40,9 +40,6 @@ class MissionTest extends PHPUnit_Framework_TestCase
 
     public function testRun()
     {
-        if (file_exists($this->log_file)) {
-            unlink($this->log_file);
-        }
 
         $this->mission->start();
         $this->mission->wait();
