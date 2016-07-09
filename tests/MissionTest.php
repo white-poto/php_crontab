@@ -20,6 +20,9 @@ class MissionTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        if(file_exists($this->log_file)) {
+            unlink($this->log_file);
+        }
         $logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
         $stream = new \Monolog\Handler\StreamHandler($this->log_file);
         $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%", ""));
