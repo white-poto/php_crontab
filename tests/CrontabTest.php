@@ -16,7 +16,7 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         }
         $logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
         $stream = new \Monolog\Handler\StreamHandler($log_file);
-        $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%", ""));
+        $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%\n", ""));
         $logger->pushHandler($stream);
         $mission = new \Jenner\Crontab\Mission("mission_test", "ls / -al", "* * * * *", $logger);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
@@ -39,7 +39,7 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         }
         $out = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
         $stream = new \Monolog\Handler\StreamHandler($log_file);
-        $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%", ""));
+        $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%\n", ""));
         $out->pushHandler($stream);;
         $err = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
         $stream = new \Monolog\Handler\StreamHandler($err_file);
@@ -65,7 +65,7 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         }
         $logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
         $stream = new \Monolog\Handler\StreamHandler($log_file);
-        $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%", ""));
+        $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%\n", ""));
         $logger->pushHandler($stream);
         $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "3 * * * *", $logger);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));

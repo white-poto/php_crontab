@@ -25,7 +25,7 @@ class MissionTest extends PHPUnit_Framework_TestCase
         }
         $logger = new \Monolog\Logger(\Jenner\Crontab\Crontab::NAME);
         $stream = new \Monolog\Handler\StreamHandler($this->log_file);
-        $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%", ""));
+        $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%\n", ""));
         $logger->pushHandler($stream);
 
         $this->mission = new \Jenner\Crontab\Mission(
