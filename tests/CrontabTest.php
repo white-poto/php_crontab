@@ -18,7 +18,7 @@ class CrontabTest extends PHPUnit_Framework_TestCase
         $stream = new \Monolog\Handler\StreamHandler($log_file);
         $stream->setFormatter(new \Monolog\Formatter\LineFormatter("%message%\n", "", true));
         $logger->pushHandler($stream);
-        $mission = new \Jenner\Crontab\Mission("mission_test", "ls / -al", "* * * * *", $logger);
+        $mission = new \Jenner\Crontab\Mission("mission_test", "ls /", "* * * * *", $logger);
         $crontab = new \Jenner\Crontab\Crontab(null, array($mission));
 
         $crontab->start(time());
