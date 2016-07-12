@@ -241,7 +241,7 @@ class Mission extends Process
 
         $out = $this->out;
         $err = $this->err;
-        $process = new \Symfony\Component\Process\Process($this->cmd);
+        $process = new \Symfony\Component\Process\Process($this->cmd, null, null, null, null);
         $process->run(function ($type, $buffer) use ($out, $err) {
             if ($type == \Symfony\Component\Process\Process::ERR) {
                 $err->error($buffer);
