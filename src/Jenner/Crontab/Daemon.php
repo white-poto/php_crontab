@@ -8,8 +8,8 @@
 
 namespace Jenner\Crontab;
 
-use Jenner\Crontab\Logger\CrontabLoggerFactory;
-use Jenner\Crontab\Logger\MissionLoggerFactory;
+use Monolog\Handler\NullHandler;
+use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use React\EventLoop\Factory;
 
@@ -22,7 +22,7 @@ class Daemon extends AbstractDaemon
 
     /**
      * @var array cron config
-     * format��[
+     * format[
      *  task_name => [
      *      'name'=>'task_name',
      *      'cmd'=>'shell command',
@@ -46,7 +46,8 @@ class Daemon extends AbstractDaemon
         $this->setTasks($tasks);
 
         if (is_null($logger)) {
-            $logger = CrontabLoggerFactory::getInstance(self::LOG_FILE);
+            $logger = new Logger(Crontab::NAME);
+            $logger->pushHandler(new NullHandler());
         }
 
         parent::__construct($logger);
