@@ -14,7 +14,12 @@ use Monolog\Logger;
 
 class MissionLoggerFactory
 {
-    public static function create($file) {
+    /**
+     * @param string $file log file
+     * @return Logger
+     */
+    public static function create($file)
+    {
         $logger = new Logger(Crontab::NAME);
         $logger->pushHandler(new StreamHandler($file));
         return $logger;
