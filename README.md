@@ -46,6 +46,8 @@ What's more? You can develop a web application to manage them.
 + STDOUT can be redirected
 + Based on react/event-loop, it can run as a daemon.
 + A HTTP server which you can manage the crontab tasks through it.
++ Dynamic task loader, you can register a task loader by Daemon::registerTaskLoader,
+which will execute every 60 seconds and update the crontab tasks.
   
 Note that the custom class must be an instance of `\Monolog\Handler\HandlerInterface`, 
 and you can pass params to your custom class's `__construct` by query string.
@@ -140,6 +142,35 @@ $missions = [
 ];
 
 $daemon = new \Jenner\Crontab\Daemon($missions);
+$daemon->start();
+```
+Or use the task loader
+```php
+function task_loader() {
+    $missions = [
+        [
+            'name' => 'ls',
+            'cmd' => "ls -al",
+            'out' => '/tmp/php_crontab.log',
+            'time' => '* * * * *',
+            'user' => 'www',
+            'group' => 'www'
+        ],
+        [
+            'name' => 'ls',
+            'cmd' => "ls -al",
+            'out' => '/tmp/php_crontab.log',
+            'time' => '* * * * *',
+            'user' => 'www',
+            'group' => 'www'
+        ],
+    ];
+
+    return $missions;
+}
+
+$daemon = new \Jenner\Crontab\Daemon();
+$daemon->registerTaskLoader("task_loader");
 $daemon->start();
 ```
 
