@@ -38,10 +38,15 @@ class Daemon extends AbstractDaemon
     protected $tasks = array();
 
     /**
+     * @var callable task loader, execute every 60 second
+     */
+    protected $task_loader;
+
+    /**
      * @param $tasks array
      * @param LoggerInterface $logger
      */
-    public function __construct($tasks, LoggerInterface $logger = null)
+    public function __construct($tasks = array(), LoggerInterface $logger = null)
     {
         $this->setTasks($tasks);
 
@@ -61,6 +66,13 @@ class Daemon extends AbstractDaemon
         $this->logger->info("crontab start");
         $crontab = $this->createCrontab();
         $loop = Factory::create();
+
+        // add task loader timer is exists.
+        if (!empty($this->task_loader) && is_callable($this->task_loader)) {
+            $loop->addPeriodicTimer(60, function () {
+                $this->task_loader = call_user_func($this->task_loader);
+            });
+        }
 
         // add periodic timer
         $loop->addPeriodicTimer(60, function () use ($crontab, $loop) {
@@ -86,6 +98,14 @@ class Daemon extends AbstractDaemon
         });
 
         $loop->run();
+    }
+
+    public function registerTaskLoader($loader)
+    {
+        if (!is_callable($loader)) {
+            throw new \InvalidArgumentException("task loader is not callable");
+        }
+        $this->task_loader = $loader;
     }
 
     /**
