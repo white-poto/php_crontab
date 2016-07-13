@@ -12,14 +12,14 @@ require dirname(dirname(__FILE__)) . DS . 'vendor' . DS . 'autoload.php';
 
 $loop = \React\EventLoop\Factory::create();
 $loop->addPeriodicTimer(60, function() {
-   while(true) {
+   for($i=0; $i<10; $i++) {
        echo "function A", PHP_EOL;
        sleep(1);
    }
 });
 
 $loop->addPeriodicTimer(60, function() {
-    while(true) {
+    for($i=0; $i<10; $i++) {
         echo "function B", PHP_EOL;
         sleep(1);
     }
