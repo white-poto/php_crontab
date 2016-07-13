@@ -16,18 +16,13 @@ use React\EventLoop\Factory;
 class Daemon extends AbstractDaemon
 {
     /**
-     * default daemon log file
-     */
-    const LOG_FILE = '/var/log/php_crontab.log';
-
-    /**
      * @var array cron config
      * format[
      *  task_name => [
      *      'name'=>'task_name',
      *      'cmd'=>'shell command',
-     *      'out'=>'output',
-     *      'err'=>'errout'
+     *      'out'=>'output file or instance of LoggerInterface',
+     *      'err'=>'errout file or instance of LoggerInterface'
      *      'time'=>'* * * * *',
      *      'user'=>'process user',
      *      'group'=>'process group',
@@ -123,8 +118,17 @@ class Daemon extends AbstractDaemon
         $tasks = $this->formatTasks();
         $missions = array();
         foreach ($tasks as $task) {
-            $out = MissionLoggerFactory::create($task['out']);
-            $err = MissionLoggerFactory::create($task['err']);
+            if($task['out'] instanceof LoggerInterface) {
+                $out = $task['out'];
+            }else{
+                $out = MissionLoggerFactory::create($task['out']);
+            }
+            if($task['err'] instanceof LoggerInterface) {
+                $err = $task['err'];
+            }else{
+                $err = MissionLoggerFactory::create($task['err']);
+            }
+
             $mission = new Mission(
                 $task['name'],
                 $task['cmd'],
