@@ -24,3 +24,5 @@ $loop->addPeriodicTimer(60, function() {
         sleep(1);
     }
 });
+
+$loop->run();
