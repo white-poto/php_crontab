@@ -70,7 +70,12 @@ class Daemon extends AbstractDaemon
         // add task loader timer is exists.
         if (!empty($this->task_loader) && is_callable($this->task_loader)) {
             $loop->addPeriodicTimer(60, function () {
+                $start_time = time();
                 $this->task_loader = call_user_func($this->task_loader);
+                $execution_time = time() - $start_time;
+                if ($execution_time > 60) {
+                    $this->logger->warning("task loader's execution time is more than 60 seconds.");
+                }
             });
         }
 
