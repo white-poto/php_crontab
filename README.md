@@ -48,9 +48,6 @@ What's more? You can develop a web application to manage them.
 + A HTTP server which you can manage the crontab tasks through it.
 + Dynamic task loader, you can register a task loader by Daemon::registerTaskLoader,
 which will execute every 60 seconds and update the crontab tasks.
-  
-Note that the custom class must be an instance of `\Monolog\Handler\HandlerInterface`, 
-and you can pass params to your custom class's `__construct` by query string.
 
 HTTP interfaces
 -------------
