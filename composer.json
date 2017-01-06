@@ -18,20 +18,20 @@
     "require": {
         "php": ">=5.4.0",
         "ext-posix": "*",
-        "jenner/simple_fork": "1.1.2",
-        "monolog/monolog": "1.17.1",
-        "react/http": "v0.4.1",
-        "symfony/process": "v2.7.5"
+        "jenner/simple_fork": "1.1.*",
+        "monolog/monolog": "1.17.*",
+        "react/http": "v0.4.*",
+        "symfony/process": "v2.7.*"
     },
     "require-dev": {
-        "guzzle/guzzle": "v3.9.3",
+        "guzzle/guzzle": "v3.9.*",
         "ext-redis": "*"
     },
     "suggest": {
-        "ext-libevent": ">=0.1.0",
+        "ext-libevent": "0.1.*",
         "ext-event": "~1.0",
         "ext-libev": "*",
-        "guzzle/guzzle": "v3.9.3",
+        "guzzle/guzzle": "v3.9.*",
         "ext-redis": "*"
     },
     "autoload": {

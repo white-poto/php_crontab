@@ -95,64 +95,115 @@ class Mission extends Process
     }
 
     /**
-     * get or set name
-     *
-     * @param null $name
      * @return string
      */
-    public function name($name = null)
+    public function getName()
     {
-        if (!is_null($name)) {
-            $this->name = $name;
-        } else {
-            return $this->name;
-        }
+        return $this->name;
     }
 
     /**
-     * get or set cmd
-     *
-     * @param null $cmd
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * @return string
      */
-    public function cmd($cmd = null)
+    public function getCmd()
     {
-        if (!is_null($cmd)) {
-            $this->cmd = $cmd;
-        } else {
-            return $this->cmd;
-        }
+        return $this->cmd;
     }
 
-
     /**
-     * get or set time
-     *
-     * @param null $time
-     * @return null
+     * @param string $cmd
      */
-    public function time($time = null)
+    public function setCmd($cmd)
     {
-        if (!is_null($time)) {
-            $this->time = $time;
-        } else {
-            return $this->time;
-        }
+        $this->cmd = $cmd;
     }
 
     /**
-     * get or set out
-     *
+     * @return LoggerInterface
+     */
+    public function getOut()
+    {
+        return $this->out;
+    }
+
+    /**
      * @param LoggerInterface $out
-     * @return null|string
      */
-    public function out(LoggerInterface $out = null)
+    public function setOut(LoggerInterface $out)
     {
-        if (!is_null($out)) {
-            $this->out = $out;
-        } else {
-            return $this->out;
-        }
+        $this->out = $out;
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    public function getErr()
+    {
+        return $this->err;
+    }
+
+    /**
+     * @param LoggerInterface $err
+     */
+    public function setErr(LoggerInterface $err)
+    {
+        $this->err = $err;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param string $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param string $group
+     */
+    public function setGroup($group)
+    {
+        $this->group = $group;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param string $comment
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
     }
 
     /**
@@ -171,37 +222,6 @@ class Mission extends Process
     }
 
     /**
-     * get or set user
-     *
-     * @param null $user
-     * @return null|string
-     */
-    public function user($user = null)
-    {
-        if (!is_null($user)) {
-            $this->user = $user;
-        } else {
-            return $this->user;
-        }
-    }
-
-
-    /**
-     * get or set group
-     *
-     * @param null $group
-     * @return null|string
-     */
-    public function group($group = null)
-    {
-        if (!is_null($group)) {
-            $this->group = $group;
-        } else {
-            return $this->group;
-        }
-    }
-
-    /**
      * if the time is right
      *
      * @param $time
@@ -209,10 +229,26 @@ class Mission extends Process
      */
     public function needRun($time)
     {
-        if ($time - CrontabParse::parse($this->time(), $time) == 0) {
+        if ($time - CrontabParse::parse($this->getTime(), $time) == 0) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * @param string $time
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
     }
 
     /**

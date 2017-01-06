@@ -62,18 +62,6 @@ class Daemon extends AbstractDaemon
         $crontab = $this->createCrontab();
         $loop = Factory::create();
 
-        // add task loader timer is exists.
-        if (!empty($this->task_loader) && is_callable($this->task_loader)) {
-            $loop->addPeriodicTimer(60, function () {
-                $start_time = time();
-                $this->task_loader = call_user_func($this->task_loader);
-                $execution_time = time() - $start_time;
-                if ($execution_time > 60) {
-                    $this->logger->warning("task loader's execution time is more than 60 seconds.");
-                }
-            });
-        }
-
         // add periodic timer
         $loop->addPeriodicTimer(60, function () use ($crontab, $loop) {
             $loop->addTimer(60 - time() % 60, function () use ($crontab) {
@@ -100,14 +88,6 @@ class Daemon extends AbstractDaemon
         $loop->run();
     }
 
-    public function registerTaskLoader($loader)
-    {
-        if (!is_callable($loader)) {
-            throw new \InvalidArgumentException("task loader is not callable");
-        }
-        $this->task_loader = $loader;
-    }
-
     /**
      * create crontab object
      *
@@ -118,14 +98,14 @@ class Daemon extends AbstractDaemon
         $tasks = $this->formatTasks();
         $missions = array();
         foreach ($tasks as $task) {
-            if($task['out'] instanceof LoggerInterface) {
+            if ($task['out'] instanceof LoggerInterface) {
                 $out = $task['out'];
-            }else{
+            } else {
                 $out = MissionLoggerFactory::create($task['out']);
             }
-            if($task['err'] instanceof LoggerInterface) {
+            if ($task['err'] instanceof LoggerInterface) {
                 $err = $task['err'];
-            }else{
+            } else {
                 $err = MissionLoggerFactory::create($task['err']);
             }
 
@@ -164,18 +144,27 @@ class Daemon extends AbstractDaemon
     /**
      * @param $tasks
      */
-    public function setTasks($tasks)
+    public function addTasks($tasks)
     {
         $must = array('name', 'cmd', 'time');
         foreach ($tasks as $task) {
-            foreach ($must as $key) {
-                if (!array_key_exists($key, $task)) {
-                    $message = "task must have a {$key} value";
-                    throw new \InvalidArgumentException($message);
-                }
-            }
-
-            $this->tasks[$task['name']] = $task;
+            $this->addTask($task);
         }
+    }
+
+    /**
+     * @param $task
+     */
+    public function addTask($task)
+    {
+        $must = array('name', 'cmd', 'time');
+        foreach ($must as $key) {
+            if (!array_key_exists($key, $task)) {
+                $message = "task must have a {$key} value";
+                throw new \InvalidArgumentException($message);
+            }
+        }
+
+        $this->tasks[$task['name']] = $task;
     }
 }
