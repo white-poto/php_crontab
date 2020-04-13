@@ -294,7 +294,7 @@ class Mission extends Process
     {
         if (!is_null($this->user)) {
             if (!is_null($this->group)) {
-                $group_info = posix_getgrnam($this->user);
+                $group_info = posix_getgrnam($this->group);
                 $group_id = $group_info['gid'];
                 if (!posix_setgid($group_id)) {
                     throw new \RuntimeException("set group failed");
